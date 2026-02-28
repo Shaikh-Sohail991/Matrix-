@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Control Panels - Industrial control panel systems including PLC panels, MCC panels, and custom solutions.">
+    <title>Control Panels | ElectroTech Industries</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../static/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top" role="navigation" aria-label="Main navigation">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
+                <span>ElectroTech</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarMain">
+                <ul class="navbar-nav ms-auto me-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="services.html">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                </ul>
+                <a href="contact.html" class="btn btn-cta">Request Services</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <div class="page-header-content">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item"><a href="products.html">Products</a></li>
+                            <li class="breadcrumb-item"><a href="category.html">Categories</a></li>
+                            <li class="breadcrumb-item"><a href="category_details.html?id=industrial">Industrial
+                                    Equipment</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Control Panels</li>
+                        </ol>
+                    </nav>
+                    <h1>Control Panels</h1>
+                    <p>Industrial control panels, PLC panels, motor control centers, and custom panel solutions.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subcategory Detail Section -->
+        <section class="section-padding" aria-labelledby="subcategory-detail-title">
+            <div class="container">
+                <div class="row g-4">
+                    <!-- Filter Sidebar -->
+                    <div class="col-lg-3">
+                        <div class="filter-sidebar-accordion">
+                            <div class="accordion" id="filterAccordion">
+                                <!-- Product Type -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            Product Type
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse show"
+                                        aria-labelledby="headingOne" data-bs-parent="#filterAccordion">
+                                        <div class="accordion-body">
+                                            <div class="filter-option">
+                                                <input type="checkbox" id="type-plc" name="type-plc">
+                                                <label for="type-plc">PLC Panels (12)</label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <input type="checkbox" id="type-mcc" name="type-mcc">
+                                                <label for="type-mcc">MCC Panels (8)</label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <input type="checkbox" id="type-control" name="type-control">
+                                                <label for="type-control">Control Desks (6)</label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <input type="checkbox" id="type-vfd" name="type-vfd">
+                                                <label for="type-vfd">VFD Panels (6)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Voltage Rating -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                                            aria-expanded="false" aria-controls="collapseTwo">
+                                            Voltage Rating
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse"
+                                        aria-labelledby="headingTwo" data-bs-parent="#filterAccordion">
+                                        <div class="accordion-body">
+                                            <div class="filter-option">
+                                                <input type="checkbox" id="voltage-230" name="voltage-230">
+                                                <label for="voltage-230">230V AC (10)</label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <input type="checkbox" id="voltage-400" name="voltage-400">
+                                                <label for="voltage-400">400V AC (18)</label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <input type="checkbox" id="voltage-690" name="voltage-690">
+                                                <label for="voltage-690">690V AC (4)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Protection Rating -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingThree">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                                            aria-expanded="false" aria-controls="collapseThree">
+                                            Protection Rating
+                                        </button>
+                                    </h2>
+                                    <div id="collapseThree" class="accordion-collapse collapse"
+                                        aria-labelledby="headingThree" data-bs-parent="#filterAccordion">
+                                        <div class="accordion-body">
+                                            <div class="filter-option">
+                                                <input type="checkbox" id="ip54" name="ip54">
+                                                <label for="ip54">IP54 (8)</label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <input type="checkbox" id="ip65" name="ip65">
+                                                <label for="ip65">IP65 (14)</label>
+                                            </div>
+                                            <div class="filter-option">
+                                                <input type="checkbox" id="ip66" name="ip66">
+                                                <label for="ip66">IP66 (6)</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="filter-buttons mt-3">
+                                <button class="btn btn-primary-custom w-100">
+                                    <span>Apply Filters</span>
+                                </button>
+                                <button class="btn btn-outline-custom w-100 mt-2">
+                                    Clear All
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Products Grid -->
+                    <div class="col-lg-9">
+                        <!-- Results toolbar: Showing + Sort by -->
+                        <div class="results-toolbar reveal">
+                            <div class="results-count">
+                                <i class="bi bi-collection" aria-hidden="true"></i>
+                                <span>Showing <strong>12</strong> of <strong>32</strong> products</span>
+                            </div>
+                            <div class="sort-wrap">
+                                <label for="sortSelect" class="sort-label">Sort by</label>
+                                <select id="sortSelect" class="sort-select" aria-label="Sort products">
+                                    <option value="popular">Most Popular</option>
+                                    <option value="newest">Newest First</option>
+                                    <option value="name-asc">Name (A-Z)</option>
+                                    <option value="name-desc">Name (Z-A)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Products -->
+                        <div class="product-grid stagger-children">
+                            <!-- Product 1 -->
+                            <article class="product-card">
+                                <div class="product-card-image">
+                                    <span class="product-card-badge">Featured</span>
+                                    <i class="bi bi-grid-3x3-gap"></i>
+                                </div>
+                                <div class="product-card-content">
+                                    <span class="product-card-category">PLC Control Panel</span>
+                                    <h4><a href="product_details.html?id=cp-2000">PLC Control Panel CP-2000</a></h4>
+                                    <p>Advanced PLC-based control panel with HMI interface, comprehensive I/O, and
+                                        safety interlocks.</p>
+                                    <div class="product-card-specs">
+                                        <span>IP65</span>
+                                        <span>400V AC</span>
+                                        <span>128 I/O</span>
+                                    </div>
+                                    <div class="product-card-footer">
+                                        <div class="product-card-price">
+                                            Request Quote
+                                        </div>
+                                        <a href="product_details.html?id=cp-2000"
+                                            class="btn btn-primary-custom btn-sm-custom">
+                                            <span>View Details</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Product 2 -->
+                            <article class="product-card">
+                                <div class="product-card-image">
+                                    <span class="product-card-badge badge-new">New</span>
+                                    <i class="bi bi-grid-3x3-gap"></i>
+                                </div>
+                                <div class="product-card-content">
+                                    <span class="product-card-category">MCC Panel</span>
+                                    <h4><a href="product_details.html?id=mcc-500">Motor Control Center MCC-500</a></h4>
+                                    <p>Modular MCC panel with intelligent motor protection, variable frequency drives,
+                                        and communication.</p>
+                                    <div class="product-card-specs">
+                                        <span>IP54</span>
+                                        <span>400V AC</span>
+                                        <span>6300A</span>
+                                    </div>
+                                    <div class="product-card-footer">
+                                        <div class="product-card-price">
+                                            Request Quote
+                                        </div>
+                                        <a href="product_details.html?id=mcc-500"
+                                            class="btn btn-primary-custom btn-sm-custom">
+                                            <span>View Details</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Product 3 -->
+                            <article class="product-card">
+                                <div class="product-card-image">
+                                    <i class="bi bi-grid-3x3-gap"></i>
+                                </div>
+                                <div class="product-card-content">
+                                    <span class="product-card-category">VFD Panel</span>
+                                    <h4><a href="product_details.html?id=vfd-100">VFD Drive Panel VFD-100</a></h4>
+                                    <p>Variable frequency drive panel with built-in harmonic filtering and regenerative
+                                        braking.</p>
+                                    <div class="product-card-specs">
+                                        <span>IP65</span>
+                                        <span>400V AC</span>
+                                        <span>0.75-75kW</span>
+                                    </div>
+                                    <div class="product-card-footer">
+                                        <div class="product-card-price">
+                                            Request Quote
+                                        </div>
+                                        <a href="product_details.html?id=vfd-100"
+                                            class="btn btn-primary-custom btn-sm-custom">
+                                            <span>View Details</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Product 4 -->
+                            <article class="product-card">
+                                <div class="product-card-image">
+                                    <i class="bi bi-grid-3x3-gap"></i>
+                                </div>
+                                <div class="product-card-content">
+                                    <span class="product-card-category">Control Desk</span>
+                                    <h4><a href="product_details.html?id=cd-eco">Ergonomic Control Desk CD-ECO</a></h4>
+                                    <p>Operator control desk with touchscreen HMI, emergency stop, and ergonomic design.
+                                    </p>
+                                    <div class="product-card-specs">
+                                        <span>IP54</span>
+                                        <span>230V AC</span>
+                                        <span>15" HMI</span>
+                                    </div>
+                                    <div class="product-card-footer">
+                                        <div class="product-card-price">
+                                            Request Quote
+                                        </div>
+                                        <a href="product_details.html?id=cd-eco"
+                                            class="btn btn-primary-custom btn-sm-custom">
+                                            <span>View Details</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Product 5 -->
+                            <article class="product-card">
+                                <div class="product-card-image">
+                                    <i class="bi bi-grid-3x3-gap"></i>
+                                </div>
+                                <div class="product-card-content">
+                                    <span class="product-card-category">PLC Panel</span>
+                                    <h4><a href="product_details.html?id=cp-lite">Compact PLC Panel CP-LITE</a></h4>
+                                    <p>Compact PLC control panel for small automation systems with integrated I/O.</p>
+                                    <div class="product-card-specs">
+                                        <span>IP65</span>
+                                        <span>230V AC</span>
+                                        <span>32 I/O</span>
+                                    </div>
+                                    <div class="product-card-footer">
+                                        <div class="product-card-price">
+                                            Request Quote
+                                        </div>
+                                        <a href="product_details.html?id=cp-lite"
+                                            class="btn btn-primary-custom btn-sm-custom">
+                                            <span>View Details</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <!-- Product 6 -->
+                            <article class="product-card">
+                                <div class="product-card-image">
+                                    <span class="product-card-badge badge-featured">Best Seller</span>
+                                    <i class="bi bi-grid-3x3-gap"></i>
+                                </div>
+                                <div class="product-card-content">
+                                    <span class="product-card-category">Power Control</span>
+                                    <h4><a href="product_details.html?id=apfc-200">APFC Panel APFC-200</a></h4>
+                                    <p>Automatic power factor correction panel with intelligent capacitor switching.</p>
+                                    <div class="product-card-specs">
+                                        <span>IP54</span>
+                                        <span>400V AC</span>
+                                        <span>50-200kVAR</span>
+                                    </div>
+                                    <div class="product-card-footer">
+                                        <div class="product-card-price">
+                                            Request Quote
+                                        </div>
+                                        <a href="product_details.html?id=apfc-200"
+                                            class="btn btn-primary-custom btn-sm-custom">
+                                            <span>View Details</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="pagination-wrapper">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                            <i class="bi bi-chevron-left"></i>
+                                        </a>
+                                    </li>
+                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                            <i class="bi bi-chevron-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-brand">
+                        <div class="footer-brand-name">
+                            <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
+                            ElectroTech
+                        </div>
+                        <p class="footer-tagline">
+                            Engineering reliable electrical and electronic solutions for industry, education, and
+                            research.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-nav">
+                        <h5>Navigation</h5>
+                        <ul class="footer-links">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="about.html">About Us</a></li>
+                            <li><a href="services.html">Services</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-nav">
+                        <h5>Products</h5>
+                        <ul class="footer-links">
+                            <li><a href="category.html">Categories</a></li>
+                            <li><a href="products.html">All Products</a></li>
+                            <li><a href="subcategory.html">Subcategories</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-social">
+                        <h5>Connect With Us</h5>
+                        <div class="footer-social-links">
+                            <a href="#" class="footer-social-link" aria-label="LinkedIn">
+                                <i class="bi bi-linkedin"></i>
+                            </a>
+                            <a href="#" class="footer-social-link" aria-label="Twitter/X">
+                                <i class="bi bi-twitter-x"></i>
+                            </a>
+                            <a href="#" class="footer-social-link" aria-label="WhatsApp">
+                                <i class="bi bi-whatsapp"></i>
+                            </a>
+                            <a href="#" class="footer-social-link" aria-label="Facebook">
+                                <i class="bi bi-facebook"></i>
+                            </a>
+                            <a href="#" class="footer-social-link" aria-label="Instagram">
+                                <i class="bi bi-instagram"></i>
+                            </a>
+                        </div>
+                        <div class="footer-newsletter mt-4" id="newsletter">
+                            <form action="#" class="newsletter-form d-flex align-items-center justify-content-end">
+                                <input type="email" placeholder="Enter your email" required>
+                                <button type="submit" class="btn btn-primary-custom"><i class="bi bi-send-fill"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="footer-bottom">
+                <p class="footer-copyright">
+                    &copy; 2024 ElectroTech Industries. All rights reserved.
+                </p>
+                <div class="footer-legal">
+                    <a href="privacy_policy.html">Privacy Policy</a>
+                    <a href="terms_of_service.html">Terms of Service</a>
+                    <a href="cookie_policy.html">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JS -->
+    <script src="../static/js/main.js"></script>
+</body>
+
+</html>
