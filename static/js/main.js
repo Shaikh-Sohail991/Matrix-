@@ -1,3 +1,19 @@
+// Helper function to get CSRF token
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 // Navbar scroll effect
 const navbar = document.querySelector('.navbar');
 
@@ -56,15 +72,36 @@ if (contactForm) {
             return;
         }
 
-        // Demo success message
+        // Submit form via AJAX
         const formData = new FormData(contactForm);
-        console.log('Form submitted:', Object.fromEntries(formData));
+        const actionUrl = contactForm.getAttribute('action');
+        const csrftoken = getCookie('csrftoken');
 
-        alert('Thank you for your message! We will get back to you within 24 hours.');
+        fetch(actionUrl, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': csrftoken,
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Show success message
+                alert(data.message);
 
-        // Reset form
-        contactForm.reset();
-        contactForm.classList.remove('was-validated');
+                // Reset form and remove validation state
+                contactForm.reset();
+                contactForm.classList.remove('was-validated');
+            } else {
+                alert(data.message || 'An error occurred. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
     });
 }
 
@@ -123,52 +160,48 @@ if (thumbs) {
 }
 
 
-// Inquiry form submission (demo) (from product_details.html)
-const inquiryForm = document.getElementById('inquiryForm');
-if (inquiryForm) {
-    inquiryForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        alert('Thank you for your question! We will respond within 24 hours.');
-        bootstrap.Modal.getInstance(document.getElementById('inquiryModal')).hide();
-        this.reset();
-    });
-}
-
-
 // Quote form submission (demo) (from product_details.html)
+// Note: This is overridden by inline script in product_details.html
 const quoteForm = document.getElementById('quoteForm');
-if (quoteForm) {
+if (quoteForm && !quoteForm.hasAttribute('data-handler-set')) {
     quoteForm.addEventListener('submit', function (e) {
         e.preventDefault();
         alert('Your quote request has been sent! We will contact you shortly.');
-        bootstrap.Modal.getInstance(document.getElementById('quoteModal')).hide();
+        if (document.getElementById('quoteModal')) {
+            bootstrap.Modal.getInstance(document.getElementById('quoteModal')).hide();
+        }
         this.reset();
     });
+    quoteForm.setAttribute('data-handler-set', 'true');
 }
 
 
 // Populate product name for forms if needed (from product_details.html)
 const productName = document.getElementById('product-title')?.textContent || '';
-const inquiryProductInput = document.getElementById('inquiryProduct');
 const quoteProductInput = document.getElementById('quoteProduct');
-if (inquiryProductInput) inquiryProductInput.value = productName;
 if (quoteProductInput) quoteProductInput.value = productName;
 
 
 // Service Modal functionality (from services.html)
 const serviceModal = document.getElementById('serviceModal');
-const serviceTypeInput = document.getElementById('serviceType');
 
 if (serviceModal) {
     serviceModal.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
+        const button = event.relatedTarget; // Button that triggered the modal
         const service = button.getAttribute('data-service');
-        serviceTypeInput.value = service;
+        
+        const serviceInput = document.getElementById('service');
+        const serviceLabel = document.getElementById('serviceLabel');
+        
+        if (service) {
+            if (serviceInput) serviceInput.value = service;
+            if (serviceLabel) serviceLabel.textContent = service;
+        }
     });
 }
 
 
-// Form submission (demo only) (from services.html)
+// Form submission (from services.html)
 const serviceForm = document.getElementById('serviceForm');
 
 if (serviceForm) {
@@ -178,15 +211,41 @@ if (serviceForm) {
         // Simple validation
         if (!serviceForm.checkValidity()) {
             e.stopPropagation();
+            serviceForm.classList.add('was-validated');
             return;
         }
 
-        // Demo success message
-        alert('Thank you for your inquiry! We will contact you shortly.');
+        // Submit form via AJAX
+        const formData = new FormData(serviceForm);
+        const actionUrl = serviceForm.getAttribute('action');
+        const csrftoken = getCookie('csrftoken');
 
-        // Close modal and reset form
-        const modal = bootstrap.Modal.getInstance(serviceModal);
-        modal.hide();
-        serviceForm.reset();
+        fetch(actionUrl, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRFToken': csrftoken,
+            },
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Show success message
+                alert(data.message);
+
+                // Close modal and reset form
+                const modal = bootstrap.Modal.getInstance(serviceModal);
+                modal.hide();
+                serviceForm.reset();
+                serviceForm.classList.remove('was-validated');
+            } else {
+                alert(data.message || 'An error occurred. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
     });
 }

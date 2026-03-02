@@ -1,65 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Privacy Policy - ElectroTech Industries</title>
+{% block title %}Privacy Policy - ElectroTech Industries{% endblock %}
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+{% block meta_description %}Privacy Policy for ElectroTech Industries - Learn how we collect, use, and protect your personal information.{% endblock %}
 
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="../static/css/style.css" rel="stylesheet">
-</head>
-
-<body>
-    
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg fixed-top" role="navigation" aria-label="Main navigation">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
-                <span>ElectroTech</span>
-            </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
-                aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarMain">
-                <ul class="navbar-nav ms-auto me-3">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="services.html">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
-                    </li>
-                </ul>
-                <a href="contact.html" class="btn btn-cta">Request Services</a>
+{% block content %}
+        <!-- Page Header -->
+        <section class="page-header">
+            <div class="container">
+                <div class="page-header-content">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Privacy Policy</li>
+                        </ol>
+                    </nav>
+                    <h1>Privacy Policy</h1>
+                    <p>Learn how we collect, use, and protect your personal information.</p>
+                </div>
             </div>
-        </div>
-    </nav>
+        </section>
 
-    <!-- Main Content -->
-    <main id="main-content" class="section-padding">
+        <div class="section-padding">
         <div class="container">
             <div class="section-header reveal">
                 <span class="section-label">Legal</span>
@@ -110,7 +72,7 @@
                     <li>Withdraw consent where processing is based on consent.</li>
                     <li>Lodge a complaint with a data protection authority.</li>
                 </ul>
-                <p>To exercise these rights, please <a href="contact.html">contact us</a>. We will respond within a reasonable time as required by applicable law.</p>
+                <p>To exercise these rights, please <a href="{% url 'core:contact' %}">contact us</a>. We will respond within a reasonable time as required by applicable law.</p>
 
                 <h3>Security</h3>
                 <p>We adopt reasonable technical and organizational security measures to protect your information against unauthorized access, alteration, disclosure, or destruction. These include encryption, access controls, and secure hosting. However, no method of transmission over the internet or electronic storage is 100% secure, and we cannot guarantee absolute security.</p>
@@ -125,99 +87,9 @@
                 <p>We may update this Privacy Policy from time to time. We will post the revised policy on this page and update the "Last updated" date. We encourage you to review this policy periodically. Continued use of our site after changes constitutes acceptance of the updated policy.</p>
 
                 <h3>Contact Us</h3>
-                <p>If you have questions about this Privacy Policy or wish to exercise your privacy rights, please <a href="contact.html">contact us</a>. We will be happy to assist you.</p>
+                <p>If you have questions about this Privacy Policy or wish to exercise your privacy rights, please <a href="{% url 'core:contact' %}">contact us</a>. We will be happy to assist you.</p>
             </article>
         </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer" role="contentinfo">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-4 col-md-6">
-                    <div class="footer-brand">
-                        <div class="footer-brand-name">
-                            <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
-                            ElectroTech
-                        </div>
-                        <p class="footer-tagline">
-                            Engineering reliable electrical and electronic solutions for industry, education, and
-                            research.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-6">
-                    <div class="footer-nav">
-                        <h5>Navigation</h5>
-                        <ul class="footer-links">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="services.html">Services</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-nav">
-                        <h5>Services</h5>
-                        <ul class="footer-links">
-                            <li><a href="services.html">Manufacturing</a></li>
-                            <li><a href="services.html">Installation</a></li>
-                            <li><a href="services.html">Calibration</a></li>
-                            <li><a href="services.html">AMC Services</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-social">
-                        <h5>Connect With Us</h5>
-                        <div class="footer-social-links">
-                            <a href="#" class="footer-social-link" aria-label="LinkedIn">
-                                <i class="bi bi-linkedin"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="Twitter/X">
-                                <i class="bi bi-twitter-x"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="WhatsApp">
-                                <i class="bi bi-whatsapp"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="Facebook">
-                                <i class="bi bi-facebook"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="Instagram">
-                                <i class="bi bi-instagram"></i>
-                            </a>
-                        </div>
-                        <div class="footer-newsletter mt-4" id="newsletter">
-                            <form action="#" class="newsletter-form d-flex align-items-center justify-content-end">
-                                <input type="email" placeholder="Enter your email" required>
-                                <button type="submit" class="btn btn-primary-custom"><i class="bi bi-send-fill"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p class="footer-copyright">
-                    &copy; 2024 ElectroTech Industries. All rights reserved.
-                </p>
-                <div class="footer-legal">
-                    <a href="privacy_policy.html">Privacy Policy</a>
-                    <a href="terms_of_service.html">Terms of Service</a>
-                    <a href="cookie_policy.html">Cookie Policy</a>
-                </div>
-            </div>
         </div>
-    </footer>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script src="../static/js/main.js"></script>
-</body>
-
-</html>
+{% endblock %}

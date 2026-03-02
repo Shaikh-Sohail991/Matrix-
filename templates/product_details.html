@@ -1,682 +1,522 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Industrial Control Panel CP-2000 - Advanced PLC-based control panel with HMI interface, comprehensive I/O, and safety interlocks.">
-    <title>Industrial Control Panel CP-2000 | ElectroTech Industries</title>
+{% block extra_css %}
+<!-- Product details page: force white text (overrides gray) -->
+<style>
+    .page-product-details,
+    .page-product-details p,
+    .page-product-details .product-info-meta span,
+    .page-product-details .product-info-description,
+    .page-product-details .specifications-table th,
+    .page-product-details .specifications-table td,
+    .page-product-details .features-list p,
+    .page-product-details .features-list .text-muted,
+    .page-product-details .product-card-content p,
+    .page-product-details .product-card-category,
+    .page-product-details .page-header .breadcrumb-item a,
+    .page-product-details .page-header .breadcrumb-item + .breadcrumb-item::before,
+    .page-product-details .text-muted,
+    .page-product-details small.text-muted,
+    .page-product-details .bg-card .text-muted,
+    .page-product-details .bg-card p.small,
+    .page-product-details .quick-specs small,
+    .page-product-details .bg-card h5 {
+        color: #ffffff !important;
+    }
+    .page-product-details h1,
+    .page-product-details h3,
+    .page-product-details h4,
+    .page-product-details h5 {
+        color: #ffffff !important;
+    }
+    .page-product-details .page-header .breadcrumb-item.active {
+        color: var(--accent) !important;
+    }
+    .page-product-details .nav-tabs .nav-link {
+        color: #ffffff !important;
+    }
+    .page-product-details .nav-tabs .nav-link.active {
+        color: var(--accent) !important;
+    }
+</style>
+{% endblock %}
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+{% block title %}{{ product.name }} | ElectroTech Industries{% endblock %}
 
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+{% block meta_description %}{{ product.name }} - {{ product.short_description }}{% endblock %}
 
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="../static/css/style.css" rel="stylesheet">
-
-    <!-- Product details page: force white text (overrides gray) -->
-    <style>
-        .page-product-details #main-content,
-        .page-product-details #main-content p,
-        .page-product-details .product-info-meta span,
-        .page-product-details .product-info-description,
-        .page-product-details .product-info-price-label,
-        .page-product-details .product-info-price-note,
-        .page-product-details .product-info-price-note i,
-        .page-product-details .specifications-table th,
-        .page-product-details .specifications-table td,
-        .page-product-details .features-list p,
-        .page-product-details .features-list .text-muted,
-        .page-product-details .product-card-content p,
-        .page-product-details .product-card-category,
-        .page-product-details .page-header .breadcrumb-item a,
-        .page-product-details .page-header .breadcrumb-item + .breadcrumb-item::before,
-        .page-product-details .text-muted,
-        .page-product-details small.text-muted,
-        .page-product-details .bg-card .text-muted,
-        .page-product-details .bg-card p.small,
-        .page-product-details .quick-specs small,
-        .page-product-details .bg-card h5 {
-            color: #ffffff !important;
-        }
-        .page-product-details #main-content h1,
-        .page-product-details #main-content h3,
-        .page-product-details #main-content h4,
-        .page-product-details #main-content h5 {
-            color: #ffffff !important;
-        }
-        .page-product-details .page-header .breadcrumb-item.active {
-            color: var(--accent) !important;
-        }
-        .page-product-details .nav-tabs .nav-link {
-            color: #ffffff !important;
-        }
-        .page-product-details .nav-tabs .nav-link.active {
-            color: var(--accent) !important;
-        }
-    </style>
-</head>
-
-<body class="page-product-details">
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg fixed-top" role="navigation" aria-label="Main navigation">
+{% block content %}
+<!-- Main Content -->
+<main id="main-content" class="page-product-details">
+    <!-- Page Header -->
+    <section class="page-header">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
-                <span>ElectroTech</span>
-            </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
-                aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarMain">
-                <ul class="navbar-nav ms-auto me-3">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="services.html">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
-                    </li>
-                </ul>
-                <a href="contact.html" class="btn btn-cta">Request Services</a>
+            <div class="page-header-content">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'products:product_list' %}">Products</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'products:category_list' %}">Categories</a></li>
+                        {% if product.category %}
+                        <li class="breadcrumb-item"><a href="{% url 'products:category_details' product.category.slug %}">{{ product.category.name }}</a></li>
+                        {% endif %}
+                        {% if product.subcategory %}
+                        <li class="breadcrumb-item"><a href="{% url 'products:subcategory_list' %}">Subcategories</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'products:subcategory_details' product.subcategory.slug %}">{{ product.subcategory.name }}</a></li>
+                        {% endif %}
+                        <li class="breadcrumb-item"><a href="{% url 'products:product_list' %}{% if product.category %}?category={{ product.category.slug }}{% endif %}">Products</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+                    </ol>
+                </nav>
             </div>
         </div>
-    </nav>
+    </section>
 
-    <!-- Main Content -->
-    <main id="main-content">
-        <!-- Page Header -->
-        <section class="page-header">
-            <div class="container">
-                <div class="page-header-content">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item"><a href="products.html">Products</a></li>
-                            <li class="breadcrumb-item"><a href="category_details.html?id=industrial">Industrial
-                                    Equipment</a></li>
-                            <li class="breadcrumb-item"><a href="subcategory_details.html?id=control-panels">Control
-                                    Panels</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">CP-2000</li>
-                        </ol>
-                    </nav>
+    <!-- Product Detail Section -->
+    <section class="section-padding" aria-labelledby="product-title">
+        <div class="container">
+            <div class="product-detail">
+                <!-- Product Gallery -->
+                <div class="product-gallery">
+                    <div class="product-gallery-main" id="galleryMain">
+                        {% if product.image %}
+                        <img src="{{ product.image.url }}" alt="{{ product.name }}" id="mainGalleryImg" style="max-width:100%;max-height:100%;object-fit:contain;border-radius:8px;">
+                        {% else %}
+                        <i class="bi bi-grid-3x3-gap" id="mainGalleryIcon"></i>
+                        {% endif %}
+                    </div>
+                    <div class="product-gallery-thumbs">
+                        {% if product.image %}
+                        <div class="product-gallery-thumb active" data-type="image" data-src="{{ product.image.url }}" title="Main image">
+                            <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width:100%;height:100%;object-fit:cover;border-radius:6px;">
+                        </div>
+                        {% endif %}
+                        {% for img in product.gallery.all %}
+                        <div class="product-gallery-thumb" data-type="image" data-src="{{ img.url }}" title="Image {{ forloop.counter }}">
+                            <img src="{{ img.url }}" alt="{{ product.name }}" style="width:100%;height:100%;object-fit:cover;border-radius:6px;">
+                        </div>
+                        {% endfor %}
+                        {% if product.documentation %}
+                        <div class="product-gallery-thumb" data-type="doc" data-src="{{ product.documentation.url }}" title="View Documentation">
+                            <i class="bi bi-file-earmark-pdf" style="color:var(--accent);font-size:1.5rem;"></i>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Product Info -->
+                <div class="product-info">
+                    <div class="product-info-header">
+                        <div class="product-info-meta">
+                            {% if product.is_featured %}<span class="product-info-badge">Featured Product</span>{% endif %}
+                        </div>
+                        <h1 id="product-title">{{ product.name }}</h1>
+                        <div class="product-info-meta">
+                            {% if product.subcategory %}
+                            <span><i class="bi bi-folder"></i> {{ product.subcategory.name }}</span>
+                            {% else %}
+                            <span><i class="bi bi-box"></i> Standalone Product</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <p class="product-info-description">
+                        {{ product.description }}
+                    </p>
+
+                    <div class="product-info-actions">
+                        <button class="btn btn-primary-custom" data-bs-toggle="modal" data-bs-target="#quoteModal">
+                            <span><i class="bi bi-envelope me-2"></i>Request Quote</span>
+                        </button>
+                    </div>
+
+                    <!-- Quick Specs -->
+                    <div class="bg-card p-3 rounded-3 mt-3" style="border: 1px solid var(--border);">
+                        <h5 class="mb-3">Quick Specifications</h5>
+                        <div class="row g-3">
+                            {% for spec in product.quick_specs %}
+                            <div class="col-6">
+                                <small class="text-muted d-block">{{ spec.label }}</small>
+                                <strong>{{ spec.value }}</strong>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Product Detail Section -->
-        <section class="section-padding" aria-labelledby="product-title">
-            <div class="container">
-                <div class="product-detail">
-                    <!-- Product Gallery -->
-                    <div class="product-gallery reveal-left">
-                        <div class="product-gallery-main">
+            <!-- Detailed Specifications -->
+            <div class="row g-4 mt-4">
+                <div class="col-lg-8">
+                    <!-- Tabs -->
+                    <ul class="nav nav-tabs mb-4" id="productTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="specs-tab" data-bs-toggle="tab" data-bs-target="#specs" type="button" role="tab" aria-controls="specs" aria-selected="true">
+                                Specifications
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="features-tab" data-bs-toggle="tab" data-bs-target="#features" type="button" role="tab" aria-controls="features" aria-selected="false">
+                                Features
+                            </button>
+                        </li>
+
+                    </ul>
+
+                    <div class="tab-content" id="productTabsContent">
+                        <!-- Specifications Tab -->
+                        <div class="tab-pane fade show active" id="specs" role="tabpanel" aria-labelledby="specs-tab">
+                            <div class="bg-card rounded-3 overflow-hidden" style="border: 1px solid var(--border);">
+                                {% if product.specifications %}
+                                <table class="specifications-table">
+                                    <tbody>
+                                        {% for spec in product.specifications %}
+                                        <tr>
+                                            <th>{{ spec.label }}</th>
+                                            <td>{{ spec.value }}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                {% else %}
+                                <div class="p-4 text-center text-muted">
+                                    <p>No specifications available for this product.</p>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Features Tab -->
+                        <div class="tab-pane fade" id="features" role="tabpanel" aria-labelledby="features-tab">
+                            <div class="bg-card rounded-3 p-4" style="border: 1px solid var(--border);">
+                                {% if product.features %}
+                                <h5 class="mb-4">Key Features</h5>
+                                <ul class="features-list">
+                                    {% for feat in product.features %}
+                                    <li>
+                                        <i class="bi bi-check-circle-fill"></i>
+                                        <div>
+                                            <strong>{{ feat.title }}</strong>
+                                            <p class="mb-0 text-muted">{{ feat.description }}</p>
+                                        </div>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                {% else %}
+                                <div class="text-center text-muted">
+                                    <p>No features listed for this product.</p>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <!-- Contact Card -->
+                    <div class="bg-card rounded-3 p-4 mb-4" style="border: 1px solid var(--border);">
+                        <h5 class="mb-3">Need Help?</h5>
+                        <p class="text-muted small">Our product specialists are available to help you configure the
+                            right solution for your application.</p>
+                        <div class="d-grid gap-2">
+                            <a href="tel:{{ support.phone }}" class="btn btn-outline-custom">
+                                <i class="bi bi-telephone me-2"></i>{{ support.label_call }}
+                            </a>
+                            <a href="{% url 'core:contact' %}" class="btn btn-primary-custom">
+                                <span><i class="bi bi-envelope me-2"></i>{{ support.label_email }}</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Services Card -->
+                    <div class="bg-card rounded-3 p-4" style="border: 1px solid var(--border);">
+                        <h5 class="mb-3">Related Services</h5>
+                        <ul class="list-unstyled mb-0">
+                            {% for srv in related_services %}
+                            <li class="mb-2">
+                                <a href="{% url 'core:services' %}" class="d-flex align-items-center gap-2">
+                                    <i class="bi {{ srv.icon }} text-accent"></i>
+                                    {{ srv.name }}
+                                </a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Products -->
+            <div class="related-products">
+                <h3 class="mb-4 reveal">Related Products</h3>
+                <div class="product-grid stagger-children">
+                    {% for rel in related_products %}
+                    <article class="product-card">
+                        <div class="product-card-image">
                             <i class="bi bi-grid-3x3-gap"></i>
                         </div>
-                        <div class="product-gallery-thumbs">
-                            <div class="product-gallery-thumb active">
-                                <i class="bi bi-grid-3x3-gap"></i>
-                            </div>
-                            <div class="product-gallery-thumb">
-                                <i class="bi bi-grid-3x3-gap"></i>
-                            </div>
-                            <div class="product-gallery-thumb">
-                                <i class="bi bi-grid-3x3-gap"></i>
-                            </div>
-                            <div class="product-gallery-thumb">
-                                <i class="bi bi-file-earmark-text"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product Info -->
-                    <div class="product-info reveal-right">
-                        <div class="product-info-header">
-                            <div class="product-info-meta">
-                                <span><i class="bi bi-tag"></i> SKU: CP-2000-PLC</span>
-                                <span class="product-info-badge">Featured Product</span>
-                            </div>
-                            <h1 id="product-title">Industrial Control Panel CP-2000</h1>
-                            <div class="product-info-meta">
-                                <span><i class="bi bi-folder"></i> Control Panels</span>
-                                <span><i class="bi bi-check-circle text-accent"></i> In Stock</span>
-                                <span><i class="bi bi-star-fill text-warning"></i> 4.9 (128 reviews)</span>
-                            </div>
-                        </div>
-
-                        <p class="product-info-description">
-                            The CP-2000 is an advanced PLC-based industrial control panel designed for demanding
-                            manufacturing environments. It features a comprehensive I/O configuration, integrated HMI
-                            touchscreen, and complete safety interlock system compliant with international standards.
-                        </p>
-
-                        <div class="product-info-price">
-                            <div class="product-info-price-label">Price</div>
-                            <div class="product-info-price-value">Request Quote</div>
-                            <p class="product-info-price-note">
-                                <i class="bi bi-info-circle me-1"></i>
-                                Pricing varies based on configuration and customization requirements.
-                            </p>
-                        </div>
-
-                        <div class="product-info-actions">
-                            <button class="btn btn-primary-custom" data-bs-toggle="modal" data-bs-target="#quoteModal">
-                                <span><i class="bi bi-envelope me-2"></i>Request Quote</span>
-                            </button>
-                            <button class="btn btn-outline-custom" data-bs-toggle="modal"
-                                data-bs-target="#inquiryModal">
-                                <i class="bi bi-question-circle me-2"></i>Ask a Question
-                            </button>
-                        </div>
-
-                        <!-- Quick Specs -->
-                        <div class="bg-card p-3 rounded-3 mt-3" style="border: 1px solid var(--border);">
-                            <h5 class="mb-3">Quick Specifications</h5>
-                            <div class="row g-3">
-                                <div class="col-6">
-                                    <small class="text-muted d-block">Voltage Rating</small>
-                                    <strong>400V AC, 3-Phase</strong>
-                                </div>
-                                <div class="col-6">
-                                    <small class="text-muted d-block">I/O Points</small>
-                                    <strong>128 Digital, 32 Analog</strong>
-                                </div>
-                                <div class="col-6">
-                                    <small class="text-muted d-block">Protection Rating</small>
-                                    <strong>IP65</strong>
-                                </div>
-                                <div class="col-6">
-                                    <small class="text-muted d-block">Communication</small>
-                                    <strong>Ethernet, Modbus, Profinet</strong>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Detailed Specifications -->
-                <div class="row g-4 mt-4">
-                    <div class="col-lg-8">
-                        <!-- Tabs -->
-                        <ul class="nav nav-tabs mb-4" id="productTabs" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="specs-tab" data-bs-toggle="tab"
-                                    data-bs-target="#specs" type="button" role="tab" aria-controls="specs"
-                                    aria-selected="true">
-                                    Specifications
-                                </button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="features-tab" data-bs-toggle="tab"
-                                    data-bs-target="#features" type="button" role="tab" aria-controls="features"
-                                    aria-selected="false">
-                                    Features
-                                </button>
-                            </li>
-
-                        </ul>
-
-                        <div class="tab-content" id="productTabsContent">
-                            <!-- Specifications Tab -->
-                            <div class="tab-pane fade show active" id="specs" role="tabpanel"
-                                aria-labelledby="specs-tab">
-                                <div class="bg-card rounded-3 overflow-hidden" style="border: 1px solid var(--border);">
-                                    <table class="specifications-table">
-                                        <tbody>
-                                            <tr>
-                                                <th>Model Number</th>
-                                                <td>CP-2000-PLC</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Voltage Rating</th>
-                                                <td>400V AC, 3-Phase, 50/60Hz</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Current Rating</th>
-                                                <td>Up to 630A Main Bus</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Protection Rating</th>
-                                                <td>IP65 (standard), IP66 (optional)</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Digital Inputs</th>
-                                                <td>128 points, 24V DC</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Digital Outputs</th>
-                                                <td>128 points, Relay and Transistor</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Analog Inputs</th>
-                                                <td>32 channels, 4-20mA, 0-10V</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Analog Outputs</th>
-                                                <td>16 channels, 4-20mA</td>
-                                            </tr>
-                                            <tr>
-                                                <th>HMI Display</th>
-                                                <td>15" TFT Touch Screen, 1024x768</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Communication Protocols</th>
-                                                <td>Ethernet, Modbus TCP/RTU, Profinet, OPC UA</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Safety Features</th>
-                                                <td>Emergency Stop, Safety Interlocks, Door Monitoring</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Operating Temperature</th>
-                                                <td>-10°C to +55°C</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Enclosure Material</th>
-                                                <td>Powder Coated Steel / Stainless Steel 316 (optional)</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Dimensions</th>
-                                                <td>2000mm (H) x 800mm (W) x 600mm (D)</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Compliance</th>
-                                                <td>IEC 61439, UL 508A, CE Marking</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
-                            <!-- Features Tab -->
-                            <div class="tab-pane fade" id="features" role="tabpanel" aria-labelledby="features-tab">
-                                <div class="bg-card rounded-3 p-4" style="border: 1px solid var(--border);">
-                                    <h5 class="mb-4">Key Features</h5>
-                                    <ul class="features-list">
-                                        <li>
-                                            <i class="bi bi-check-circle-fill"></i>
-                                            <div>
-                                                <strong>Modular Design</strong>
-                                                <p class="mb-0 text-muted">Easily expandable I/O modules allow for
-                                                    future system growth without replacing the entire panel.</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <i class="bi bi-check-circle-fill"></i>
-                                            <div>
-                                                <strong>Integrated HMI</strong>
-                                                <p class="mb-0 text-muted">15" color touchscreen with intuitive
-                                                    interface for system monitoring and control.</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <i class="bi bi-check-circle-fill"></i>
-                                            <div>
-                                                <strong>Safety Compliance</strong>
-                                                <p class="mb-0 text-muted">Complete safety system with emergency stop,
-                                                    door interlocks, and motor protection.</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <i class="bi bi-check-circle-fill"></i>
-                                            <div>
-                                                <strong>Multi-Protocol Communication</strong>
-                                                <p class="mb-0 text-muted">Supports Ethernet, Modbus, Profinet, and OPC
-                                                    UA for seamless integration.</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <i class="bi bi-check-circle-fill"></i>
-                                            <div>
-                                                <strong>Data Logging</strong>
-                                                <p class="mb-0 text-muted">Built-in data historian with USB export
-                                                    capability for process analysis.</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <i class="bi bi-check-circle-fill"></i>
-                                            <div>
-                                                <strong>Remote Access</strong>
-                                                <p class="mb-0 text-muted">Secure remote monitoring and programming via
-                                                    VPN connection.</p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-
-                    <!-- Sidebar -->
-                    <div class="col-lg-4">
-                        <!-- Contact Card -->
-                        <div class="bg-card rounded-3 p-4 mb-4" style="border: 1px solid var(--border);">
-                            <h5 class="mb-3">Need Help?</h5>
-                            <p class="text-muted small">Our product specialists are available to help you configure the
-                                right solution for your application.</p>
-                            <div class="d-grid gap-2">
-                                <a href="tel:+911234567890" class="btn btn-outline-custom">
-                                    <i class="bi bi-telephone me-2"></i>Call Now
-                                </a>
-                                <a href="contact.html" class="btn btn-primary-custom">
-                                    <span><i class="bi bi-envelope me-2"></i>Email Us</span>
+                        <div class="product-card-content">
+                            <span class="product-card-category">{{ rel.subcategory.name }}</span>
+                            <h4><a href="{% url 'products:product_details' rel.slug %}">{{ rel.name }}</a></h4>
+                            <p>{{ rel.short_description }}</p>
+                            <div class="product-card-footer">
+                                <div class="product-card-price">Request Quote</div>
+                                <a href="{% url 'products:product_details' rel.slug %}" class="btn btn-primary-custom btn-sm-custom">
+                                    <span>View</span>
                                 </a>
                             </div>
                         </div>
-
-                        <!-- Services Card -->
-                        <div class="bg-card rounded-3 p-4" style="border: 1px solid var(--border);">
-                            <h5 class="mb-3">Related Services</h5>
-                            <ul class="list-unstyled mb-0">
-                                <li class="mb-2">
-                                    <a href="services.html" class="d-flex align-items-center gap-2">
-                                        <i class="bi bi-tools text-accent"></i>
-                                        Installation & Commissioning
-                                    </a>
-                                </li>
-                                <li class="mb-2">
-                                    <a href="services.html" class="d-flex align-items-center gap-2">
-                                        <i class="bi bi-speedometer2 text-accent"></i>
-                                        Calibration Services
-                                    </a>
-                                </li>
-                                <li class="mb-2">
-                                    <a href="services.html" class="d-flex align-items-center gap-2">
-                                        <i class="bi bi-wrench-adjustable text-accent"></i>
-                                        Maintenance & Repair
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="services.html" class="d-flex align-items-center gap-2">
-                                        <i class="bi bi-calendar-check text-accent"></i>
-                                        Annual Maintenance Contract
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Related Products -->
-                <div class="related-products">
-                    <h3 class="mb-4 reveal">Related Products</h3>
-                    <div class="product-grid stagger-children">
-                        <!-- Related Product 1 -->
-                        <article class="product-card">
-                            <div class="product-card-image">
-                                <i class="bi bi-grid-3x3-gap"></i>
-                            </div>
-                            <div class="product-card-content">
-                                <span class="product-card-category">MCC Panel</span>
-                                <h4><a href="product_details.html?id=mcc-500">Motor Control Center MCC-500</a></h4>
-                                <p>Modular MCC panel with intelligent motor protection and VFD integration.</p>
-                                <div class="product-card-footer">
-                                    <div class="product-card-price">Request Quote</div>
-                                    <a href="product_details.html?id=mcc-500"
-                                        class="btn btn-primary-custom btn-sm-custom">
-                                        <span>View</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Related Product 2 -->
-                        <article class="product-card">
-                            <div class="product-card-image">
-                                <i class="bi bi-grid-3x3-gap"></i>
-                            </div>
-                            <div class="product-card-content">
-                                <span class="product-card-category">VFD Panel</span>
-                                <h4><a href="product_details.html?id=vfd-100">VFD Drive Panel VFD-100</a></h4>
-                                <p>Variable frequency drive panel with harmonic filtering and regenerative braking.</p>
-                                <div class="product-card-footer">
-                                    <div class="product-card-price">Request Quote</div>
-                                    <a href="product_details.html?id=vfd-100"
-                                        class="btn btn-primary-custom btn-sm-custom">
-                                        <span>View</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Related Product 3 -->
-                        <article class="product-card">
-                            <div class="product-card-image">
-                                <i class="bi bi-grid-3x3-gap"></i>
-                            </div>
-                            <div class="product-card-content">
-                                <span class="product-card-category">Control Desk</span>
-                                <h4><a href="product_details.html?id=cd-eco">Ergonomic Control Desk CD-ECO</a></h4>
-                                <p>Operator control desk with touchscreen HMI and emergency stop.</p>
-                                <div class="product-card-footer">
-                                    <div class="product-card-price">Request Quote</div>
-                                    <a href="product_details.html?id=cd-eco"
-                                        class="btn btn-primary-custom btn-sm-custom">
-                                        <span>View</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
+                    </article>
+                    {% endfor %}
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
+</main>
 
-    <!-- Inquiry Modal -->
-    <div class="modal fade" id="inquiryModal" tabindex="-1" aria-labelledby="inquiryModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="inquiryModalLabel">Ask a Question</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="inquiryForm">
-                        <div class="row g-3">
-                            <div class="col-12">
-                                <label for="inquiryName" class="form-label">Your Name <span
-                                        class="text-accent">*</span></label>
-                                <input type="text" class="form-control" id="inquiryName" required>
-                            </div>
-                            <div class="col-12">
-                                <label for="inquiryEmail" class="form-label">Email Address <span
-                                        class="text-accent">*</span></label>
-                                <input type="email" class="form-control" id="inquiryEmail" required>
-                            </div>
-                            <div class="col-12">
-                                <label for="inquiryPhone" class="form-label">Phone Number</label>
-                                <input type="tel" class="form-control" id="inquiryPhone">
-                            </div>
-                            <div class="col-12">
-                                <label for="inquiryMessage" class="form-label">Your Question <span
-                                        class="text-accent">*</span></label>
-                                <textarea class="form-control" id="inquiryMessage" rows="4" required
-                                    placeholder="Enter your question about this product..."></textarea>
-                            </div>
-                            <div class="col-12">
-                                <input type="hidden" id="inquiryProduct" value="Industrial Control Panel CP-2000">
-                            </div>
+
+<!-- Catalog / Documentation Request Modal -->
+<div class="modal fade" id="catalogModal" tabindex="-1" aria-labelledby="catalogModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="catalogModalLabel"><i class="bi bi-file-earmark-pdf me-2"></i>Request Documentation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted small mb-3">Please fill in your details to access the product documentation.</p>
+                <form id="catalogForm">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="catalogProduct" class="form-label">Product Name <span class="text-accent">*</span></label>
+                            <input type="text" class="form-control" id="catalogProduct" name="productName" required readonly>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" form="inquiryForm" class="btn btn-primary-custom">
-                        <span>Submit Question</span>
-                    </button>
-                </div>
+                        <div class="col-12">
+                            <label for="catalogFullName" class="form-label">Full Name <span class="text-accent">*</span></label>
+                            <input type="text" class="form-control" id="catalogFullName" name="fullName" required placeholder="Your full name">
+                        </div>
+                        <div class="col-12">
+                            <label for="catalogEmail" class="form-label">Email Address <span class="text-accent">*</span></label>
+                            <input type="email" class="form-control" id="catalogEmail" name="email" required placeholder="your@email.com">
+                        </div>
+                        <div class="col-12">
+                            <label for="catalogPhone" class="form-label">Phone Number <span class="text-accent">*</span></label>
+                            <input type="tel" class="form-control" id="catalogPhone" name="phoneNumber" required placeholder="+1 234 567 8900">
+                        </div>
+                    </div>
+                </form>
+                <div id="catalogResponseMsg" class="mt-3" style="display:none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary-custom" id="catalogSubmitBtn">
+                    <span><i class="bi bi-file-earmark-arrow-down me-2"></i>Submit &amp; View Doc</span>
+                </button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Quote Modal -->
-    <div class="modal fade" id="quoteModal" tabindex="-1" aria-labelledby="quoteModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="quoteModalLabel">Request a Quote</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="quoteForm">
-                        <div class="row g-3">
-                            <div class="col-12">
-                                <label for="quoteName" class="form-label">Name <span
-                                        class="text-accent">*</span></label>
-                                <input type="text" class="form-control" id="quoteName" required>
-                            </div>
-                            <div class="col-12">
-                                <label for="quoteEmail" class="form-label">Email <span
-                                        class="text-accent">*</span></label>
-                                <input type="email" class="form-control" id="quoteEmail" required>
-                            </div>
-                            <div class="col-12">
-                                <label for="quotePhone" class="form-label">Phone <span
-                                        class="text-accent">*</span></label>
-                                <input type="tel" class="form-control" id="quotePhone" required>
-                            </div>
-                            <div class="col-12">
-                                <label for="quoteSubject" class="form-label">Subject <span
-                                        class="text-accent">*</span></label>
-                                <input type="text" class="form-control" id="quoteSubject" value="Request Quote"
-                                    readonly>
-                            </div>
-                            <div class="col-12">
-                                <label for="quoteProduct" class="form-label">Product <span
-                                        class="text-accent">*</span></label>
-                                <input type="text" class="form-control" id="quoteProduct"
-                                    value="Industrial Control Panel CP-2000" readonly>
-                            </div>
-                            <div class="col-12">
-                                <label for="quoteMessage" class="form-label">Message <span
-                                        class="text-accent">*</span></label>
-                                <textarea class="form-control" id="quoteMessage" rows="4" required
-                                    placeholder="Include any details or requirements..."></textarea>
-                            </div>
+<!-- Quote Modal -->
+<div class="modal fade" id="quoteModal" tabindex="-1" aria-labelledby="quoteModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="quoteModalLabel">Request a Quote</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="quoteForm">
+                    {% csrf_token %}
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label for="quoteProduct" class="form-label">Product Name <span class="text-accent">*</span></label>
+                            <input type="text" class="form-control" id="quoteProduct" name="productName" required readonly>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" form="quoteForm" class="btn btn-primary-custom">
-                        <span>Submit Request</span>
-                    </button>
-                </div>
+                        <div class="col-12">
+                            <label for="quoteFullName" class="form-label">Full Name <span class="text-accent">*</span></label>
+                            <input type="text" class="form-control" id="quoteFullName" name="fullName" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="quoteEmail" class="form-label">Email Address <span class="text-accent">*</span></label>
+                            <input type="email" class="form-control" id="quoteEmail" name="email" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="quotePhone" class="form-label">Phone Number <span class="text-accent">*</span></label>
+                            <input type="tel" class="form-control" id="quotePhone" name="phoneNumber" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="quoteMessage" class="form-label">Message <span class="text-accent">*</span></label>
+                            <textarea class="form-control" id="quoteMessage" name="message" rows="4" required placeholder="Please describe your requirements..."></textarea>
+                        </div>
+                    </div>
+                </form>
+                <div id="quoteResponseMsg" class="mt-3" style="display: none;"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-custom" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" form="quoteForm" class="btn btn-primary-custom" id="quoteSubmitBtn">
+                    <span>Submit Quote</span>
+                </button>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Footer -->
-    <footer class="footer" role="contentinfo">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-4 col-md-6">
-                    <div class="footer-brand">
-                        <div class="footer-brand-name">
-                            <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
-                            ElectroTech
-                        </div>
-                        <p class="footer-tagline">
-                            Engineering reliable electrical and electronic solutions for industry, education, and
-                            research.
-                        </p>
-                    </div>
-                </div>
+<script>
+    // ── Gallery: swap main image on thumb click ──────────────────────────────
+    (function () {
+        const allThumbs = document.querySelectorAll('.product-gallery-thumb');
+        const mainWrap  = document.getElementById('galleryMain');
 
-                <div class="col-lg-2 col-md-6">
-                    <div class="footer-nav">
-                        <h5>Navigation</h5>
-                        <ul class="footer-links">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="services.html">Services</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
+        allThumbs.forEach(function (thumb) {
+            thumb.addEventListener('click', function () {
+                const type = this.dataset.type;
+                const src  = this.dataset.src;
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-nav">
-                        <h5>Products</h5>
-                        <ul class="footer-links">
-                            <li><a href="category.html">Categories</a></li>
-                            <li><a href="products.html">All Products</a></li>
-                            <li><a href="subcategory.html">Subcategories</a></li>
-                        </ul>
-                    </div>
-                </div>
+                if (type === 'doc') {
+                    // Show catalog modal – doc URL stored for later
+                    document.getElementById('catalogModal').dataset.docSrc = src;
+                    new bootstrap.Modal(document.getElementById('catalogModal')).show();
+                    return;
+                }
 
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-social">
-                        <h5>Connect With Us</h5>
-                        <div class="footer-social-links">
-                            <a href="#" class="footer-social-link" aria-label="LinkedIn">
-                                <i class="bi bi-linkedin"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="Twitter/X">
-                                <i class="bi bi-twitter-x"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="WhatsApp">
-                                <i class="bi bi-whatsapp"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="Facebook">
-                                <i class="bi bi-facebook"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="Instagram">
-                                <i class="bi bi-instagram"></i>
-                            </a>
-                        </div>
-                        <div class="footer-newsletter mt-4" id="newsletter">
-                            <form action="#" class="newsletter-form d-flex align-items-center justify-content-end">
-                                <input type="email" placeholder="Enter your email" required>
-                                <button type="submit" class="btn btn-primary-custom"><i class="bi bi-send-fill"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                // Image thumb: swap main
+                allThumbs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
 
+                let img = mainWrap.querySelector('img');
+                const icon = mainWrap.querySelector('i');
+                if (img) {
+                    img.src = src;
+                } else {
+                    // No img tag yet – create one and hide the icon
+                    if (icon) icon.style.display = 'none';
+                    img = document.createElement('img');
+                    img.id = 'mainGalleryImg';
+                    img.alt = '';
+                    img.style.cssText = 'max-width:100%;max-height:100%;object-fit:contain;border-radius:8px;';
+                    img.src = src;
+                    mainWrap.appendChild(img);
+                }
+            });
+        });
+    })();
 
+    // ── Catalog form submit ───────────────────────────────────────────────────
+    (function () {
+        const btn       = document.getElementById('catalogSubmitBtn');
+        const form      = document.getElementById('catalogForm');
+        const msgDiv    = document.getElementById('catalogResponseMsg');
+        const modalEl   = document.getElementById('catalogModal');
 
-            <div class="footer-bottom">
-                <p class="footer-copyright">
-                    &copy; 2024 ElectroTech Industries. All rights reserved.
-                </p>
-                <div class="footer-legal">
-                    <a href="privacy_policy.html">Privacy Policy</a>
-                    <a href="terms_of_service.html">Terms of Service</a>
-                    <a href="cookie_policy.html">Cookie Policy</a>
-                </div>
-            </div>
-        </div>
-    </footer>
+        if (!btn) return;
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        btn.addEventListener('click', function () {
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
 
-    <!-- Custom JS -->
-    <script src="../static/js/main.js"></script>
-</body>
+            const origHtml = btn.innerHTML;
+            btn.disabled = true;
+            btn.innerHTML = '<span>Submitting...</span>';
 
-</html>
+            const formData = new FormData(form);
+            fetch('{% url "products:catalog_request" %}', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(r => r.json())
+            .then(data => {
+                msgDiv.style.display = 'block';
+                if (data.success) {
+                    msgDiv.className = 'alert alert-success mt-3';
+                    msgDiv.textContent = data.message;
+                    form.reset();
+                    setTimeout(function () {
+                        bootstrap.Modal.getInstance(modalEl).hide();
+                        msgDiv.style.display = 'none';
+                        // Open the documentation after successful submission
+                        const docSrc = modalEl.dataset.docSrc;
+                        if (docSrc) window.open(docSrc, '_blank');
+                    }, 1500);
+                } else {
+                    msgDiv.className = 'alert alert-danger mt-3';
+                    msgDiv.textContent = data.message;
+                }
+            })
+            .catch(function () {
+                msgDiv.style.display = 'block';
+                msgDiv.className = 'alert alert-danger mt-3';
+                msgDiv.textContent = 'An error occurred. Please try again.';
+            })
+            .finally(function () {
+                btn.disabled = false;
+                btn.innerHTML = origHtml;
+            });
+        });
+
+        // Pre-fill product name when catalog modal opens
+        modalEl.addEventListener('show.bs.modal', function () {
+            const name = document.getElementById('product-title')?.textContent.trim() || '';
+            document.getElementById('catalogProduct').value = name;
+        });
+    })();
+
+    // ── Quote form ────────────────────────────────────────────────────────────
+    const quoteForm = document.getElementById('quoteForm');
+    if (quoteForm) {
+        quoteForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const formData  = new FormData(this);
+            const submitBtn = document.getElementById('quoteSubmitBtn');
+            const origHtml  = submitBtn.innerHTML;
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span>Submitting...</span>';
+
+            fetch('{% url "products:quote_request" %}', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(r => r.json())
+            .then(data => {
+                const msgDiv = document.getElementById('quoteResponseMsg');
+                msgDiv.style.display = 'block';
+                if (data.success) {
+                    msgDiv.className = 'alert alert-success';
+                    msgDiv.textContent = data.message;
+                    quoteForm.reset();
+                    setTimeout(() => {
+                        bootstrap.Modal.getInstance(document.getElementById('quoteModal')).hide();
+                        msgDiv.style.display = 'none';
+                    }, 2000);
+                } else {
+                    msgDiv.className = 'alert alert-danger';
+                    msgDiv.textContent = data.message;
+                }
+            })
+            .catch(function () {
+                const msgDiv = document.getElementById('quoteResponseMsg');
+                msgDiv.style.display = 'block';
+                msgDiv.className = 'alert alert-danger';
+                msgDiv.textContent = 'An error occurred. Please try again.';
+            })
+            .finally(function () {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = origHtml;
+            });
+        });
+    }
+
+    // Pre-fill product name in quote modal
+    const productName    = document.getElementById('product-title')?.textContent || '';
+    const quoteProductInput = document.getElementById('quoteProduct');
+    if (quoteProductInput) quoteProductInput.value = productName;
+</script>
+{% endblock %}

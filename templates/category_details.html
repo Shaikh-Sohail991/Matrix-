@@ -1,435 +1,206 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Explore Industrial Equipment category - control panels, motor starters, switchgear, and automation systems.">
-    <title>Industrial Equipment | ElectroTech Industries</title>
+{% block title %}{{ category.name }} | ElectroTech Industries{% endblock %}
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+{% block meta_description %}Explore {{ category.name }} category - {{ category.description }}{% endblock %}
 
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="../static/css/style.css" rel="stylesheet">
-</head>
-
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg fixed-top" role="navigation" aria-label="Main navigation">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
-                <span>ElectroTech</span>
-            </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
-                aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarMain">
-                <ul class="navbar-nav ms-auto me-3">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="services.html">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
-                    </li>
-                </ul>
-                <a href="contact.html" class="btn btn-cta">Request Services</a>
-            </div>
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <div class="page-header-content">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'products:category_list' %}">Products</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'products:category_list' %}">Categories</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ category.name }}</li>
+                </ol>
+            </nav>
+            <h1>{{ category.name }}</h1>
+            <p>{{ category.short_description }}</p>
         </div>
-    </nav>
+    </div>
+</section>
 
-    <!-- Main Content -->
-    <main id="main-content">
-        <!-- Page Header -->
-        <section class="page-header">
-            <div class="container">
-                <div class="page-header-content">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item"><a href="products.html">Products</a></li>
-                            <li class="breadcrumb-item"><a href="category.html">Categories</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Industrial Equipment</li>
-                        </ol>
-                    </nav>
-                    <h1>Industrial Equipment</h1>
-                    <p>Heavy-duty electrical apparatus, control systems, and automation solutions for industrial
-                        applications.</p>
-                </div>
+<!-- Category Detail Section -->
+<section class="section-padding" aria-labelledby="category-detail-title">
+    <div class="container">
+        <!-- Category Header -->
+        <div class="category-header reveal">
+            <div class="category-header-icon">
+                {% if category.image %}
+                    <img src="{{ category.image.url }}" alt="{{ category.name }}" style="max-width: 150px; height: auto;">
+                {% else %}
+                    <i class="bi bi-gear-wide-connected"></i>
+                {% endif %}
             </div>
-        </section>
-
-        <!-- Category Detail Section -->
-        <section class="section-padding" aria-labelledby="category-detail-title">
-            <div class="container">
-                <!-- Category Header -->
-                <div class="category-header reveal">
-                    <div class="category-header-icon">
-                        <i class="bi bi-gear-wide-connected"></i>
+            <div class="category-header-content">
+                <h1 id="category-detail-title">{{ category.name }}</h1>
+                <p>{{ category.description }}</p>
+                <div class="category-header-stats-container">
+                    <div class="category-header-stat-card">
+                        <div class="category-header-stat-value">{{ category.subcategory_count }}</div>
+                        <div class="category-header-stat-label">Subcategories</div>
                     </div>
-                    <div class="category-header-content">
-                        <h1 id="category-detail-title">Industrial Equipment</h1>
-                        <p>Comprehensive range of industrial electrical equipment designed for demanding manufacturing
-                            and processing environments. Our products meet international safety standards and are built
-                            for reliability and longevity.</p>
-                        <div class="category-header-stats-container">
-                            <div class="category-header-stat-card">
-                                <div class="category-header-stat-value">8</div>
-                                <div class="category-header-stat-label">Subcategories</div>
-                            </div>
-                            <div class="category-header-stat-card">
-                                <div class="category-header-stat-value">156</div>
-                                <div class="category-header-stat-label">Products</div>
-                            </div>
-                            <div class="category-header-stat-card">
-                                <div class="category-header-stat-value">ISO</div>
-                                <div class="category-header-stat-label">Certified</div>
-                            </div>
-                        </div>
+                    <div class="category-header-stat-card">
+                        <div class="category-header-stat-value">{{ category.product_count }}</div>
+                        <div class="category-header-stat-label">Products</div>
                     </div>
-                </div>
-
-                <!-- Subcategories -->
-                <div class="mb-5">
-                    <h3 class="mb-4 reveal">Subcategories</h3>
-                    <div class="subcategory-grid stagger-children">
-                        <a href="subcategory_details.html?id=control-panels" class="subcategory-card">
-                            <div class="subcategory-card-icon">
-                                <i class="bi bi-grid-3x3-gap"></i>
-                            </div>
-                            <div class="subcategory-card-content">
-                                <h5>Control Panels</h5>
-                                <p>Custom and standard control panels for industrial automation</p>
-                                <span class="product-count"><i class="bi bi-box-seam me-1"></i>32 Products</span>
-                            </div>
-                        </a>
-
-                        <a href="subcategory_details.html?id=motor-starters" class="subcategory-card">
-                            <div class="subcategory-card-icon">
-                                <i class="bi bi-hdd"></i>
-                            </div>
-                            <div class="subcategory-card-content">
-                                <h5>Motor Starters</h5>
-                                <p>DOL, star-delta, and soft starters for motor control</p>
-                                <span class="product-count"><i class="bi bi-box-seam me-1"></i>24 Products</span>
-                            </div>
-                        </a>
-
-                        <a href="subcategory_details.html?id=switchgear" class="subcategory-card">
-                            <div class="subcategory-card-icon">
-                                <i class="bi bi-toggle2-on"></i>
-                            </div>
-                            <div class="subcategory-card-content">
-                                <h5>Switchgear</h5>
-                                <p>Low and medium voltage switchgear assemblies</p>
-                                <span class="product-count"><i class="bi bi-box-seam me-1"></i>28 Products</span>
-                            </div>
-                        </a>
-
-                        <a href="subcategory_details.html?id=industrial-automation" class="subcategory-card">
-                            <div class="subcategory-card-icon">
-                                <i class="bi bi-robot"></i>
-                            </div>
-                            <div class="subcategory-card-content">
-                                <h5>Industrial Automation</h5>
-                                <p>PLC systems, SCADA, and HMI solutions</p>
-                                <span class="product-count"><i class="bi bi-box-seam me-1"></i>18 Products</span>
-                            </div>
-                        </a>
-
-                        <a href="subcategory_details.html?id=enclosures" class="subcategory-card">
-                            <div class="subcategory-card-icon">
-                                <i class="bi bi-box"></i>
-                            </div>
-                            <div class="subcategory-card-content">
-                                <h5>Electrical Enclosures</h5>
-                                <p>Industrial enclosures and cabinet systems</p>
-                                <span class="product-count"><i class="bi bi-box-seam me-1"></i>15 Products</span>
-                            </div>
-                        </a>
-
-                        <a href="subcategory_details.html?id=relays-contactors" class="subcategory-card">
-                            <div class="subcategory-card-icon">
-                                <i class="bi bi-plug"></i>
-                            </div>
-                            <div class="subcategory-card-content">
-                                <h5>Relays & Contactors</h5>
-                                <p>Industrial relays, contactors, and timers</p>
-                                <span class="product-count"><i class="bi bi-box-seam me-1"></i>21 Products</span>
-                            </div>
-                        </a>
-
-                        <a href="subcategory_details.html?id=sensors" class="subcategory-card">
-                            <div class="subcategory-card-icon">
-                                <i class="bi bi-broadcast-pin"></i>
-                            </div>
-                            <div class="subcategory-card-content">
-                                <h5>Sensors & Transducers</h5>
-                                <p>Industrial sensors and measurement transducers</p>
-                                <span class="product-count"><i class="bi bi-box-seam me-1"></i>10 Products</span>
-                            </div>
-                        </a>
-
-                        <a href="subcategory_details.html?id=wiring-accessories" class="subcategory-card">
-                            <div class="subcategory-card-icon">
-                                <i class="bi bi-signpost-split"></i>
-                            </div>
-                            <div class="subcategory-card-content">
-                                <h5>Wiring Accessories</h5>
-                                <p>Cable glands, terminals, and wiring systems</p>
-                                <span class="product-count"><i class="bi bi-box-seam me-1"></i>8 Products</span>
-                            </div>
-                        </a>
+                    <div class="category-header-stat-card">
+                        <div class="category-header-stat-value">ISO</div>
+                        <div class="category-header-stat-label">Certified</div>
                     </div>
-                </div>
-
-                <!-- Featured Products -->
-                <div>
-                    <div class="d-flex justify-content-between align-items-center mb-4 reveal">
-                        <h3 class="mb-0">Featured Products</h3>
-                        <a href="products.html?category=industrial" class="btn btn-outline-custom btn-sm-custom">
-                            View All <i class="bi bi-arrow-right ms-1"></i>
-                        </a>
-                    </div>
-
-                    <!-- Results toolbar: Showing + Sort by -->
-                    <div class="results-toolbar reveal">
-                        <div class="results-count">
-                            <i class="bi bi-collection" aria-hidden="true"></i>
-                            <span>Showing <strong>1–3</strong> of <strong>156</strong> products</span>
-                        </div>
-                        <div class="sort-wrap">
-                            <label for="sortSelectCategory" class="sort-label">Sort by</label>
-                            <select id="sortSelectCategory" class="sort-select" aria-label="Sort products">
-                                <option value="popular">Most Popular</option>
-                                <option value="newest">Newest First</option>
-                                <option value="name-asc">Name (A–Z)</option>
-                                <option value="name-desc">Name (Z–A)</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="product-grid stagger-children">
-                        <!-- Product 1 -->
-                        <article class="product-card">
-                            <div class="product-card-image">
-                                <span class="product-card-badge">Featured</span>
-                                <i class="bi bi-grid-3x3-gap"></i>
-                            </div>
-                            <div class="product-card-content">
-                                <span class="product-card-category">Control Panels</span>
-                                <h4><a href="product_details.html?id=cp-2000">Industrial Control Panel CP-2000</a></h4>
-                                <p>Modular control panel with PLC integration, push-button stations, and safety
-                                    interlocks.</p>
-                                <div class="product-card-specs">
-                                    <span>IP65</span>
-                                    <span>400V AC</span>
-                                    <span>Modular</span>
-                                </div>
-                                <div class="product-card-footer">
-                                    <div class="product-card-price">
-                                        Request Quote
-                                    </div>
-                                    <a href="product_details.html?id=cp-2000"
-                                        class="btn btn-primary-custom btn-sm-custom">
-                                        <span>View Details</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Product 2 -->
-                        <article class="product-card">
-                            <div class="product-card-image">
-                                <span class="product-card-badge badge-new">New</span>
-                                <i class="bi bi-hdd"></i>
-                            </div>
-                            <div class="product-card-content">
-                                <span class="product-card-category">Motor Starters</span>
-                                <h4><a href="product_details.html?id=ms-500">Soft Starter MS-500 Series</a></h4>
-                                <p>Intelligent soft starter with built-in motor protection and communication interface.
-                                </p>
-                                <div class="product-card-specs">
-                                    <span>5.5-500kW</span>
-                                    <span>RS485</span>
-                                    <span>IEC Compliant</span>
-                                </div>
-                                <div class="product-card-footer">
-                                    <div class="product-card-price">
-                                        Request Quote
-                                    </div>
-                                    <a href="product_details.html?id=ms-500"
-                                        class="btn btn-primary-custom btn-sm-custom">
-                                        <span>View Details</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </article>
-
-                        <!-- Product 3 -->
-                        <article class="product-card">
-                            <div class="product-card-image">
-                                <i class="bi bi-toggle2-on"></i>
-                            </div>
-                            <div class="product-card-content">
-                                <span class="product-card-category">Switchgear</span>
-                                <h4><a href="product_details.html?id=sg-lv400">LV Switchgear Assembly SG-LV400</a></h4>
-                                <p>Low voltage switchgear with air circuit breakers and comprehensive metering.</p>
-                                <div class="product-card-specs">
-                                    <span>400V</span>
-                                    <span>6300A</span>
-                                    <span>Form 4</span>
-                                </div>
-                                <div class="product-card-footer">
-                                    <div class="product-card-price">
-                                        Request Quote
-                                    </div>
-                                    <a href="product_details.html?id=sg-lv400"
-                                        class="btn btn-primary-custom btn-sm-custom">
-                                        <span>View Details</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="cta-section section-padding" aria-labelledby="cta-title">
-            <div class="container">
-                <div class="cta-content reveal">
-                    <h2 id="cta-title">Need Custom Industrial Equipment?</h2>
-                    <p>
-                        Our engineering team can design and manufacture custom solutions tailored to your specific
-                        requirements.
-                    </p>
-                    <div class="cta-buttons">
-                        <a href="contact.html" class="btn btn-primary-custom">
-                            <span><i class="bi bi-envelope me-2"></i>Request Custom Quote</span>
-                        </a>
-                        <a href="services.html" class="btn btn-outline-custom">
-                            <i class="bi bi-tools me-2"></i>Our Services
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer" role="contentinfo">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-4 col-md-6">
-                    <div class="footer-brand">
-                        <div class="footer-brand-name">
-                            <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
-                            ElectroTech
-                        </div>
-                        <p class="footer-tagline">
-                            Engineering reliable electrical and electronic solutions for industry, education, and
-                            research.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-6">
-                    <div class="footer-nav">
-                        <h5>Navigation</h5>
-                        <ul class="footer-links">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="services.html">Services</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-nav">
-                        <h5>Products</h5>
-                        <ul class="footer-links">
-                            <li><a href="category.html">Categories</a></li>
-                            <li><a href="products.html">All Products</a></li>
-                            <li><a href="subcategory.html">Subcategories</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-social">
-                        <h5>Connect With Us</h5>
-                        <div class="footer-social-links">
-                            <a href="#" class="footer-social-link" aria-label="LinkedIn">
-                                <i class="bi bi-linkedin"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="Twitter/X">
-                                <i class="bi bi-twitter-x"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="WhatsApp">
-                                <i class="bi bi-whatsapp"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="Facebook">
-                                <i class="bi bi-facebook"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="Instagram">
-                                <i class="bi bi-instagram"></i>
-                            </a>
-                        </div>
-                        <div class="footer-newsletter mt-4" id="newsletter">
-                            <form action="#" class="newsletter-form d-flex align-items-center justify-content-end">
-                                <input type="email" placeholder="Enter your email" required>
-                                <button type="submit" class="btn btn-primary-custom"><i
-                                        class="bi bi-send-fill"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <div class="footer-bottom">
-                <p class="footer-copyright">
-                    &copy; 2024 ElectroTech Industries. All rights reserved.
-                </p>
-                <div class="footer-legal">
-                    <a href="privacy_policy.html">Privacy Policy</a>
-                    <a href="terms_of_service.html">Terms of Service</a>
-                    <a href="cookie_policy.html">Cookie Policy</a>
                 </div>
             </div>
         </div>
-    </footer>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Subcategories -->
+        <div class="mb-5">
+            <h3 class="mb-4 reveal">Subcategories</h3>
+            <div class="subcategory-grid stagger-children">
+                {% for sub in category.subcategories.all %}
+                <a href="{% url 'products:subcategory_details' sub.slug %}" class="subcategory-card">
+                    <div class="subcategory-card-icon">
+                        {% if sub.image %}
+                            <img src="{{ sub.image.url }}" alt="{{ sub.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                        {% else %}
+                            <i class="bi bi-grid-3x3-gap"></i>
+                        {% endif %}
+                    </div>
+                    <div class="subcategory-card-content">
+                        <h5>{{ sub.name }}</h5>
+                        <p>{{ sub.description }}</p>
+                        <span class="product-count"><i class="bi bi-box-seam me-1"></i>{{ sub.product_count }} Products</span>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
 
-    <!-- Custom JS -->
-    <script src="../static/js/main.js"></script>
-</body>
+        <!-- Featured Products -->
+        <div class="row g-4">
 
-</html>
+            <!-- Filter Sidebar -->
+            <div class="col-lg-3">
+                <form method="get" id="filterForm">
+                <div class="filter-sidebar-accordion">
+                    <div class="accordion" id="catFilterAccordion">
+                        {% for filter in filters %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="catHeading{{ forloop.counter }}">
+                                <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#catCollapse{{ forloop.counter }}" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="catCollapse{{ forloop.counter }}">
+                                    {{ filter.name }}
+                                </button>
+                            </h2>
+                            <div id="catCollapse{{ forloop.counter }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" aria-labelledby="catHeading{{ forloop.counter }}" data-bs-parent="#catFilterAccordion">
+                                <div class="accordion-body">
+                                    {% for option in filter.options %}
+                                    <div class="filter-option">
+                                        <input type="checkbox" id="cat_{{ option.id }}" name="{{ option.name }}" value="{{ option.label }}" {% if option.checked %}checked{% endif %}>
+                                        <label for="cat_{{ option.id }}">{{ option.label }} ({{ option.count }})</label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p class="text-muted small px-2">No filters available.</p>
+                        {% endfor %}
+                    </div>
+
+                    <div class="filter-buttons mt-3">
+                        <button type="submit" class="btn btn-primary-custom w-100">
+                            <span>Apply Filters</span>
+                        </button>
+                        <a href="{{ request.path }}" class="btn btn-outline-custom w-100 mt-2 d-block text-center">
+                            Clear All
+                        </a>
+                    </div>
+                </div>
+                </form>
+            </div>
+
+            <!-- Products -->
+            <div class="col-lg-9">
+            <div class="d-flex justify-content-between align-items-center mb-4 reveal">
+                <h3 class="mb-0">Featured Products</h3>
+                <a href="{% url 'products:product_list' %}?category={{ category.slug }}" class="btn btn-outline-custom btn-sm-custom">
+                    View All <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+            </div>
+
+            <!-- Results toolbar: Showing + Sort by -->
+            <div class="results-toolbar reveal">
+                <div class="results-count">
+                    <i class="bi bi-collection" aria-hidden="true"></i>
+                    {% if featured and featured.count %}
+                        <span>Showing <strong>1–{{ featured.count }}</strong> of <strong>{{ category.product_count }}</strong> products</span>
+                    {% else %}
+                        <span>No featured products – {{ category.product_count }} total products available</span>
+                    {% endif %}
+                </div>
+                <div class="sort-wrap">
+                    <label for="sortSelectCategory" class="sort-label">Sort by</label>
+                    <select id="sortSelectCategory" class="sort-select" aria-label="Sort products">
+                        <option value="popular">Most Popular</option>
+                        <option value="newest">Newest First</option>
+                        <option value="name-asc">Name (A–Z)</option>
+                        <option value="name-desc">Name (Z–A)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="product-grid stagger-children">
+                {% for product in featured %}
+                <article class="product-card" data-specs='{{ product.specs_json }}'>
+                    <div class="product-card-image">
+                        {% if product.is_featured %}<span class="product-card-badge">Featured</span>{% endif %}
+                        {% if product.is_new %}<span class="product-card-badge badge-new">New</span>{% endif %}
+                        <i class="bi bi-grid-3x3-gap"></i>
+                    </div>
+                    <div class="product-card-content">
+                        <span class="product-card-category">{% if product.subcategory %}{{ product.subcategory.name }}{% else %}Standalone{% endif %}</span>
+                        <h4><a href="{% url 'products:product_details' product.slug %}">{{ product.name }}</a></h4>
+                        <p>{{ product.short_description }}</p>
+                        <div class="product-card-specs">
+                            {% for spec in product.quick_specs %}
+                            <span>{{ spec.label }}: {{ spec.value }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="product-card-footer">
+                            <div class="product-card-price">Request Quote</div>
+                            <a href="{% url 'products:product_details' product.slug %}"
+                                class="btn btn-primary-custom btn-sm-custom">
+                                <span>View Details</span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+                {% endfor %}
+            </div><!-- /product-grid -->
+            </div><!-- /col-lg-9 -->
+        </div><!-- /row -->
+    </div><!-- /container -->
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section section-padding" aria-labelledby="cta-title">
+    <div class="container">
+        <div class="cta-content reveal">
+            <h2 id="cta-title">Need Custom {{ category.name }}?</h2>
+            <p>
+                Our engineering team can design and manufacture custom solutions tailored to your specific requirements.
+            </p>
+            <div class="cta-buttons">
+                <a href="{% url 'core:contact' %}" class="btn btn-primary-custom">
+                    <span><i class="bi bi-envelope me-2"></i>Request Custom Quote</span>
+                </a>
+                <a href="{% url 'core:services' %}" class="btn btn-outline-custom">
+                    <i class="bi bi-tools me-2"></i>Our Services
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

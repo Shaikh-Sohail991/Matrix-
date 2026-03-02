@@ -1,594 +1,146 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Browse our complete catalog of electrical and electronic products. Industrial equipment, laboratory instruments, educational kits, and more.">
-    <title>All Products | ElectroTech Industries</title>
+{% block title %}All Products | ElectroTech Industries{% endblock %}
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+{% block meta_description %}Browse our complete catalog of electrical and electronic products. Industrial equipment, laboratory instruments, educational kits, and more.{% endblock %}
 
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="../static/css/style.css" rel="stylesheet">
-</head>
-
-<body>
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg fixed-top" role="navigation" aria-label="Main navigation">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
-                <span>ElectroTech</span>
-            </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
-                aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarMain">
-                <ul class="navbar-nav ms-auto me-3">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="services.html">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#newsletter">Newsletter</a>
-                    </li>
-                </ul>
-                <a href="contact.html" class="btn btn-cta">Request Services</a>
-            </div>
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <div class="page-header-content">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Products</li>
+                </ol>
+            </nav>
+            <h1>All Products</h1>
+            <p>Browse our complete catalog of electrical and electronic products with advanced filtering
+                options.</p>
         </div>
-    </nav>
+    </div>
+</section>
 
-    <!-- Main Content -->
-    <main id="main-content">
-        <!-- Page Header -->
-        <section class="page-header">
-            <div class="container">
-                <div class="page-header-content">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Products</li>
-                        </ol>
+<!-- Products Section -->
+<section class="section-padding" aria-labelledby="products-title">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Filter Sidebar -->
+            <div class="col-lg-3">
+                <form method="get" id="filterForm">
+                {% if request.GET.category %}
+                <input type="hidden" name="category" value="{{ request.GET.category }}">
+                {% endif %}
+                <div class="filter-sidebar-accordion">
+                    <div class="accordion" id="filterAccordion">
+                        {% for filter in filters %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                                <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="collapse{{ forloop.counter }}">
+                                    {% if filter.icon %}<i class="bi {{ filter.icon }} me-2"></i>{% endif %}{{ filter.name }}
+                                </button>
+                            </h2>
+                            <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse {% if forloop.first %}show{% endif %}" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#filterAccordion">
+                                <div class="accordion-body">
+                                    {% for option in filter.options %}
+                                    <div class="filter-option">
+                                        <input type="checkbox" id="{{ option.id }}" name="{{ option.name }}" value="{{ option.label }}" {% if option.checked %}checked{% endif %}>
+                                        <label for="{{ option.id }}">{{ option.label }}{% if option.count %} ({{ option.count }}){% endif %}</label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p class="text-muted small px-2">No filters available.</p>
+                        {% endfor %}
+                    </div>
+
+                    <div class="filter-buttons mt-3">
+                        <button type="submit" class="btn btn-primary-custom w-100">
+                            <span>Apply Filters</span>
+                        </button>
+                        <a href="{{ request.path }}{% if request.GET.category %}?category={{ request.GET.category }}{% endif %}" class="btn btn-outline-custom w-100 mt-2 d-block text-center">
+                            Clear All
+                        </a>
+                    </div>
+                </div>
+                </form>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="col-lg-9">
+                <!-- Results toolbar: Showing + Sort by -->
+                <div class="results-toolbar reveal">
+                    <div class="results-count">
+                        <i class="bi bi-collection" aria-hidden="true"></i>
+                        <span>Showing <strong>{{ page_obj.start_index }}–{{ page_obj.end_index }}</strong> of <strong>{{ page_obj.paginator.count }}</strong> products</span>
+                    </div>
+                    <div class="sort-wrap">
+                        <label for="sortSelect" class="sort-label">Sort by</label>
+                        <select id="sortSelect" class="sort-select" aria-label="Sort products">
+                            <option value="popular">Most Popular</option>
+                            <option value="newest">Newest First</option>
+                            <option value="name-asc">Name (A-Z)</option>
+                            <option value="name-desc">Name (Z-A)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Products -->
+                <div class="product-grid stagger-children">
+                    {% for product in page_obj %}
+                    <article class="product-card" data-specs='{{ product.specs_json }}'>
+                        <div class="product-card-image">
+                            {% if product.is_featured %}<span class="product-card-badge">Featured</span>{% endif %}
+                            {% if product.is_new %}<span class="product-card-badge badge-new">New</span>{% endif %}
+                            <i class="bi bi-grid-3x3-gap"></i>
+                        </div>
+                        <div class="product-card-content">
+                            <span class="product-card-category">{% if product.category %}{{ product.category.name }}{% else %}Standalone{% endif %}</span>
+                            <h4><a href="{% url 'products:product_details' product.slug %}">{{ product.name }}</a></h4>
+                            <p>{{ product.short_description }}</p>
+                            <div class="product-card-specs">
+                                {% for spec in product.quick_specs %}
+                                <span>{{ spec.label }}: {{ spec.value }}</span>
+                                {% endfor %}
+                            </div>
+                            <div class="product-card-footer">
+                                <div class="product-card-price">Request Quote</div>
+                                <a href="{% url 'products:product_details' product.slug %}" class="btn btn-primary-custom btn-sm-custom"><span>View</span></a>
+                            </div>
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination-wrapper mt-5">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            {% if page_obj.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?{% if filter_query_string %}{{ filter_query_string }}&{% endif %}page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                                    <i class="bi bi-chevron-left"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+                            {% for num in page_obj.paginator.page_range %}
+                            <li class="page-item {% if page_obj.number == num %}active{% endif %}"><a class="page-link" href="?{% if filter_query_string %}{{ filter_query_string }}&{% endif %}page={{ num }}">{{ num }}</a></li>
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?{% if filter_query_string %}{{ filter_query_string }}&{% endif %}page={{ page_obj.next_page_number }}" aria-label="Next">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </li>
+                            {% endif %}
+                        </ul>
                     </nav>
-                    <h1>All Products</h1>
-                    <p>Browse our complete catalog of electrical and electronic products with advanced filtering
-                        options.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Products Section -->
-        <section class="section-padding" aria-labelledby="products-title">
-            <div class="container">
-                <div class="row g-4">
-                    <!-- Filter Sidebar -->
-                    <div class="col-lg-3">
-                        <div class="filter-sidebar-accordion">
-                            <div class="accordion" id="filterAccordion">
-                                <!-- Search -->
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingOne">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseOne" aria-expanded="true"
-                                            aria-controls="collapseOne">
-                                            <i class="bi bi-search me-2"></i> Search
-                                        </button>
-                                    </h2>
-                                    <div id="collapseOne" class="accordion-collapse collapse show"
-                                        aria-labelledby="headingOne" data-bs-parent="#filterAccordion">
-                                        <div class="accordion-body">
-                                            <div class="search-box">
-                                                <i class="bi bi-search"></i>
-                                                <input type="text" placeholder="Search products..."
-                                                    aria-label="Search products">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Categories -->
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingTwo">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                            aria-expanded="false" aria-controls="collapseTwo">
-                                            Categories
-                                        </button>
-                                    </h2>
-                                    <div id="collapseTwo" class="accordion-collapse collapse"
-                                        aria-labelledby="headingTwo" data-bs-parent="#filterAccordion">
-                                        <div class="accordion-body">
-                                            <div class="filter-option">
-                                                <input type="checkbox" id="cat-industrial" name="cat-industrial">
-                                                <label for="cat-industrial">Industrial Equipment (156)</label>
-                                            </div>
-                                            <div class="filter-option">
-                                                <input type="checkbox" id="cat-lab" name="cat-lab">
-                                                <label for="cat-lab">Laboratory Instruments (98)</label>
-                                            </div>
-                                            <div class="filter-option">
-                                                <input type="checkbox" id="cat-edu" name="cat-edu">
-                                                <label for="cat-edu">Educational Kits (84)</label>
-                                            </div>
-                                            <div class="filter-option">
-                                                <input type="checkbox" id="cat-testing" name="cat-testing">
-                                                <label for="cat-testing">Testing & Measuring (127)</label>
-                                            </div>
-                                            <div class="filter-option">
-                                                <input type="checkbox" id="cat-control" name="cat-control">
-                                                <label for="cat-control">Control Systems (72)</label>
-                                            </div>
-                                            <div class="filter-option">
-                                                <input type="checkbox" id="cat-power" name="cat-power">
-                                                <label for="cat-power">Power Equipment (93)</label>
-                                            </div>
-                                            <div class="filter-option">
-                                                <input type="checkbox" id="cat-safety" name="cat-safety">
-                                                <label for="cat-safety">Safety Equipment (58)</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Application -->
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingThree">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                            aria-expanded="false" aria-controls="collapseThree">
-                                            Application
-                                        </button>
-                                    </h2>
-                                    <div id="collapseThree" class="accordion-collapse collapse"
-                                        aria-labelledby="headingThree" data-bs-parent="#filterAccordion">
-                                        <div class="accordion-body">
-                                            <div class="filter-option">
-                                                <input type="checkbox" id="app-industrial" name="app-industrial">
-                                                <label for="app-industrial">Industrial (245)</label>
-                                            </div>
-                                            <div class="filter-option">
-                                                <input type="checkbox" id="app-laboratory" name="app-laboratory">
-                                                <label for="app-laboratory">Laboratory (134)</label>
-                                            </div>
-                                            <div class="filter-option">
-                                                <input type="checkbox" id="app-educational" name="app-educational">
-                                                <label for="app-educational">Educational (112)</label>
-                                            </div>
-                                            <div class="filter-option">
-                                                <input type="checkbox" id="app-commercial" name="app-commercial">
-                                                <label for="app-commercial">Commercial (97)</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Availability -->
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingFour">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseFour"
-                                            aria-expanded="false" aria-controls="collapseFour">
-                                            Availability
-                                        </button>
-                                    </h2>
-                                    <div id="collapseFour" class="accordion-collapse collapse"
-                                        aria-labelledby="headingFour" data-bs-parent="#filterAccordion">
-                                        <div class="accordion-body">
-                                            <div class="filter-option">
-                                                <input type="checkbox" id="avail-stock" name="avail-stock">
-                                                <label for="avail-stock">In Stock (487)</label>
-                                            </div>
-                                            <div class="filter-option">
-                                                <input type="checkbox" id="avail-preorder" name="avail-preorder">
-                                                <label for="avail-preorder">Pre-Order (43)</label>
-                                            </div>
-                                            <div class="filter-option">
-                                                <input type="checkbox" id="avail-custom" name="avail-custom">
-                                                <label for="avail-custom">Made to Order (58)</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="filter-buttons mt-3">
-                                <button class="btn btn-primary-custom w-100">
-                                    <span>Apply Filters</span>
-                                </button>
-                                <button class="btn btn-outline-custom w-100 mt-2">
-                                    Clear All
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Products Grid -->
-                    <div class="col-lg-9">
-                        <!-- Results toolbar: Showing + Sort by -->
-                        <div class="results-toolbar reveal">
-                            <div class="results-count">
-                                <i class="bi bi-collection" aria-hidden="true"></i>
-                                <span>Showing <strong>1-12</strong> of <strong>633</strong> products</span>
-                            </div>
-                            <div class="sort-wrap">
-                                <label for="sortSelect" class="sort-label">Sort by</label>
-                                <select id="sortSelect" class="sort-select" aria-label="Sort products">
-                                    <option value="popular">Most Popular</option>
-                                    <option value="newest">Newest First</option>
-                                    <option value="name-asc">Name (A-Z)</option>
-                                    <option value="name-desc">Name (Z-A)</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Products -->
-                        <div class="product-grid stagger-children">
-                            <!-- Product 1 -->
-                            <article class="product-card">
-                                <div class="product-card-image">
-                                    <span class="product-card-badge">Featured</span>
-                                    <i class="bi bi-grid-3x3-gap"></i>
-                                </div>
-                                <div class="product-card-content">
-                                    <span class="product-card-category">Industrial Equipment</span>
-                                    <h4><a href="product_details.html?id=cp-2000">Industrial Control Panel CP-2000</a>
-                                    </h4>
-                                    <p>Advanced PLC-based control panel with HMI interface and safety interlocks.</p>
-                                    <div class="product-card-specs">
-                                        <span>IP65</span>
-                                        <span>400V AC</span>
-                                        <span>128 I/O</span>
-                                    </div>
-                                    <div class="product-card-footer">
-                                        <div class="product-card-price">Request Quote</div>
-                                        <a href="product_details.html?id=cp-2000"
-                                            class="btn btn-primary-custom btn-sm-custom">
-                                            <span>View</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <!-- Product 2 -->
-                            <article class="product-card">
-                                <div class="product-card-image">
-                                    <span class="product-card-badge badge-new">New</span>
-                                    <i class="bi bi-speedometer2"></i>
-                                </div>
-                                <div class="product-card-content">
-                                    <span class="product-card-category">Testing & Measuring</span>
-                                    <h4><a href="product_details.html?id=dso-200">Digital Storage Oscilloscope
-                                            DSO-200</a></h4>
-                                    <p>4-channel digital oscilloscope with 200MHz bandwidth and deep memory.</p>
-                                    <div class="product-card-specs">
-                                        <span>200MHz</span>
-                                        <span>4 Channel</span>
-                                        <span>14Mpts</span>
-                                    </div>
-                                    <div class="product-card-footer">
-                                        <div class="product-card-price">Request Quote</div>
-                                        <a href="product_details.html?id=dso-200"
-                                            class="btn btn-primary-custom btn-sm-custom">
-                                            <span>View</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <!-- Product 3 -->
-                            <article class="product-card">
-                                <div class="product-card-image">
-                                    <i class="bi bi-mortarboard"></i>
-                                </div>
-                                <div class="product-card-content">
-                                    <span class="product-card-category">Educational Kits</span>
-                                    <h4><a href="product_details.html?id=bek-101">Basic Electronics Kit BEK-101</a></h4>
-                                    <p>Comprehensive electronics training kit with breadboard and components.</p>
-                                    <div class="product-card-specs">
-                                        <span>200+ Parts</span>
-                                        <span>Manual</span>
-                                        <span>Lab Pack</span>
-                                    </div>
-                                    <div class="product-card-footer">
-                                        <div class="product-card-price">Request Quote</div>
-                                        <a href="product_details.html?id=bek-101"
-                                            class="btn btn-primary-custom btn-sm-custom">
-                                            <span>View</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <!-- Product 4 -->
-                            <article class="product-card">
-                                <div class="product-card-image">
-                                    <i class="bi bi-lightning-charge"></i>
-                                </div>
-                                <div class="product-card-content">
-                                    <span class="product-card-category">Power Equipment</span>
-                                    <h4><a href="product_details.html?id=ups-10k">Online UPS System UPS-10K</a></h4>
-                                    <p>10kVA online double-conversion UPS with extended battery backup.</p>
-                                    <div class="product-card-specs">
-                                        <span>10kVA</span>
-                                        <span>Online</span>
-                                        <span>3-Phase</span>
-                                    </div>
-                                    <div class="product-card-footer">
-                                        <div class="product-card-price">Request Quote</div>
-                                        <a href="product_details.html?id=ups-10k"
-                                            class="btn btn-primary-custom btn-sm-custom">
-                                            <span>View</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <!-- Product 5 -->
-                            <article class="product-card">
-                                <div class="product-card-image">
-                                    <i class="bi bi-cpu"></i>
-                                </div>
-                                <div class="product-card-content">
-                                    <span class="product-card-category">Control Systems</span>
-                                    <h4><a href="product_details.html?id=plc-compact">Compact PLC System PLC-COMPACT</a>
-                                    </h4>
-                                    <p>Modular PLC with integrated HMI and Ethernet connectivity.</p>
-                                    <div class="product-card-specs">
-                                        <span>64 I/O</span>
-                                        <span>Ethernet</span>
-                                        <span>Modular</span>
-                                    </div>
-                                    <div class="product-card-footer">
-                                        <div class="product-card-price">Request Quote</div>
-                                        <a href="product_details.html?id=plc-compact"
-                                            class="btn btn-primary-custom btn-sm-custom">
-                                            <span>View</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <!-- Product 6 -->
-                            <article class="product-card">
-                                <div class="product-card-image">
-                                    <span class="product-card-badge badge-featured">Best Seller</span>
-                                    <i class="bi bi-thermometer-half"></i>
-                                </div>
-                                <div class="product-card-content">
-                                    <span class="product-card-category">Laboratory Instruments</span>
-                                    <h4><a href="product_details.html?id=dm-300">Digital Multimeter DM-300</a></h4>
-                                    <p>True RMS digital multimeter with temperature measurement and data logging.</p>
-                                    <div class="product-card-specs">
-                                        <span>True RMS</span>
-                                        <span>6000 Count</span>
-                                        <span>Bluetooth</span>
-                                    </div>
-                                    <div class="product-card-footer">
-                                        <div class="product-card-price">Request Quote</div>
-                                        <a href="product_details.html?id=dm-300"
-                                            class="btn btn-primary-custom btn-sm-custom">
-                                            <span>View</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <!-- Product 7 -->
-                            <article class="product-card">
-                                <div class="product-card-image">
-                                    <i class="bi bi-shield-check"></i>
-                                </div>
-                                <div class="product-card-content">
-                                    <span class="product-card-category">Safety Equipment</span>
-                                    <h4><a href="product_details.html?id=elm-200">Earth Leakage Monitor ELM-200</a></h4>
-                                    <p>Continuous earth leakage monitoring with alarm and trip functions.</p>
-                                    <div class="product-card-specs">
-                                        <span>30mA-30A</span>
-                                        <span>Modbus</span>
-                                        <span>DIN Rail</span>
-                                    </div>
-                                    <div class="product-card-footer">
-                                        <div class="product-card-price">Request Quote</div>
-                                        <a href="product_details.html?id=elm-200"
-                                            class="btn btn-primary-custom btn-sm-custom">
-                                            <span>View</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <!-- Product 8 -->
-                            <article class="product-card">
-                                <div class="product-card-image">
-                                    <i class="bi bi-gear"></i>
-                                </div>
-                                <div class="product-card-content">
-                                    <span class="product-card-category">Educational Kits</span>
-                                    <h4><a href="product_details.html?id=eml-200">Electrical Machines Lab EML-200</a>
-                                    </h4>
-                                    <p>Complete lab setup for electrical machines experiments and testing.</p>
-                                    <div class="product-card-specs">
-                                        <span>DC/AC Motors</span>
-                                        <span>Generators</span>
-                                        <span>Complete Set</span>
-                                    </div>
-                                    <div class="product-card-footer">
-                                        <div class="product-card-price">Request Quote</div>
-                                        <a href="product_details.html?id=eml-200"
-                                            class="btn btn-primary-custom btn-sm-custom">
-                                            <span>View</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <!-- Product 9 -->
-                            <article class="product-card">
-                                <div class="product-card-image">
-                                    <i class="bi bi-hdd"></i>
-                                </div>
-                                <div class="product-card-content">
-                                    <span class="product-card-category">Industrial Equipment</span>
-                                    <h4><a href="product_details.html?id=ss-500">Soft Starter SS-500</a></h4>
-                                    <p>Intelligent motor soft starter with built-in protection and communication.</p>
-                                    <div class="product-card-specs">
-                                        <span>5.5-500kW</span>
-                                        <span>RS485</span>
-                                        <span>IEC</span>
-                                    </div>
-                                    <div class="product-card-footer">
-                                        <div class="product-card-price">Request Quote</div>
-                                        <a href="product_details.html?id=ss-500"
-                                            class="btn btn-primary-custom btn-sm-custom">
-                                            <span>View</span>
-                                        </a>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-
-                        <!-- Pagination -->
-                        <div class="pagination-wrapper mt-5">
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" aria-label="Previous" tabindex="-1">
-                                            <i class="bi bi-chevron-left"></i>
-                                        </a>
-                                    </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <i class="bi bi-chevron-right"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer" role="contentinfo">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-4 col-md-6">
-                    <div class="footer-brand">
-                        <div class="footer-brand-name">
-                            <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
-                            ElectroTech
-                        </div>
-                        <p class="footer-tagline">
-                            Engineering reliable electrical and electronic solutions for industry, education, and
-                            research.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-6">
-                    <div class="footer-nav">
-                        <h5>Navigation</h5>
-                        <ul class="footer-links">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="services.html">Services</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-nav">
-                        <h5>Products</h5>
-                        <ul class="footer-links">
-                            <li><a href="category.html">Categories</a></li>
-                            <li><a href="products.html">All Products</a></li>
-                            <li><a href="subcategory.html">Subcategories</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-social">
-                        <h5>Connect With Us</h5>
-                        <div class="footer-social-links">
-                            <a href="#" class="footer-social-link" aria-label="LinkedIn">
-                                <i class="bi bi-linkedin"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="Twitter/X">
-                                <i class="bi bi-twitter-x"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="WhatsApp">
-                                <i class="bi bi-whatsapp"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="Facebook">
-                                <i class="bi bi-facebook"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="Instagram">
-                                <i class="bi bi-instagram"></i>
-                            </a>
-                        </div>
-                        <div class="footer-newsletter mt-4" id="newsletter">
-                            <form action="#" class="newsletter-form d-flex align-items-center justify-content-end">
-                                <input type="email" placeholder="Enter your email" required>
-                                <button type="submit" class="btn btn-primary-custom"><i class="bi bi-send-fill"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <div class="footer-bottom">
-                <p class="footer-copyright">
-                    &copy; 2024 ElectroTech Industries. All rights reserved.
-                </p>
-                <div class="footer-legal">
-                    <a href="privacy_policy.html">Privacy Policy</a>
-                    <a href="terms_of_service.html">Terms of Service</a>
-                    <a href="cookie_policy.html">Cookie Policy</a>
                 </div>
             </div>
         </div>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Custom JS -->
-    <script src="../static/js/main.js"></script>
-</body>
-
-</html>
+    </div>
+</section>
+{% endblock %}

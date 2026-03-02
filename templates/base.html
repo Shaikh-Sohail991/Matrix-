@@ -1,28 +1,23 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="{% block meta_description %}Leading manufacturer of electrical & electronic products. Industrial equipment, laboratory instruments, educational kits, and professional services.{% endblock %}">
+    <meta name="description"
+        content="{% block meta_description %}Leading manufacturer of electrical & electronic products. Industrial equipment, laboratory instruments, educational kits, and professional services.{% endblock %}">
     <title>{% block title %}ElectroTech Industries | Electrical & Electronic Solutions{% endblock %}</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
-
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="../static/css/style.css" rel="stylesheet">
-    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
     {% block extra_css %}{% endblock %}
 </head>
 
@@ -30,7 +25,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg fixed-top" role="navigation" aria-label="Main navigation">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
+            <a class="navbar-brand" href="{% url 'core:index' %}">
                 <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
                 <span>ElectroTech</span>
             </a>
@@ -43,22 +38,35 @@
             <div class="collapse navbar-collapse" id="navbarMain">
                 <ul class="navbar-nav ms-auto me-3">
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/index.html' %}active{% endif %}" href="index.html" {% if request.path == '/index.html' %}aria-current="page"{% endif %}>Home</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"
+                            href="{% url 'core:index' %}" {% if request.resolver_match.url_name == 'index' %}aria-current="page"{% endif %}>Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/about.html' %}active{% endif %}" href="about.html" {% if request.path == '/about.html' %}aria-current="page"{% endif %}>About</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}"
+                            href="{% url 'core:about' %}" {% if request.resolver_match.url_name == 'about' %}aria-current="page"{% endif %}>About</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/services.html' %}active{% endif %}" href="services.html" {% if request.path == '/services.html' %}aria-current="page{% endif %}">Services</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'services' %}active{% endif %}"
+                            href="{% url 'core:services' %}" {% if request.resolver_match.url_name == 'services' %}aria-current="page"{% endif %}>Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/products.html' %}active{% endif %}" href="products.html" {% if request.path == '/products.html' %}aria-current="page{% endif %}">Products</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'category_list' %}active{% endif %}"
+                            href="{% url 'products:category_list' %}" {% if request.resolver_match.url_name == 'category_list' %}aria-current="page"{% endif %}>Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/contact.html' %}active{% endif %}" href="contact.html" {% if request.path == '/contact.html' %}aria-current="page{% endif %}">Contact</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'subcategory_list' %}active{% endif %}"
+                            href="{% url 'products:subcategory_list' %}" {% if request.resolver_match.url_name == 'subcategory_list' %}aria-current="page"{% endif %}>Subcategories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'product_list' %}active{% endif %}"
+                            href="{% url 'products:product_list' %}" {% if request.resolver_match.url_name == 'product_list' %}aria-current="page"{% endif %}>Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}"
+                            href="{% url 'core:contact' %}" {% if request.resolver_match.url_name == 'contact' %}aria-current="page"{% endif %}>Contact</a>
                     </li>
                 </ul>
-                <a href="contact.html" class="btn btn-cta">Request Services</a>
+                <a href="{% url 'core:contact' %}" class="btn btn-cta">Request Services</a>
             </div>
         </div>
     </nav>
@@ -91,11 +99,10 @@
                     <div class="footer-nav">
                         <h5>Navigation</h5>
                         <ul class="footer-links">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="services.html">Services</a></li>
-                            <li><a href="products.html">Products</a></li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="{% url 'core:index' %}">Home</a></li>
+                            <li><a href="{% url 'core:about' %}">About Us</a></li>
+                            <li><a href="{% url 'core:services' %}">Services</a></li>
+                            <li><a href="{% url 'core:contact' %}">Contact</a></li>
                         </ul>
                     </div>
                 </div>
@@ -104,9 +111,9 @@
                     <div class="footer-nav">
                         <h5>Products</h5>
                         <ul class="footer-links">
-                            <li><a href="category.html">Categories</a></li>
-                            <li><a href="products.html">All Products</a></li>
-                            <li><a href="subcategory.html">Subcategories</a></li>
+                            <li><a href="{% url 'products:category_list' %}">Categories</a></li>
+                            <li><a href="{% url 'products:subcategory_list' %}">Subcategories</a></li>
+                            <li><a href="{% url 'products:product_list' %}">All Products</a></li>
                         </ul>
                     </div>
                 </div>
@@ -132,9 +139,12 @@
                             </a>
                         </div>
                         <div class="footer-newsletter mt-4" id="newsletter">
-                            <form action="#" class="newsletter-form d-flex align-items-center justify-content-end">
-                                <input type="email" placeholder="Enter your email" required>
-                                <button type="submit" class="btn btn-primary-custom"><i class="bi bi-send-fill"></i></button>
+                            <form action="{% url 'core:newsletter_subscribe' %}" method="POST"
+                                class="newsletter-form d-flex align-items-center justify-content-end">
+                                {% csrf_token %}
+                                <input type="email" name="email" placeholder="Enter your email" required>
+                                <button type="submit" class="btn btn-primary-custom"><i
+                                        class="bi bi-send-fill"></i></button>
                             </form>
                         </div>
                     </div>
@@ -146,20 +156,20 @@
                     &copy; 2024 ElectroTech Industries. All rights reserved.
                 </p>
                 <div class="footer-legal">
-                    <a href="privacy_policy.html">Privacy Policy</a>
-                    <a href="terms_of_service.html">Terms of Service</a>
-                    <a href="cookie_policy.html">Cookie Policy</a>
+                    <a href="{% url 'core:privacy_policy' %}">Privacy Policy</a>
+                    <a href="{% url 'core:terms_of_service' %}">Terms of Service</a>
+                    <a href="{% url 'core:cookie_policy' %}">Cookie Policy</a>
                 </div>
             </div>
         </div>
     </footer>
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Custom JS -->
-    <script src="../static/js/main.js"></script>
-    
+    <script src="{% static 'js/main.js' %}"></script>
+
     {% block extra_js %}{% endblock %}
 </body>
 

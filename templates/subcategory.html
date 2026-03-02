@@ -1,418 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Browse all product subcategories - detailed classification of electrical and electronic products.">
-    <title>Product Subcategories | ElectroTech Industries</title>
+{% block title %}Product Subcategories | ElectroTech Industries{% endblock %}
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
+{% block meta_description %}Browse all product subcategories - detailed classification of electrical and electronic products.{% endblock %}
 
-    <!-- Bootstrap 5 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <div class="page-header-content">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'products:category_list' %}">Products</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'products:category_list' %}">Categories</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Subcategories</li>
+                </ol>
+            </nav>
+            <h1>Product Subcategories</h1>
+            <p>Detailed product classification to help you find exactly what you need.</p>
+        </div>
+    </div>
+</section>
 
-    <!-- Bootstrap Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+<!-- Subcategories Section -->
+<section class="section-padding" aria-labelledby="subcategories-title">
+    <div class="container">
+        <div class="section-header reveal">
+            <span class="section-label">Browse Products</span>
+            <h2 id="subcategories-title" class="section-title">All Subcategories</h2>
+            <p class="section-description">
+                Navigate through our detailed product classification system organized by category.
+            </p>
+        </div>
 
-    <!-- Custom CSS -->
-    <link href="../static/css/style.css" rel="stylesheet">
-</head>
-
-<body>
-    
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg fixed-top" role="navigation" aria-label="Main navigation">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
-                <span>ElectroTech</span>
-            </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
-                aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarMain">
-                <ul class="navbar-nav ms-auto me-3">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="services.html">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
-                    </li>
-                </ul>
-                <a href="contact.html" class="btn btn-cta">Request Services</a>
+        {% for category in categories %}
+        <div class="mb-5 reveal">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h4 class="mb-0">
+                    <i class="bi bi-gear-wide-connected text-accent me-2"></i> {# icon could change per category #}
+                    {{ category.name }}
+                </h4>
+                <a href="{% url 'products:category_details' category.slug %}" class="text-accent small">View Category</a>
+            </div>
+            <div class="row g-3">
+                {% for sub in category.subcategories %}
+                <div class="col-md-6 col-lg-4">
+                    <a href="{% url 'products:subcategory_details' sub.slug %}" class="subcategory-card d-block">
+                        <div class="subcategory-card-icon">
+                            {% if sub.image %}
+                                <img src="{{ sub.image.url }}" alt="{{ sub.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                            {% else %}
+                                <i class="bi bi-grid-3x3-gap"></i>
+                            {% endif %}
+                        </div>
+                        <div class="subcategory-card-content">
+                            <h5>{{ sub.name }}</h5>
+                            <p>{{ sub.short_description }}</p>
+                            <span class="product-count"><i class="bi bi-box-seam me-1"></i>{{ sub.product_count }} Products</span>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
             </div>
         </div>
-    </nav>
+        {% endfor %}
+    </div>
+</section>
 
-    <!-- Main Content -->
-    <main id="main-content">
-        <!-- Page Header -->
-        <section class="page-header">
-            <div class="container">
-                <div class="page-header-content">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                            <li class="breadcrumb-item"><a href="products.html">Products</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Subcategories</li>
-                        </ol>
-                    </nav>
-                    <h1>Product Subcategories</h1>
-                    <p>Detailed product classification to help you find exactly what you need.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Subcategories Section -->
-        <section class="section-padding" aria-labelledby="subcategories-title">
-            <div class="container">
-                <div class="section-header reveal">
-                    <span class="section-label">Browse Products</span>
-                    <h2 id="subcategories-title" class="section-title">All Subcategories</h2>
-                    <p class="section-description">
-                        Navigate through our detailed product classification system organized by category.
-                    </p>
-                </div>
-
-                <!-- Industrial Equipment Subcategories -->
-                <div class="mb-5 reveal">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="mb-0">
-                            <i class="bi bi-gear-wide-connected text-accent me-2"></i>
-                            Industrial Equipment
-                        </h4>
-                        <a href="category_details.html?id=industrial" class="text-accent small">View Category</a>
-                    </div>
-                    <div class="row g-3">
-                        <div class="col-md-6 col-lg-4">
-                            <a href="subcategory_details.html?id=control-panels" class="subcategory-card d-block">
-                                <div class="subcategory-card-icon">
-                                    <i class="bi bi-grid-3x3-gap"></i>
-                                </div>
-                                <div class="subcategory-card-content">
-                                    <h5>Control Panels</h5>
-                                    <p>Custom and standard control panels</p>
-                                    <span class="product-count"><i class="bi bi-box-seam me-1"></i>32 Products</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <a href="subcategory_details.html?id=motor-starters" class="subcategory-card d-block">
-                                <div class="subcategory-card-icon">
-                                    <i class="bi bi-hdd"></i>
-                                </div>
-                                <div class="subcategory-card-content">
-                                    <h5>Motor Starters</h5>
-                                    <p>DOL, star-delta, soft starters</p>
-                                    <span class="product-count"><i class="bi bi-box-seam me-1"></i>24 Products</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <a href="subcategory_details.html?id=switchgear" class="subcategory-card d-block">
-                                <div class="subcategory-card-icon">
-                                    <i class="bi bi-toggle2-on"></i>
-                                </div>
-                                <div class="subcategory-card-content">
-                                    <h5>Switchgear</h5>
-                                    <p>LV and MV switchgear assemblies</p>
-                                    <span class="product-count"><i class="bi bi-box-seam me-1"></i>28 Products</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <a href="subcategory_details.html?id=industrial-automation"
-                                class="subcategory-card d-block">
-                                <div class="subcategory-card-icon">
-                                    <i class="bi bi-robot"></i>
-                                </div>
-                                <div class="subcategory-card-content">
-                                    <h5>Industrial Automation</h5>
-                                    <p>PLC, SCADA, HMI solutions</p>
-                                    <span class="product-count"><i class="bi bi-box-seam me-1"></i>18 Products</span>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Laboratory Instruments Subcategories -->
-                <div class="mb-5 reveal">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="mb-0">
-                            <i class="bi bi-thermometer-half text-accent me-2"></i>
-                            Laboratory Instruments
-                        </h4>
-                        <a href="category_details.html?id=laboratory" class="text-accent small">View Category</a>
-                    </div>
-                    <div class="row g-3">
-                        <div class="col-md-6 col-lg-4">
-                            <a href="subcategory_details.html?id=analytical-instruments"
-                                class="subcategory-card d-block">
-                                <div class="subcategory-card-icon">
-                                    <i class="bi bi-search"></i>
-                                </div>
-                                <div class="subcategory-card-content">
-                                    <h5>Analytical Instruments</h5>
-                                    <p>Spectrophotometers, analyzers</p>
-                                    <span class="product-count"><i class="bi bi-box-seam me-1"></i>22 Products</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <a href="subcategory_details.html?id=measurement-devices" class="subcategory-card d-block">
-                                <div class="subcategory-card-icon">
-                                    <i class="bi bi-rulers"></i>
-                                </div>
-                                <div class="subcategory-card-content">
-                                    <h5>Measurement Devices</h5>
-                                    <p>Precision measurement equipment</p>
-                                    <span class="product-count"><i class="bi bi-box-seam me-1"></i>35 Products</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <a href="subcategory_details.html?id=lab-power-supplies" class="subcategory-card d-block">
-                                <div class="subcategory-card-icon">
-                                    <i class="bi bi-plug"></i>
-                                </div>
-                                <div class="subcategory-card-content">
-                                    <h5>Lab Power Supplies</h5>
-                                    <p>DC power supplies, function generators</p>
-                                    <span class="product-count"><i class="bi bi-box-seam me-1"></i>18 Products</span>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Educational Kits Subcategories -->
-                <div class="mb-5 reveal">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="mb-0">
-                            <i class="bi bi-mortarboard text-accent me-2"></i>
-                            Educational Kits
-                        </h4>
-                        <a href="category_details.html?id=educational" class="text-accent small">View Category</a>
-                    </div>
-                    <div class="row g-3">
-                        <div class="col-md-6 col-lg-4">
-                            <a href="subcategory_details.html?id=basic-electronics" class="subcategory-card d-block">
-                                <div class="subcategory-card-icon">
-                                    <i class="bi bi-cpu"></i>
-                                </div>
-                                <div class="subcategory-card-content">
-                                    <h5>Basic Electronics Kits</h5>
-                                    <p>Fundamental electronics training</p>
-                                    <span class="product-count"><i class="bi bi-box-seam me-1"></i>28 Products</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <a href="subcategory_details.html?id=electrical-machines" class="subcategory-card d-block">
-                                <div class="subcategory-card-icon">
-                                    <i class="bi bi-gear"></i>
-                                </div>
-                                <div class="subcategory-card-content">
-                                    <h5>Electrical Machines Lab</h5>
-                                    <p>Motor and generator trainers</p>
-                                    <span class="product-count"><i class="bi bi-box-seam me-1"></i>20 Products</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <a href="subcategory_details.html?id=control-systems-lab" class="subcategory-card d-block">
-                                <div class="subcategory-card-icon">
-                                    <i class="bi bi-diagram-3"></i>
-                                </div>
-                                <div class="subcategory-card-content">
-                                    <h5>Control Systems Lab</h5>
-                                    <p>Process control trainers</p>
-                                    <span class="product-count"><i class="bi bi-box-seam me-1"></i>15 Products</span>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Testing & Measuring Subcategories -->
-                <div class="mb-5 reveal">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h4 class="mb-0">
-                            <i class="bi bi-speedometer2 text-accent me-2"></i>
-                            Testing & Measuring
-                        </h4>
-                        <a href="category_details.html?id=testing" class="text-accent small">View Category</a>
-                    </div>
-                    <div class="row g-3">
-                        <div class="col-md-6 col-lg-4">
-                            <a href="subcategory_details.html?id=multimeters" class="subcategory-card d-block">
-                                <div class="subcategory-card-icon">
-                                    <i class="bi bi-speedometer"></i>
-                                </div>
-                                <div class="subcategory-card-content">
-                                    <h5>Multimeters</h5>
-                                    <p>Digital and analog multimeters</p>
-                                    <span class="product-count"><i class="bi bi-box-seam me-1"></i>24 Products</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <a href="subcategory_details.html?id=oscilloscopes" class="subcategory-card d-block">
-                                <div class="subcategory-card-icon">
-                                    <i class="bi bi-graph-up"></i>
-                                </div>
-                                <div class="subcategory-card-content">
-                                    <h5>Oscilloscopes</h5>
-                                    <p>Digital storage oscilloscopes</p>
-                                    <span class="product-count"><i class="bi bi-box-seam me-1"></i>16 Products</span>
-                                </div>
-                            </a>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <a href="subcategory_details.html?id=signal-generators" class="subcategory-card d-block">
-                                <div class="subcategory-card-icon">
-                                    <i class="bi bi-broadcast"></i>
-                                </div>
-                                <div class="subcategory-card-content">
-                                    <h5>Signal Generators</h5>
-                                    <p>Function and RF generators</p>
-                                    <span class="product-count"><i class="bi bi-box-seam me-1"></i>12 Products</span>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="cta-section section-padding" aria-labelledby="cta-title">
-            <div class="container">
-                <div class="cta-content reveal">
-                    <h2 id="cta-title">Need Help Finding a Product?</h2>
-                    <p>
-                        Our product specialists can help you identify the right equipment for your specific application.
-                    </p>
-                    <div class="cta-buttons">
-                        <a href="contact.html" class="btn btn-primary-custom">
-                            <span><i class="bi bi-headset me-2"></i>Talk to an Expert</span>
-                        </a>
-                        <a href="products.html" class="btn btn-outline-custom">
-                            <i class="bi bi-search me-2"></i>Browse All Products
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer" role="contentinfo">
-        <div class="container">
-            <div class="row g-5">
-                <div class="col-lg-4 col-md-6">
-                    <div class="footer-brand">
-                        <div class="footer-brand-name">
-                            <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
-                            ElectroTech
-                        </div>
-                        <p class="footer-tagline">
-                            Engineering reliable electrical and electronic solutions for industry, education, and
-                            research.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-6">
-                    <div class="footer-nav">
-                        <h5>Navigation</h5>
-                        <ul class="footer-links">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="services.html">Services</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-nav">
-                        <h5>Products</h5>
-                        <ul class="footer-links">
-                            <li><a href="category.html">Categories</a></li>
-                            <li><a href="products.html">All Products</a></li>
-                            <li><a href="subcategory.html">Subcategories</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-social">
-                        <h5>Connect With Us</h5>
-                        <div class="footer-social-links">
-                            <a href="#" class="footer-social-link" aria-label="LinkedIn">
-                                <i class="bi bi-linkedin"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="Twitter/X">
-                                <i class="bi bi-twitter-x"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="WhatsApp">
-                                <i class="bi bi-whatsapp"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="Facebook">
-                                <i class="bi bi-facebook"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="Instagram">
-                                <i class="bi bi-instagram"></i>
-                            </a>
-                        </div>
-                        <div class="footer-newsletter mt-4" id="newsletter">
-                            <form action="#" class="newsletter-form d-flex align-items-center justify-content-end">
-                                <input type="email" placeholder="Enter your email" required>
-                                <button type="submit" class="btn btn-primary-custom"><i class="bi bi-send-fill"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <div class="footer-bottom">
-                <p class="footer-copyright">
-                    &copy; 2024 ElectroTech Industries. All rights reserved.
-                </p>
-                <div class="footer-legal">
-                    <a href="privacy_policy.html">Privacy Policy</a>
-                    <a href="terms_of_service.html">Terms of Service</a>
-                    <a href="cookie_policy.html">Cookie Policy</a>
-                </div>
+<!-- CTA Section -->
+<section class="cta-section section-padding" aria-labelledby="cta-title">
+    <div class="container">
+        <div class="cta-content reveal">
+            <h2 id="cta-title">Need Help Finding a Product?</h2>
+            <p>
+                Our product specialists can help you identify the right equipment for your specific application.
+            </p>
+            <div class="cta-buttons">
+                <a href="{% url 'core:contact' %}" class="btn btn-primary-custom">
+                    <span><i class="bi bi-headset me-2"></i>Talk to an Expert</span>
+                </a>
+                <a href="{% url 'products:product_list' %}" class="btn btn-outline-custom">
+                    <i class="bi bi-search me-2"></i>Browse All Products
+                </a>
             </div>
         </div>
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Custom JS -->
-    <script src="../static/js/main.js"></script>
-</body>
-
-</html>
+    </div>
+</section>
+{% endblock %}
