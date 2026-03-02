@@ -47,9 +47,9 @@
                 {% for sub in category.subcategories %}
                 <div class="col-md-6 col-lg-4">
                     <a href="{% url 'products:subcategory_details' sub.slug %}" class="subcategory-card d-block">
-                        <div class="subcategory-card-icon">
+                        <div class="subcategory-card-icon" style="{% if sub.image %}padding:0;overflow:hidden;{% endif %}">
                             {% if sub.image %}
-                                <img src="{{ sub.image.url }}" alt="{{ sub.name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                <img src="{{ sub.image.url }}" alt="{{ sub.name }}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">
                             {% else %}
                                 <i class="bi bi-grid-3x3-gap"></i>
                             {% endif %}
