@@ -1,262 +1,81 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}About Us | ElectroTech Industries{% endblock %}
+{% block title %}About Us | Matrix Technology Inc.{% endblock %}
 
-{% block meta_description %}Learn about ElectroTech Industries - 25+ years of excellence in electrical and electronic manufacturing, our history, values, and leadership team.{% endblock %}
+{% block meta_description %}Discover Matrix Technology Inc.’s process, quality, global reach and exhibition highlights.{% endblock %}
 
 {% block content %}
-        <!-- Page Header -->
-        <section class="page-header">
-            <div class="container">
-                <div class="page-header-content">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">About Us</li>
-                        </ol>
-                    </nav>
-                    <h1>About ElectroTech Industries</h1>
-                    <p>Two decades of engineering excellence, innovation, and commitment to quality in electrical and
-                        electronic solutions.</p>
-                </div>
+<section class="page-header about-hero" style="background-image:url('{% static "images/about-hero.jpg" %}')">
+    <div class="container">
+        <div class="page-header-content">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">About Us</li>
+                </ol>
+            </nav>
+            <h1>About Us</h1>
+        </div>
+    </div>
+</section>
+
+<section class="section-padding who-we-are">
+    <div class="container">
+        <h2 class="section-title">WHO WE ARE</h2>
+        <h3 class="company-name">MATRIX TECHNOLOGY INC.</h3>
+        <div class="row">
+            <div class="col-md-6">
+                <h4>THE PROCESS</h4>
+                <p>Founded in 2003, MATRIX TECHNOLOGY INC. is an innovative enterprise integrating R&D, production and sales. Since its establishment, MATRIX has focused on the research and development and production of DC regulated power supplies. The products have been sold to more than 80 countries and regions all over the world, and are highly recommended by the majority of users. MATRIX will continue to focus on the research and development of DC power supplies, keep providing users with more reliable, durable and stable products.</p>
             </div>
-        </section>
-
-        <!-- Timeline Section -->
-        <section class="timeline-section section-padding" aria-labelledby="timeline-title">
-            <div class="container">
-                <div class="section-header reveal">
-                    <span class="section-label">Our Journey</span>
-                    <h2 id="timeline-title" class="section-title">A Legacy of Excellence</h2>
-                    <p class="section-description">
-                        From our founding to becoming an industry leader, explore the milestones that define our
-                        journey.
-                    </p>
-                </div>
-
-                <div class="timeline">
-                    <div class="timeline-item reveal">
-                        <div class="timeline-content">
-                            <span class="timeline-year">1999</span>
-                            <h4>Foundation</h4>
-                            <p>ElectroTech Industries was founded with a vision to provide quality electrical equipment
-                                for educational institutions.</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item reveal">
-                        <div class="timeline-content">
-                            <span class="timeline-year">2004</span>
-                            <h4>Industrial Expansion</h4>
-                            <p>Expanded into industrial equipment manufacturing, establishing our first dedicated
-                                production facility.</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item reveal">
-                        <div class="timeline-content">
-                            <span class="timeline-year">2008</span>
-                            <h4>ISO Certification</h4>
-                            <p>Achieved ISO 9001:2008 certification, formalizing our commitment to quality management
-                                systems.</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item reveal">
-                        <div class="timeline-content">
-                            <span class="timeline-year">2012</span>
-                            <h4>Service Division Launch</h4>
-                            <p>Launched comprehensive service division for installation, calibration, and maintenance
-                                services.</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item reveal">
-                        <div class="timeline-content">
-                            <span class="timeline-year">2016</span>
-                            <h4>R&D Center</h4>
-                            <p>Established dedicated R&D center for product innovation and custom solution development.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item reveal">
-                        <div class="timeline-content">
-                            <span class="timeline-year">2020</span>
-                            <h4>International Reach</h4>
-                            <p>Expanded operations to serve international markets with export-compliant products.</p>
-                        </div>
-                    </div>
-
-                    <div class="timeline-item reveal">
-                        <div class="timeline-content">
-                            <span class="timeline-year">2024</span>
-                            <h4>Industry Recognition</h4>
-                            <p>Recognized as a leading manufacturer with 8 international certifications and 500+
-                                satisfied clients.</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="col-md-6">
+                <h4>QUALITY</h4>
+                <p>MATRIX has obtained CE, ROHS, KC and other authoritative certifications.</p>
             </div>
-        </section>
+        </div>
+    </div>
+</section>
 
-        <!-- Core Values Section -->
-        <section class="section-padding" aria-labelledby="values-title">
-            <div class="container">
-                <div class="section-header reveal">
-                    <span class="section-label">What Drives Us</span>
-                    <h2 id="values-title" class="section-title">Our Core Values</h2>
-                    <p class="section-description">
-                        The principles that guide every decision, product, and service we deliver.
-                    </p>
-                </div>
-
-                <div class="values-grid stagger-children">
-                    <article class="value-card">
-                        <span class="value-card-number">01</span>
-                        <div class="value-card-icon">
-                            <i class="bi bi-gear-wide"></i>
-                        </div>
-                        <h4>Engineering Excellence</h4>
-                        <p>We pursue perfection in every design, ensuring our products meet the highest standards of
-                            precision and reliability for demanding applications.</p>
-                    </article>
-
-                    <article class="value-card">
-                        <span class="value-card-number">02</span>
-                        <div class="value-card-icon">
-                            <i class="bi bi-shield-check"></i>
-                        </div>
-                        <h4>Compliance & Safety</h4>
-                        <p>Every product is designed and manufactured with safety as the primary concern, exceeding
-                            regulatory requirements and industry standards.</p>
-                    </article>
-
-                    <article class="value-card">
-                        <span class="value-card-number">03</span>
-                        <div class="value-card-icon">
-                            <i class="bi bi-eye"></i>
-                        </div>
-                        <h4>Transparency</h4>
-                        <p>Open communication with clients about specifications, capabilities, and limitations. We build
-                            trust through honesty and integrity.</p>
-                    </article>
-
-                    <article class="value-card">
-                        <span class="value-card-number">04</span>
-                        <div class="value-card-icon">
-                            <i class="bi bi-lightbulb"></i>
-                        </div>
-                        <h4>Innovation</h4>
-                        <p>Continuous investment in research and development to bring cutting-edge solutions that
-                            address evolving industry challenges.</p>
-                    </article>
-
-                    <article class="value-card">
-                        <span class="value-card-number">05</span>
-                        <div class="value-card-icon">
-                            <i class="bi bi-hand-thumbs-up"></i>
-                        </div>
-                        <h4>Long-Term Partnerships</h4>
-                        <p>We view every client relationship as a long-term partnership, providing ongoing support
-                            throughout the product lifecycle.</p>
-                    </article>
-
-                    <article class="value-card">
-                        <span class="value-card-number">06</span>
-                        <div class="value-card-icon">
-                            <i class="bi bi-heart"></i>
-                        </div>
-                        <h4>Ethical Manufacturing</h4>
-                        <p>Committed to sustainable practices, fair labor standards, and environmentally responsible
-                            manufacturing processes.</p>
-                    </article>
-                </div>
+<section class="section-padding stats-section text-center">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <i class="bi bi-clock"></i>
+                <h3>23+</h3>
+                <p>YEARS OF EXPERIENCE</p>
             </div>
-        </section>
-
-        <!-- Leadership Team Section -->
-        <section class="section-padding bg-secondary" aria-labelledby="team-title">
-            <div class="container">
-                <div class="section-header reveal">
-                    <span class="section-label">Leadership</span>
-                    <h2 id="team-title" class="section-title">Our Leadership Team</h2>
-                    <p class="section-description">
-                        Experienced professionals driving innovation and excellence across our organization.
-                    </p>
-                </div>
-
-                <div class="team-grid stagger-children">
-                    <article class="team-card">
-                        <div class="team-card-image">
-                            <i class="bi bi-person-circle"></i>
-                        </div>
-                        <div class="team-card-content">
-                            <h4>Rajesh Kumar</h4>
-                            <p class="team-card-role">Founder & Managing Director</p>
-                            <p>25+ years in electrical engineering. Founded ElectroTech with a vision to provide quality
-                                educational equipment. Leads strategic direction and business development.</p>
-                            <div class="team-card-social">
-                                <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
-                                <a href="#" aria-label="Twitter/X"><i class="bi bi-twitter-x"></i></a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="team-card">
-                        <div class="team-card-image">
-                            <i class="bi bi-person-circle"></i>
-                        </div>
-                        <div class="team-card-content">
-                            <h4>Dr. Priya Sharma</h4>
-                            <p class="team-card-role">Technical Director</p>
-                            <p>PhD in Electronics Engineering with 18 years of R&D experience. Oversees product
-                                development, quality assurance, and technical innovation initiatives.</p>
-                            <div class="team-card-social">
-                                <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
-                                <a href="#" aria-label="GitHub"><i class="bi bi-github"></i></a>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="team-card">
-                        <div class="team-card-image">
-                            <i class="bi bi-person-circle"></i>
-                        </div>
-                        <div class="team-card-content">
-                            <h4>Amit Patel</h4>
-                            <p class="team-card-role">Operations Head</p>
-                            <p>20 years of manufacturing operations experience. Manages production facilities, supply
-                                chain, and service delivery operations with focus on efficiency and quality.</p>
-                            <div class="team-card-social">
-                                <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
-                                <a href="#" aria-label="Telegram"><i class="bi bi-telegram"></i></a>
-                            </div>
-                        </div>
-                    </article>
-                </div>
+            <div class="stat-item">
+                <i class="bi bi-globe"></i>
+                <h3>80+</h3>
+                <p>COUNTRIES</p>
             </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="cta-section section-padding" aria-labelledby="cta-title">
-            <div class="container">
-                <div class="cta-content reveal">
-                    <h2 id="cta-title">Join Our Growing Network of Partners</h2>
-                    <p>
-                        Discover how ElectroTech can support your organization with quality products and reliable
-                        services.
-                    </p>
-                    <div class="cta-buttons">
-                        <a href="{% url 'core:services' %}" class="btn btn-primary-custom">
-                            <span><i class="bi bi-tools me-2"></i>Explore Services</span>
-                        </a>
-                        <a href="{% url 'core:contact' %}" class="btn btn-outline-custom">
-                            <i class="bi bi-telephone me-2"></i>Contact Us
-                        </a>
-                    </div>
-                </div>
+            <div class="stat-item">
+                <i class="bi bi-award"></i>
+                <h3>10+</h3>
+                <p>CERTIFICATIONS</p>
             </div>
-        </section>
+            <div class="stat-item">
+                <i class="bi bi-building"></i>
+                <h3>500+</h3>
+                <p>EXHIBITIONS</p>
+            </div>
+        </div>
+        <div class="brand-logo-wrap mt-5">
+            <img src="{% static 'images/matrix-logo.png' %}" alt="Matrix Technology Logo">
+        </div>
+    </div>
+</section>
 
+<section class="section-padding gallery-section">
+    <div class="container">
+        <h2 class="section-title">Our Exhibitions</h2>
+        <div class="gallery-grid">
+            <img src="{% static 'images/gallery1.jpg' %}" alt="Exhibition 1">
+            <img src="{% static 'images/gallery2.jpg' %}" alt="Exhibition 2">
+            <img src="{% static 'images/gallery3.jpg' %}" alt="Exhibition 3">
+            <img src="{% static 'images/gallery4.jpg' %}" alt="Exhibition 4">
+        </div>
+    </div>
+</section>
 {% endblock %}

@@ -71,3 +71,16 @@ class ServiceInquiry(models.Model):
         ordering = ['-submitted_at']
         verbose_name = 'Service Inquiry'
         verbose_name_plural = 'Service Inquiries'
+
+
+class Customer(models.Model):
+    name = models.CharField(max_length=255)
+    logo = models.ImageField(upload_to='customers/logos/')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'Customer'
+        verbose_name_plural = 'Customers'

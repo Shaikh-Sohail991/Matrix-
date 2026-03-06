@@ -24,49 +24,79 @@
 <body>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg fixed-top" role="navigation" aria-label="Main navigation">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'core:index' %}">
-                <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
-                <span>ElectroTech</span>
-            </a>
+        <div class="container navbar-container">
+            <!-- Top row: Brand + Account + Toggler -->
+            <div class="navbar-top d-flex w-100 align-items-center justify-content-between">
+                <a class="navbar-brand" href="{% url 'core:index' %}">
+                    <span class="brand-logo-wrap">
+                        <span class="brand-strips" aria-hidden="true">
+                            <i></i><i></i><i></i>
+                        </span>
+                        <span class="brand-name">MATRIX</span>
+                    </span>
+                </a>
+                <div class="d-flex align-items-center gap-3">
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
-                aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+            </div>
 
+            <!-- Bottom row: Nav links + Language/Search -->
             <div class="collapse navbar-collapse" id="navbarMain">
-                <ul class="navbar-nav ms-auto me-3">
+                <ul class="navbar-nav me-auto">
                     <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"
                             href="{% url 'core:index' %}" {% if request.resolver_match.url_name == 'index' %}aria-current="page"{% endif %}>Home</a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {% if request.resolver_match.url_name in 'category_list,subcategory_list,product_list,category_detail,subcategory_detail,product_detail' %}active{% endif %}"
+                            href="#" data-bs-toggle="dropdown" aria-expanded="false">Product Center</a>
+                        <ul class="dropdown-menu">
+                            {% for category in nav_categories %}
+                            <li><a class="dropdown-item" href="{% url 'products:category_details' category.slug %}">{{ category.name }}</a></li>
+                            {% empty %}
+                            <li><a class="dropdown-item" href="{% url 'products:category_list' %}">All Categories</a></li>
+                            {% endfor %}
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="{% url 'products:product_list' %}">All Products</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'services' %}active{% endif %}"
+                            href="#" data-bs-toggle="dropdown" aria-expanded="false">Service</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'core:services' %}">All Services</a></li>
+                        </ul>
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}"
-                            href="{% url 'core:about' %}" {% if request.resolver_match.url_name == 'about' %}aria-current="page"{% endif %}>About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'services' %}active{% endif %}"
-                            href="{% url 'core:services' %}" {% if request.resolver_match.url_name == 'services' %}aria-current="page"{% endif %}>Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'category_list' %}active{% endif %}"
-                            href="{% url 'products:category_list' %}" {% if request.resolver_match.url_name == 'category_list' %}aria-current="page"{% endif %}>Categories</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'subcategory_list' %}active{% endif %}"
-                            href="{% url 'products:subcategory_list' %}" {% if request.resolver_match.url_name == 'subcategory_list' %}aria-current="page"{% endif %}>Subcategories</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.resolver_match.url_name == 'product_list' %}active{% endif %}"
-                            href="{% url 'products:product_list' %}" {% if request.resolver_match.url_name == 'product_list' %}aria-current="page"{% endif %}>Products</a>
+                            href="{% url 'core:about' %}" {% if request.resolver_match.url_name == 'about' %}aria-current="page"{% endif %}>About Us</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}"
-                            href="{% url 'core:contact' %}" {% if request.resolver_match.url_name == 'contact' %}aria-current="page"{% endif %}>Contact</a>
+                            href="{% url 'core:contact' %}" {% if request.resolver_match.url_name == 'contact' %}aria-current="page"{% endif %}>Contact Us</a>
                     </li>
                 </ul>
-                <a href="{% url 'core:contact' %}" class="btn btn-cta">Request Services</a>
+                <div class="navbar-end-controls d-flex align-items-center gap-3">
+                    <button class="btn btn-link nav-search-btn p-0" id="navSearchToggle" aria-label="Search" aria-expanded="false" aria-controls="navSearchOverlay"><i class="bi bi-search"></i></button>
+                </div>
+
+            <!-- Search overlay (full-width, slides down under navbar) -->
+            <div class="nav-search-overlay" id="navSearchOverlay" aria-hidden="true">
+                <form method="get" action="{% url 'products:search' %}" class="nav-search-form" role="search">
+                    <div class="nav-search-inner container">
+                        <i class="bi bi-search nav-search-icon" aria-hidden="true"></i>
+                        <input type="search" name="q" class="nav-search-field" placeholder="Search products, categories, subcategories…" autocomplete="off" aria-label="Search site" id="navSearchField">
+                        <button type="submit" class="btn btn-primary-custom btn-sm-custom ms-2"><span>Go</span></button>
+                        <button type="button" class="btn btn-link nav-search-close ms-1" id="navSearchClose" aria-label="Close search"><i class="bi bi-x-lg"></i></button>
+                    </div>
+                </form>
+            </div>
             </div>
         </div>
     </nav>
@@ -82,87 +112,99 @@
     <footer class="footer" role="contentinfo">
         <div class="container">
             <div class="row g-5">
-                <div class="col-lg-4 col-md-6">
-                    <div class="footer-brand">
-                        <div class="footer-brand-name">
-                            <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
-                            ElectroTech
-                        </div>
-                        <p class="footer-tagline">
-                            Engineering reliable electrical and electronic solutions for industry, education, and
-                            research.
-                        </p>
-                    </div>
+                <!-- Product Column -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="footer-col-title">Product</h5>
+                    <ul class="footer-links">
+                        {% for category in nav_categories %}
+                        <li><a href="{% url 'products:category_details' category.slug %}">{{ category.name }}</a></li>
+                        {% empty %}
+                        <li><a href="{% url 'products:category_list' %}">All Categories</a></li>
+                        {% endfor %}
+                    </ul>
                 </div>
 
+                <!-- Service Column -->
                 <div class="col-lg-2 col-md-6">
-                    <div class="footer-nav">
-                        <h5>Navigation</h5>
-                        <ul class="footer-links">
-                            <li><a href="{% url 'core:index' %}">Home</a></li>
-                            <li><a href="{% url 'core:about' %}">About Us</a></li>
-                            <li><a href="{% url 'core:services' %}">Services</a></li>
-                            <li><a href="{% url 'core:contact' %}">Contact</a></li>
-                        </ul>
+                    <h5 class="footer-col-title">Service</h5>
+                    <ul class="footer-links">
+                        <li><a href="#">Video</a></li>
+                        <li><a href="#">Warranty</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <!-- About Us Column -->
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="footer-col-title">About Us</h5>
+                    <div class="footer-about-info">
+                        <p class="footer-company-name">MATRIX TECHNOLOGY INC.</p>
+                        <p class="footer-address">Room 601, Block C, Huachuangda Cultural and Technological Industrial Park, Haihui Road, District 49th, Bao'an District, Shenzhen, Guangdong Province</p>
+                        <p class="footer-contact-line">Tel: 0086 755 2836 4276</p>
+                        <p class="footer-contact-line">Email: sales@szmatrix.com</p>
                     </div>
                 </div>
 
+                <!-- Work Hours Column -->
                 <div class="col-lg-3 col-md-6">
-                    <div class="footer-nav">
-                        <h5>Products</h5>
-                        <ul class="footer-links">
-                            <li><a href="{% url 'products:category_list' %}">Categories</a></li>
-                            <li><a href="{% url 'products:subcategory_list' %}">Subcategories</a></li>
-                            <li><a href="{% url 'products:product_list' %}">All Products</a></li>
-                        </ul>
+                    <h5 class="footer-col-title">Work Hours</h5>
+                    <div class="footer-hours">
+                        <p>Mon-Fri 08:00AM - 08:00PM</p>
+                        <p>Sat-Sun 09:00AM - 06:00PM</p>
                     </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-social">
-                        <h5>Connect With Us</h5>
-                        <div class="footer-social-links">
-                            <a href="#" class="footer-social-link" aria-label="LinkedIn">
-                                <i class="bi bi-linkedin"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="Twitter/X">
-                                <i class="bi bi-twitter-x"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="WhatsApp">
-                                <i class="bi bi-whatsapp"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="Facebook">
-                                <i class="bi bi-facebook"></i>
-                            </a>
-                            <a href="#" class="footer-social-link" aria-label="Instagram">
-                                <i class="bi bi-instagram"></i>
-                            </a>
-                        </div>
-                        <div class="footer-newsletter mt-4" id="newsletter">
-                            <form action="{% url 'core:newsletter_subscribe' %}" method="POST"
-                                class="newsletter-form d-flex align-items-center justify-content-end">
-                                {% csrf_token %}
-                                <input type="email" name="email" placeholder="Enter your email" required>
-                                <button type="submit" class="btn btn-primary-custom"><i
-                                        class="bi bi-send-fill"></i></button>
-                            </form>
-                        </div>
+                    <div class="footer-social-icons">
+                        <a href="#" class="footer-social-icon" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="footer-social-icon" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+                        <a href="#" class="footer-social-icon" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="footer-social-icon" aria-label="Email"><i class="bi bi-envelope"></i></a>
                     </div>
                 </div>
             </div>
 
             <div class="footer-bottom">
-                <p class="footer-copyright">
-                    &copy; 2024 ElectroTech Industries. All rights reserved.
-                </p>
-                <div class="footer-legal">
-                    <a href="{% url 'core:privacy_policy' %}">Privacy Policy</a>
-                    <a href="{% url 'core:terms_of_service' %}">Terms of Service</a>
-                    <a href="{% url 'core:cookie_policy' %}">Cookie Policy</a>
-                </div>
+                <p class="footer-copyright">Copyright &copy; 2025 MATRIX TECHNOLOGY INC.</p>
             </div>
         </div>
+
+        <!-- Floating Contact Chat Button -->
+        <a href="{% url 'core:contact' %}" class="floating-contact-btn" aria-label="Contact us">
+            <span class="floating-contact-label">Contact us</span>
+            <span class="floating-contact-icon-wrap"><i class="bi bi-chat-fill"></i></span>
+        </a>
     </footer>
+
+    <!-- Search overlay logic -->
+    <script>
+    (function () {
+        var toggle = document.getElementById('navSearchToggle');
+        var overlay = document.getElementById('navSearchOverlay');
+        var field = document.getElementById('navSearchField');
+        var close = document.getElementById('navSearchClose');
+
+        function openSearch() {
+            overlay.classList.add('open');
+            toggle.setAttribute('aria-expanded', 'true');
+            overlay.setAttribute('aria-hidden', 'false');
+            setTimeout(function () { field.focus(); }, 120);
+        }
+
+        function closeSearch() {
+            overlay.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+            overlay.setAttribute('aria-hidden', 'true');
+        }
+
+        toggle.addEventListener('click', function () {
+            overlay.classList.contains('open') ? closeSearch() : openSearch();
+        });
+
+        close.addEventListener('click', closeSearch);
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closeSearch();
+        });
+    }());
+    </script>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

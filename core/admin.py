@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Newsletter, ContactSubmission, ServiceInquiry
+from .models import Newsletter, ContactSubmission, ServiceInquiry, Customer
 
 
 @admin.register(Newsletter)
@@ -67,3 +67,8 @@ class ServiceInquiryAdmin(admin.ModelAdmin):
     def mark_as_unread(self, request, queryset):
         queryset.update(is_read=False)
     mark_as_unread.short_description = "Mark selected as unread"
+
+
+@admin.register(Customer)
+class CustomerAdmin(admin.ModelAdmin):
+    list_display = ('name',)

@@ -200,7 +200,15 @@ def product_details(request, slug):
         "label_call": "Call Us",
         "label_email": "Email Us",
     }
-    related_services = []  # can be populated from a service model later
+    related_services = [
+        {"name": "Manufacturing",                 "icon": "bi-gear-wide-connected"},
+        {"name": "Sales & Distribution",          "icon": "bi-box-seam"},
+        {"name": "Installation & Commissioning",  "icon": "bi-tools"},
+        {"name": "Calibration & Testing",         "icon": "bi-speedometer2"},
+        {"name": "Repair & Maintenance",          "icon": "bi-wrench-adjustable"},
+        {"name": "Annual Maintenance Contracts",  "icon": "bi-calendar-check"},
+        {"name": "Custom Equipment Development",  "icon": "bi-lightbulb"},
+    ]
 
     return render(
         request,
@@ -283,3 +291,49 @@ def quote_request(request):
             {"success": False, "message": f"An error occurred: {str(e)}"},
             status=500,
         )
+
+
+# --- search ----------------------------------------------------------------
+
+def search(request):
+    """Search across Category, Subcategory, and Product by name / description."""
+    from django.db import models as db_models
+    query = request.GET.get("q", "").strip()
+
+    categories = Category.objects.none()
+    subcategories = Subcategory.objects.none()
+    products = Product.objects.none()
+
+    if query:
+        categories = Category.objects.filter(
+            db_models.Q(name__icontains=query) | db_models.Q(short_description__icontains=query)
+        )
+        subcategories = Subcategory.objects.select_related("category").filter(
+            db_models.Q(name__icontains=query) | db_models.Q(short_description__icontains=query)
+        )
+        products = (
+            Product.objects.select_related("subcategory", "subcategory__category")
+            .filter(
+                db_models.Q(name__icontains=query)
+                | db_models.Q(short_description__icontains=query)
+                | db_models.Q(description__icontains=query)
+            )
+        )
+
+    total = (
+        (categories.count() if query else 0)
+        + (subcategories.count() if query else 0)
+        + (products.count() if query else 0)
+    )
+
+    return render(
+        request,
+        "search.html",
+        {
+            "query": query,
+            "categories": categories,
+            "subcategories": subcategories,
+            "products": products,
+            "total": total,
+        },
+    )

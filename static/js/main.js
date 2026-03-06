@@ -31,6 +31,37 @@ handleNavbarScroll();
 // Scroll reveal animation
 const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .stagger-children');
 
+// Hero carousel behavior (product showcase)
+const heroCarousel = document.querySelector('.hero-carousel');
+const heroImages = heroCarousel ? heroCarousel.querySelectorAll('img') : [];
+let currentHeroIndex = 0;
+
+function showHeroImage(index) {
+    heroImages.forEach((img, i) => {
+        img.style.display = i === index ? 'block' : 'none';
+    });
+}
+
+if (heroImages.length > 0) {
+    showHeroImage(0);
+    const prevBtn = document.querySelector('.carousel-control.prev');
+    const nextBtn = document.querySelector('.carousel-control.next');
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            currentHeroIndex = (currentHeroIndex - 1 + heroImages.length) % heroImages.length;
+            showHeroImage(currentHeroIndex);
+        });
+    }
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            currentHeroIndex = (currentHeroIndex + 1) % heroImages.length;
+            showHeroImage(currentHeroIndex);
+        });
+    }
+}
+
+
 const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {

@@ -1,0 +1,362 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{% if query %}Search: {{ query }}{% else %}Search{% endif %} | ElectroTech Industries{% endblock %}
+
+{% block meta_description %}Search results for "{{ query }}" across our product categories, subcategories, and products.{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+    <div class="container">
+        <div class="page-header-content">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Search</li>
+                </ol>
+            </nav>
+            <h1>Search</h1>
+            <p>Find products, categories, and subcategories across our catalog.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Search Bar -->
+<section class="search-bar-section">
+    <div class="container">
+        <form method="get" action="{% url 'products:search' %}" class="search-form-main" role="search">
+            <div class="search-input-wrap">
+                <i class="bi bi-search search-input-icon" aria-hidden="true"></i>
+                <input
+                    type="search"
+                    name="q"
+                    id="searchInput"
+                    class="form-control search-input-main"
+                    placeholder="Search products, categories, subcategories…"
+                    value="{{ query }}"
+                    autocomplete="off"
+                    aria-label="Search"
+                    autofocus
+                >
+                <button type="submit" class="btn btn-primary-custom search-submit-btn">
+                    <span>Search</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Results Section -->
+<section class="section-padding search-results-section">
+    <div class="container">
+
+        {% if query %}
+            <!-- Results summary -->
+            <div class="search-summary reveal">
+                {% if total %}
+                    <p class="search-summary-text">
+                        Found <strong>{{ total }}</strong> result{{ total|pluralize }} for
+                        <em>"{{ query }}"</em>
+                    </p>
+                {% else %}
+                    <div class="search-no-results text-center">
+                        <i class="bi bi-search search-no-results-icon" aria-hidden="true"></i>
+                        <h3>No results found for <em>"{{ query }}"</em></h3>
+                        <p>Try different keywords or browse our product categories below.</p>
+                        <a href="{% url 'products:category_list' %}" class="btn btn-primary-custom mt-3">
+                            <span><i class="bi bi-grid me-2"></i>Browse Categories</span>
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Tab navigation -->
+            {% if total %}
+            <ul class="nav search-tabs mb-4 reveal" id="searchTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="search-tab-btn {% if products %}active{% elif not categories and not subcategories %}active{% endif %}"
+                        id="tab-products" data-bs-toggle="tab" data-bs-target="#pane-products"
+                        type="button" role="tab" aria-controls="pane-products"
+                        aria-selected="{% if products %}true{% else %}false{% endif %}">
+                        <i class="bi bi-box-seam me-1"></i> Products
+                        <span class="search-tab-count">{{ products|length }}</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="search-tab-btn {% if not products and subcategories %}active{% endif %}"
+                        id="tab-subcategories" data-bs-toggle="tab" data-bs-target="#pane-subcategories"
+                        type="button" role="tab" aria-controls="pane-subcategories"
+                        aria-selected="{% if not products and subcategories %}true{% else %}false{% endif %}">
+                        <i class="bi bi-diagram-3 me-1"></i> Subcategories
+                        <span class="search-tab-count">{{ subcategories|length }}</span>
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="search-tab-btn {% if not products and not subcategories and categories %}active{% endif %}"
+                        id="tab-categories" data-bs-toggle="tab" data-bs-target="#pane-categories"
+                        type="button" role="tab" aria-controls="pane-categories"
+                        aria-selected="{% if not products and not subcategories and categories %}true{% else %}false{% endif %}">
+                        <i class="bi bi-grid me-1"></i> Categories
+                        <span class="search-tab-count">{{ categories|length }}</span>
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="searchTabsContent">
+
+                <!-- Products Pane -->
+                <div class="tab-pane fade {% if products %}show active{% elif not categories and not subcategories %}show active{% endif %}"
+                    id="pane-products" role="tabpanel" aria-labelledby="tab-products">
+                    {% if products %}
+                        <div class="product-grid stagger-children">
+                            {% for product in products %}
+                            <article class="product-card">
+                                <div class="product-card-image">
+                                    {% if product.is_featured %}<span class="product-card-badge">Featured</span>{% endif %}
+                                    {% if product.is_new %}<span class="product-card-badge badge-new">New</span>{% endif %}
+                                    {% if product.image %}
+                                        <img src="{{ product.image.url }}" alt="{{ product.name }}" style="width:100%;height:100%;object-fit:cover;">
+                                    {% else %}
+                                        <i class="bi bi-cpu" style="font-size:2.5rem;color:var(--text-muted);"></i>
+                                    {% endif %}
+                                </div>
+                                <div class="product-card-content">
+                                    {% if product.subcategory %}
+                                        <span class="product-card-category">{{ product.subcategory.name }}</span>
+                                    {% endif %}
+                                    <h4 class="product-card-title">{{ product.name }}</h4>
+                                    <p class="product-card-desc">{{ product.short_description|truncatechars:90 }}</p>
+                                    <div class="product-card-actions">
+                                        <a href="{% url 'products:product_details' product.slug %}" class="btn btn-primary-custom btn-sm-custom">
+                                            <span>View Details</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </article>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted">No products matched your search.</p>
+                    {% endif %}
+                </div>
+
+                <!-- Subcategories Pane -->
+                <div class="tab-pane fade {% if not products and subcategories %}show active{% endif %}"
+                    id="pane-subcategories" role="tabpanel" aria-labelledby="tab-subcategories">
+                    {% if subcategories %}
+                        <div class="category-grid stagger-children">
+                            {% for sub in subcategories %}
+                            <article class="category-card">
+                                <div class="category-card-image">
+                                    {% if sub.image %}
+                                        <img src="{{ sub.image.url }}" alt="{{ sub.name }}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
+                                    {% else %}
+                                        <i class="bi bi-diagram-3"></i>
+                                    {% endif %}
+                                </div>
+                                <div class="category-card-content">
+                                    <span class="product-card-category">{{ sub.category.name }}</span>
+                                    <h4>{{ sub.name }}</h4>
+                                    <p>{{ sub.short_description|truncatechars:100 }}</p>
+                                    <div class="category-card-meta">
+                                        <span><i class="bi bi-box-seam"></i> {{ sub.product_count }} Products</span>
+                                    </div>
+                                    <a href="{% url 'products:subcategory_details' sub.slug %}" class="btn btn-primary-custom btn-sm-custom mt-3">
+                                        <span>View Subcategory</span>
+                                    </a>
+                                </div>
+                            </article>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted">No subcategories matched your search.</p>
+                    {% endif %}
+                </div>
+
+                <!-- Categories Pane -->
+                <div class="tab-pane fade {% if not products and not subcategories and categories %}show active{% endif %}"
+                    id="pane-categories" role="tabpanel" aria-labelledby="tab-categories">
+                    {% if categories %}
+                        <div class="category-grid stagger-children">
+                            {% for category in categories %}
+                            <article class="category-card">
+                                <div class="category-card-image">
+                                    {% if category.image %}
+                                        <img src="{{ category.image.url }}" alt="{{ category.name }}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;">
+                                    {% else %}
+                                        <i class="bi bi-gear-wide-connected"></i>
+                                    {% endif %}
+                                </div>
+                                <div class="category-card-content">
+                                    <h4>{{ category.name }}</h4>
+                                    <p>{{ category.short_description|truncatechars:100 }}</p>
+                                    <div class="category-card-meta">
+                                        <span><i class="bi bi-collection"></i> {{ category.subcategory_count }} Subcategories</span>
+                                        <span><i class="bi bi-box-seam"></i> {{ category.product_count }} Products</span>
+                                    </div>
+                                    <a href="{% url 'products:category_details' category.slug %}" class="btn btn-primary-custom btn-sm-custom mt-3">
+                                        <span>View Category</span>
+                                    </a>
+                                </div>
+                            </article>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted">No categories matched your search.</p>
+                    {% endif %}
+                </div>
+
+            </div><!-- /.tab-content -->
+            {% endif %}
+
+        {% else %}
+            <!-- No query yet — show browse hint -->
+            <div class="search-no-query text-center reveal">
+                <i class="bi bi-search" style="font-size:4rem;color:var(--text-muted);display:block;margin-bottom:1rem;"></i>
+                <h3>Start typing to search</h3>
+                <p class="text-muted">Search across all products, subcategories, and categories.</p>
+                <div class="search-quick-links mt-4">
+                    <a href="{% url 'products:product_list' %}" class="btn btn-outline-custom me-2">
+                        <i class="bi bi-box-seam me-1"></i> All Products
+                    </a>
+                    <a href="{% url 'products:category_list' %}" class="btn btn-outline-custom">
+                        <i class="bi bi-grid me-1"></i> All Categories
+                    </a>
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+/* Search bar section */
+.search-bar-section {
+    background: var(--bg-secondary);
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.search-form-main {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.search-input-wrap {
+    display: flex;
+    align-items: center;
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 0.35rem 0.35rem 0.35rem 1rem;
+    gap: 0.5rem;
+    transition: border-color var(--transition-fast);
+}
+
+.search-input-wrap:focus-within {
+    border-color: var(--accent);
+}
+
+.search-input-icon {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+.search-input-main {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 1rem;
+    color: var(--text-primary);
+    box-shadow: none !important;
+    padding: 0.4rem 0;
+}
+
+.search-submit-btn {
+    flex-shrink: 0;
+    border-radius: var(--radius-md) !important;
+}
+
+/* Summary */
+.search-summary {
+    margin-bottom: 1.5rem;
+}
+
+.search-summary-text {
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+/* Tabs */
+.search-tabs {
+    display: flex;
+    gap: 0.5rem;
+    border-bottom: 2px solid var(--border-light);
+    padding-bottom: 0;
+    flex-wrap: wrap;
+}
+
+.search-tab-btn {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 0.65rem 1.2rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    cursor: pointer;
+    margin-bottom: -2px;
+    border-radius: 0;
+    transition: color var(--transition-fast), border-color var(--transition-fast);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.search-tab-btn:hover {
+    color: var(--text-primary);
+}
+
+.search-tab-btn.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+    font-weight: 600;
+}
+
+.search-tab-count {
+    background: var(--bg-elevated);
+    color: var(--text-muted);
+    border-radius: 999px;
+    padding: 0.05rem 0.5rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.search-tab-btn.active .search-tab-count {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* No results */
+.search-no-results,
+.search-no-query {
+    padding: 4rem 0;
+}
+
+.search-no-results-icon {
+    font-size: 4rem;
+    color: var(--text-muted);
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.search-quick-links .btn {
+    margin-bottom: 0.5rem;
+}
+</style>
+{% endblock %}

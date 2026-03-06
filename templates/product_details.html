@@ -1,45 +1,11 @@
 {% extends "base.html" %}
+{% load static %}
 
-{% block extra_css %}
-<!-- Product details page: force white text (overrides gray) -->
-<style>
-    .page-product-details,
-    .page-product-details p,
-    .page-product-details .product-info-meta span,
-    .page-product-details .product-info-description,
-    .page-product-details .specifications-table th,
-    .page-product-details .specifications-table td,
-    .page-product-details .features-list p,
-    .page-product-details .features-list .text-muted,
-    .page-product-details .product-card-content p,
-    .page-product-details .product-card-category,
-    .page-product-details .page-header .breadcrumb-item a,
-    .page-product-details .page-header .breadcrumb-item + .breadcrumb-item::before,
-    .page-product-details .text-muted,
-    .page-product-details small.text-muted,
-    .page-product-details .bg-card .text-muted,
-    .page-product-details .bg-card p.small,
-    .page-product-details .quick-specs small,
-    .page-product-details .bg-card h5 {
-        color: #ffffff !important;
-    }
-    .page-product-details h1,
-    .page-product-details h3,
-    .page-product-details h4,
-    .page-product-details h5 {
-        color: #ffffff !important;
-    }
-    .page-product-details .page-header .breadcrumb-item.active {
-        color: var(--accent) !important;
-    }
-    .page-product-details .nav-tabs .nav-link {
-        color: #ffffff !important;
-    }
-    .page-product-details .nav-tabs .nav-link.active {
-        color: var(--accent) !important;
-    }
-</style>
-{% endblock %}
+{% comment %}
+Old extra_css block that forced white text is no longer needed now that the
+site uses a light background and black accents. Keeping default styles will
+allow text to render correctly.
+{% endcomment %}
 
 {% block title %}{{ product.name }} | ElectroTech Industries{% endblock %}
 
@@ -49,7 +15,7 @@
 <!-- Main Content -->
 <main id="main-content" class="page-product-details">
     <!-- Page Header -->
-    <section class="page-header">
+    <section class="page-header products-hero" style="background-image:url('{% static "images/product-details-hero.jpg" %}')">
         <div class="container">
             <div class="page-header-content">
                 <nav aria-label="breadcrumb">
@@ -68,6 +34,7 @@
                         <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
                     </ol>
                 </nav>
+                <h1>{{ product.name }}</h1>
             </div>
         </div>
     </section>

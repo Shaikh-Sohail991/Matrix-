@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}ElectroTech Industries | Electrical & Electronic Solutions{% endblock %}
 
@@ -7,288 +8,115 @@ instruments, educational kits, and professional services.{% endblock %}
 
 {% block content %}
 <!-- Hero Section -->
-<section class="hero" aria-labelledby="hero-title">
-    <div class="hero-grid" aria-hidden="true"></div>
+<section class="hero product-hero" aria-labelledby="hero-title">
+    <div class="container-fluid">
+        <div class="row g-0 align-items-center">
+            <!-- left text area -->
+            <div class="col-lg-6 hero-details">
+                {% if hero_product %}
+                <h1 id="hero-title" class="hero-title mb-4">{{ hero_product.name|linebreaksbr }}</h1>
+                <ul class="hero-features list-unstyled mb-4">
+                    {% for feat in hero_product.features.all %}
+                    <li>{{ feat.title }}{% if feat.description %} - {{ feat.description }}{% endif %}</li>
+                    {% empty %}
+                    <li>No features listed.</li>
+                    {% endfor %}
+                </ul>
+                <a href="#" class="btn btn-quote" data-product="{{ hero_product.name }}">Get an Quote</a>
+
+                <div class="hero-bottom-stats d-flex flex-wrap align-items-center mt-5">
+                    <div class="stat-block me-5">
+                        <span class="stat-num">{{ hero_product.specs.count }}</span>
+                        <span class="stat-label">specs</span>
+                    </div>
+                    <div class="stat-block">
+                        <span class="stat-num">{{ hero_product.gallery.count }}</span>
+                        <span class="stat-label">images</span>
+                    </div>
+                </div>
+                {% else %}
+                <p>No featured product available at this time.</p>
+                {% endif %}
+            </div>
+            <!-- right image area -->
+            <div class="col-lg-6 hero-carousel-wrap position-relative">
+                <div class="hero-carousel">
+                    {% if hero_product %}
+                        {% if hero_product.gallery.exists %}
+                            {% for img in hero_product.gallery.all %}
+                            <img src="{{ img.url }}" alt="{{ hero_product.name }}" class="img-fluid">
+                            {% endfor %}
+                        {% elif hero_product.image %}
+                            <img src="{{ hero_product.image.url }}" alt="{{ hero_product.name }}" class="img-fluid">
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <button class="carousel-control prev"><i class="bi bi-chevron-left"></i></button>
+                <button class="carousel-control next"><i class="bi bi-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Products Section -->
+<section class="featured-products section-padding" aria-labelledby="featured-title">
+    <div class="container">
+        <div class="section-header reveal">
+            <h2 id="featured-title" class="section-title">OUR FEATURED PRODUCTS</h2>
+        </div>
+        <div class="product-grid">
+            {% for prod in daily_products %}
+            <div class="product-card">
+                <div class="product-card-image">
+                    {% if prod.image %}
+                    <img src="{{ prod.image.url }}" alt="{{ prod.name }}">
+                    {% endif %}
+                </div>
+                <div class="product-card-content">
+                    <h4><a href="{% url 'products:product_details' prod.slug %}">{{ prod.name }}</a></h4>
+                    <p>{{ prod.short_description }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'products:product_list' %}" class="btn btn-primary-custom">View all Products</a>
+        </div>
+    </div>
+</section>
+
+<!-- Customers Section -->
+<section class="customers-section section-padding" aria-labelledby="customers-title">
+    <div class="container text-center">
+        <h2 id="customers-title" class="section-title reveal">MATRIX'S CUSTOMERS</h2>
+        <div class="customers-grid reveal">
+            {% for cust in customers %}
+            <div class="customer-logo">
+                <img src="{{ cust.logo.url }}" alt="{{ cust.name }}" class="img-fluid">
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Promo Video Section (hardcoded) -->
+<section class="promo-video-section section-padding">
     <div class="container">
         <div class="row align-items-center g-5">
             <div class="col-lg-6">
-                <div class="hero-content">
-                    <div class="hero-badge">
-                        <i class="bi bi-patch-check-fill"></i>
-                        ISO Certified Manufacturer
-                    </div>
-                    <h1 id="hero-title" class="hero-title">
-                        Engineering <span class="highlight">Reliable Electrical</span> & Electronic Solutions
-                    </h1>
-                    <p class="hero-description">
-                        We design, manufacture, and service high-quality electrical and electronic equipment
-                        trusted by laboratories, educational institutions, and industrial clients worldwide.
-                    </p>
-                    <div class="hero-buttons">
-                        <a href="services.html" class="btn btn-primary-custom">
-                            <span><i class="bi bi-arrow-right-circle me-2"></i>Explore Services</span>
-                        </a>
-                        <a href="contact.html" class="btn btn-outline-custom">
-                            <i class="bi bi-envelope me-2"></i>Contact Us
-                        </a>
-                    </div>
-                </div>
+                <img src="{% static 'images/promo-supply.jpg' %}" alt="Promo product" class="img-fluid">
             </div>
             <div class="col-lg-6">
-                <div class="hero-visual">
-                    <div class="hero-visual-inner">
-                        <div class="hero-stats-mini stagger-children">
-                            <div class="hero-stat-item">
-                                <i class="bi bi-calendar-check"></i>
-                                <span class="stat-number" data-count="25">25</span>
-                                <span class="stat-label">Years Experience</span>
-                            </div>
-                            <div class="hero-stat-item">
-                                <i class="bi bi-people"></i>
-                                <span class="stat-number" data-count="500">500</span>
-                                <span class="stat-label">Clients Served</span>
-                            </div>
-                            <div class="hero-stat-item">
-                                <i class="bi bi-box-seam"></i>
-                                <span class="stat-number" data-count="12000">12K</span>
-                                <span class="stat-label">Products Delivered</span>
-                            </div>
-                            <div class="hero-stat-item">
-                                <i class="bi bi-award"></i>
-                                <span class="stat-number" data-count="8">8</span>
-                                <span class="stat-label">Certifications</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- About Overview Section -->
-<section class="about-section section-padding" aria-labelledby="about-title">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="section-label">About Us</span>
-            <h2 id="about-title" class="section-title">Excellence in Engineering & Manufacturing</h2>
-            <p class="section-description">
-                For over two decades, we have been at the forefront of electrical and electronic innovation,
-                delivering precision-engineered solutions.
-            </p>
-        </div>
-
-        <div class="about-grid stagger-children">
-            <article class="about-card">
-                <div class="about-card-icon">
-                    <i class="bi bi-gear-wide-connected"></i>
-                </div>
-                <h4>Manufacturing Excellence</h4>
-                <p>State-of-the-art manufacturing facilities equipped with precision machinery and automated
-                    quality control systems for consistent product quality.</p>
-            </article>
-
-            <article class="about-card">
-                <div class="about-card-icon">
-                    <i class="bi bi-bullseye"></i>
-                </div>
-                <h4>Precision Engineering</h4>
-                <p>Every product is engineered with meticulous attention to detail, ensuring accuracy,
-                    reliability, and long operational lifespan in demanding environments.</p>
-            </article>
-
-            <article class="about-card">
-                <div class="about-card-icon">
-                    <i class="bi bi-shield-check"></i>
-                </div>
-                <h4>Quality Assurance</h4>
-                <p>Rigorous testing protocols and quality management systems ensure every product meets
-                    international standards and customer specifications.</p>
-            </article>
-
-            <article class="about-card">
-                <div class="about-card-icon">
-                    <i class="bi bi-clipboard-check"></i>
-                </div>
-                <h4>Standards Compliance</h4>
-                <p>Full compliance with ISO, IEC, and industry-specific regulations. Regular audits maintain our
-                    certifications and quality benchmarks.</p>
-            </article>
-
-            <article class="about-card">
-                <div class="about-card-icon">
-                    <i class="bi bi-headset"></i>
-                </div>
-                <h4>After-Sales Support</h4>
-                <p>Dedicated technical support team providing installation guidance, calibration services,
-                    maintenance, and prompt resolution of queries.</p>
-            </article>
-
-            <article class="about-card">
-                <div class="about-card-icon">
-                    <i class="bi bi-lock"></i>
-                </div>
-                <h4>Security & Reliability</h4>
-                <p>Security-first approach in product design with redundant safety features, surge protection,
-                    and fail-safe mechanisms for critical applications.</p>
-            </article>
-        </div>
-    </div>
-</section>
-
-<!-- Statistics Section -->
-<section class="stats-section section-padding" aria-labelledby="stats-title">
-    <div class="container">
-        <div class="section-header reveal">
-            <span class="section-label">Our Impact</span>
-            <h2 id="stats-title" class="section-title">Numbers That Define Our Excellence</h2>
-        </div>
-
-        <div class="stats-grid stagger-children">
-            <div class="stat-item">
-                <div class="stat-icon">
-                    <i class="bi bi-calendar-range"></i>
-                </div>
-                <div class="stat-number">
-                    <span class="counter" data-target="25">0</span><span class="stat-suffix">+</span>
-                </div>
-                <div class="stat-label">Years in Manufacturing</div>
-            </div>
-
-            <div class="stat-item">
-                <div class="stat-icon">
-                    <i class="bi bi-building"></i>
-                </div>
-                <div class="stat-number">
-                    <span class="counter" data-target="500">0</span><span class="stat-suffix">+</span>
-                </div>
-                <div class="stat-label">Clients Served</div>
-            </div>
-
-            <div class="stat-item">
-                <div class="stat-icon">
-                    <i class="bi bi-box-seam"></i>
-                </div>
-                <div class="stat-number">
-                    <span class="counter" data-target="12000">0</span><span class="stat-suffix">+</span>
-                </div>
-                <div class="stat-label">Products Delivered</div>
-            </div>
-
-            <div class="stat-item">
-                <div class="stat-icon">
-                    <i class="bi bi-patch-check"></i>
-                </div>
-                <div class="stat-number">
-                    <span class="counter" data-target="8">0</span>
-                </div>
-                <div class="stat-label">Certifications</div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Mission Section -->
-<section class="mission-section section-padding" aria-labelledby="mission-title">
-    <div class="container">
-        <div class="mission-content">
-            <div class="mission-text reveal-left">
-                <span class="section-label">Our Mission</span>
-                <h2 id="mission-title">Driving Innovation Through Engineering Excellence</h2>
-                <p>
-                    To be the most trusted partner for electrical and electronic solutions, enabling industries
-                    and institutions to achieve their goals through innovative, reliable, and sustainable
-                    products and services.
-                </p>
-
-                <div class="mission-points">
-                    <div class="mission-point">
-                        <div class="mission-point-icon">
-                            <i class="bi bi-shield-lock"></i>
-                        </div>
-                        <div class="mission-point-content">
-                            <h5>Security-First Manufacturing</h5>
-                            <p>Products designed with integrated safety features and compliance with global
-                                security standards.</p>
-                        </div>
-                    </div>
-
-                    <div class="mission-point">
-                        <div class="mission-point-icon">
-                            <i class="bi bi-star"></i>
-                        </div>
-                        <div class="mission-point-content">
-                            <h5>Quality-Driven Production</h5>
-                            <p>Zero-compromise approach to quality with multi-stage inspection and testing
-                                protocols.</p>
-                        </div>
-                    </div>
-
-                    <div class="mission-point">
-                        <div class="mission-point-icon">
-                            <i class="bi bi-people"></i>
-                        </div>
-                        <div class="mission-point-content">
-                            <h5>Client-First Service Model</h5>
-                            <p>Dedicated support throughout the product lifecycle with responsive service teams.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="mission-point">
-                        <div class="mission-point-icon">
-                            <i class="bi bi-lightbulb"></i>
-                        </div>
-                        <div class="mission-point-content">
-                            <h5>Research-Driven Design</h5>
-                            <p>Continuous R&D investment to develop cutting-edge solutions for evolving needs.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mission-visual reveal-right">
-                <div class="mission-card">
-                    <div class="mission-card-icon">
-                        <i class="bi bi-quote"></i>
-                    </div>
-                    <blockquote>
-                        "Excellence is not a destination but a continuous journey. Every product we create is a
-                        testament to our commitment to quality, innovation, and the trust our clients place in
-                        us."
-                    </blockquote>
-                    <div class="mission-card-author">
-                        <div class="mission-card-author-avatar">
-                            <i class="bi bi-person"></i>
-                        </div>
-                        <div class="mission-card-author-info">
-                            <h6>Leadership Team</h6>
-                            <span>ElectroTech Industries</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- CTA Section -->
-<section class="cta-section section-padding" aria-labelledby="cta-title">
-    <div class="container">
-        <div class="cta-content reveal">
-            <h2 id="cta-title">Ready to Partner With Us?</h2>
-            <p>
-                From product manufacturing to complete lifecycle services, we are your trusted partner for
-                electrical and electronic solutions.
-            </p>
-            <div class="cta-buttons">
-                <a href="services.html" class="btn btn-primary-custom">
-                    <span><i class="bi bi-tools me-2"></i>View Our Services</span>
-                </a>
-                <a href="contact.html" class="btn btn-outline-custom">
-                    <i class="bi bi-telephone me-2"></i>Get in Touch
-                </a>
+                <h2 class="promo-title">MPS-H-3 SERIES TRIPPLE CHANNEL DC LINEAR POWER SUPPLY</h2>
+                <ol class="promo-features">
+                    <li>Current and voltage can be set to adjust in a certain range;</li>
+                    <li>Direct display of voltage and current in series and parallel mode;</li>
+                    <li>Can save last time output data and last time output status;</li>
+                    <li>Optional USB, RS-232, RS-485 interface;</li>
+                    <li>Channel 1 and channel 2 are independent switch control;</li>
+                    <li>Four digits display, 10mV/1mA resolution;</li>
+                </ol>
+                <a href="#" class="btn btn-watch"><i class="bi bi-play-fill me-2"></i>Watch Now</a>
             </div>
         </div>
     </div>

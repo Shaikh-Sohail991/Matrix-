@@ -4,8 +4,32 @@ from django.views.decorators.http import require_http_methods
 from django.contrib import messages
 from .models import Newsletter, ContactSubmission, ServiceInquiry
 
+from products.models import Product
+import random
+from datetime import date
+
+
+def get_daily_products(count=6):
+    """Return a pseudo-random but stable set of products which changes daily."""
+    qs = list(Product.objects.all())
+    if not qs:
+        return []
+    # deterministic shuffle based on current day
+    seed = date.today().toordinal()
+    rand = random.Random(seed)
+    rand.shuffle(qs)
+    return qs[:count]
+
+
 def index(request):
-    return render(request, 'index.html')
+    # hero product remains the first featured item
+    hero_product = Product.objects.filter(is_featured=True).first()
+    # pick six products that rotate every day
+    daily_products = get_daily_products(6)
+    # company customers for logos section
+    from .models import Customer
+    customers = Customer.objects.all()[:12]
+    return render(request, 'index.html', {'hero_product': hero_product, 'daily_products': daily_products, 'customers': customers})
 
 def about(request):
     return render(request, 'about.html')
