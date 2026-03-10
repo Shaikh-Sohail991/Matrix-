@@ -2,7 +2,7 @@ from collections import defaultdict
 from urllib.parse import urlencode
 
 from django.db.models import Count
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
@@ -176,6 +176,19 @@ def product_list(request):
             "filter_query_string": filter_query_string,
             "active_filter_count": sum(len(v) for v in active_filters.values()),
         },
+    )
+
+
+def product_missing(request):
+    """User navigated to /products/product/ without specifying a slug.
+
+    Rather than a generic 404, show a friendly page encouraging them to
+    choose a product (with a link to the full product list).
+    """
+    return render(
+        request,
+        "product_missing.html",
+        {"message": "It looks like you haven't selected a product yet."},
     )
 
 

@@ -191,26 +191,79 @@ if (thumbs) {
 }
 
 
-// Quote form submission (demo) (from product_details.html)
-// Note: This is overridden by inline script in product_details.html
-const quoteForm = document.getElementById('quoteForm');
-if (quoteForm && !quoteForm.hasAttribute('data-handler-set')) {
-    quoteForm.addEventListener('submit', function (e) {
+// Quote form logic (site‑wide) – the modal is defined in base.html and
+// individual pages (product_details) already have a copy as a fallback.
+(function() {
+    function initQuoteForm() {
+        const quoteForm = document.getElementById('quoteForm');
+        if (!quoteForm || quoteForm.hasAttribute('data-handler-set')) return;
+
+        quoteForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const formData  = new FormData(this);
+            const submitBtn = document.getElementById('quoteSubmitBtn');
+            const origHtml  = submitBtn.innerHTML;
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span>Submitting...</span>';
+
+            fetch('{% url "products:quote_request" %}', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(r => r.json())
+            .then(data => {
+                const msgDiv = document.getElementById('quoteResponseMsg');
+                msgDiv.style.display = 'block';
+                if (data.success) {
+                    msgDiv.className = 'alert alert-success';
+                    msgDiv.textContent = data.message;
+                    quoteForm.reset();
+                    setTimeout(() => {
+                        bootstrap.Modal.getInstance(document.getElementById('quoteModal')).hide();
+                        msgDiv.style.display = 'none';
+                    }, 2000);
+                } else {
+                    msgDiv.className = 'alert alert-danger';
+                    msgDiv.textContent = data.message;
+                }
+            })
+            .catch(function () {
+                const msgDiv = document.getElementById('quoteResponseMsg');
+                msgDiv.style.display = 'block';
+                msgDiv.className = 'alert alert-danger';
+                msgDiv.textContent = 'An error occurred. Please try again.';
+            })
+            .finally(function () {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = origHtml;
+            });
+        });
+
+        quoteForm.setAttribute('data-handler-set', 'true');
+    }
+
+    document.addEventListener('click', function(e) {
+        const btn = e.target.closest('.btn-quote');
+        if (!btn) return;
         e.preventDefault();
-        alert('Your quote request has been sent! We will contact you shortly.');
-        if (document.getElementById('quoteModal')) {
-            bootstrap.Modal.getInstance(document.getElementById('quoteModal')).hide();
+        const prodName = btn.dataset.product || '';
+        const modalEl = document.getElementById('quoteModal');
+        if (modalEl) {
+            const input = modalEl.querySelector('#quoteProduct');
+            if (input) input.value = prodName;
+            new bootstrap.Modal(modalEl).show();
+            initQuoteForm();
         }
-        this.reset();
     });
-    quoteForm.setAttribute('data-handler-set', 'true');
-}
 
-
-// Populate product name for forms if needed (from product_details.html)
-const productName = document.getElementById('product-title')?.textContent || '';
-const quoteProductInput = document.getElementById('quoteProduct');
-if (quoteProductInput) quoteProductInput.value = productName;
+    document.addEventListener('DOMContentLoaded', function() {
+        const productName = document.getElementById('product-title')?.textContent.trim() || '';
+        const quoteProductInput = document.getElementById('quoteProduct');
+        if (quoteProductInput && productName) quoteProductInput.value = productName;
+        initQuoteForm();
+    });
+})();
 
 
 // Service Modal functionality (from services.html)

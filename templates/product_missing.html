@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Select a Product | ElectroTech Industries{% endblock %}
+
+{% block meta_description %}Please choose a product from our catalog to view details.{% endblock %}
+
+{% block content %}
+<section class="section-padding text-center" style="background:#000; color:#fff;">
+    <div class="container">
+        <h1 class="text-white">Oops! No Product Selected</h1>
+        <p class="lead text-white">{{ message }} Browse our full product catalog to get started.</p>
+        <a href="{% url 'products:product_list' %}" class="btn btn-primary-custom mt-3">
+            <span><i class="bi bi-box-seam me-2"></i>View All Products</span>
+        </a>
+    </div>
+</section>
+{% endblock %}

@@ -3383,6 +3383,11 @@ textarea.form-control {
   color: #ffffff;
 }
 
+/* neutralize Bootstrap muted color inside dark modals */
+.modal-body .text-muted {
+  color: #dddddd !important;
+}
+
 .modal-title .bi,
 .modal-body .bi {
   /* icons in modal titles/body should also be bright */

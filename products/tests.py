@@ -63,3 +63,10 @@ class ViewTests(SimpleDataMixin, TestCase):
         self.assertEqual(resp.status_code, 200)
         self.assertContains(resp, self.prod.name)
 
+    def test_product_missing_view(self):
+        # accessing bare "product/" should render a friendly message rather
+        # than a 404.
+        resp = self.client.get(reverse("products:product_missing"))
+        self.assertEqual(resp.status_code, 200)
+        self.assertContains(resp, "No Product Selected")
+
