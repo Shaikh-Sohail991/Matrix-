@@ -3300,7 +3300,7 @@ textarea.form-control {
 
 .contact-section .contact-info-icon i {
   font-size: 1.25rem;
-  color: var(--accent);
+  color: #ffffff;
 }
 
 .contact-section .contact-social h5 {
@@ -3365,10 +3365,28 @@ textarea.form-control {
 .modal-title {
   font-family: var(--font-display);
   font-weight: 700;
+  color: #ffffff;
+}
+
+/* ensure cancel button in modal footer is white */
+.modal-footer .btn-outline-custom {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+.modal-footer .btn-outline-custom:hover {
+  background: rgba(255,255,255,0.1);
 }
 
 .modal-body {
   padding: 2rem;
+  /* ensure all text inside dark modals appears light */
+  color: #ffffff;
+}
+
+.modal-title .bi,
+.modal-body .bi {
+  /* icons in modal titles/body should also be bright */
+  color: #ffffff;
 }
 
 .modal-footer {
@@ -3384,6 +3402,22 @@ textarea.form-control {
 
 .btn-close:hover {
   opacity: 1;
+}
+
+/* Modal form styles */
+.modal-body .form-label {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.modal-body .form-control {
+  background: #ffffff;
+  border: 1px solid #ddd;
+  color: #000;
+}
+
+.modal-body .form-control::placeholder {
+  color: #999;
 }
 
 /* ========================================
