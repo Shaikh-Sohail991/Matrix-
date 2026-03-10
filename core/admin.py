@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Newsletter, ContactSubmission, ServiceInquiry, Customer
+from .models import Newsletter, ContactSubmission, ServiceInquiry, Customer, YouTubeVideo
 
 
 @admin.register(Newsletter)
@@ -72,3 +72,12 @@ class ServiceInquiryAdmin(admin.ModelAdmin):
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
     list_display = ('name',)
+
+
+@admin.register(YouTubeVideo)
+class YouTubeVideoAdmin(admin.ModelAdmin):
+    list_display = ('title', 'category', 'youtube_id', 'created_at')
+    list_filter = ('category', 'created_at')
+    search_fields = ('title', 'youtube_id')
+    readonly_fields = ('created_at',)
+    date_hierarchy = 'created_at'

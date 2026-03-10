@@ -84,3 +84,25 @@ class Customer(models.Model):
         ordering = ['name']
         verbose_name = 'Customer'
         verbose_name_plural = 'Customers'
+
+
+class YouTubeVideo(models.Model):
+    CATEGORY_CHOICES = [
+        ('intro', 'Introduction'),
+        ('maint', 'Maintenance'),
+        ('tutorial', 'Tutorial'),
+        ('other', 'Other'),
+    ]
+
+    title = models.CharField(max_length=255)
+    youtube_id = models.CharField(max_length=50)
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='other')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'YouTube Video'
+        verbose_name_plural = 'YouTube Videos'

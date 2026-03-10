@@ -586,9 +586,13 @@ img {
   min-height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center;
   position: relative;
   overflow: hidden;
   padding-top: 110px;
+  padding: 110px 2rem 2rem 2rem;
+  background: linear-gradient(135deg, #0a1929 0%, #1a237e 50%, #0d47a1 100%);
+  color: #fff;
 }
 
 /* product-hero variant */
@@ -693,8 +697,8 @@ img {
   right: 0;
   bottom: 0;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0, 200, 150, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(0, 150, 136, 0.06) 0%, transparent 40%);
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0, 240, 255, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(0, 150, 200, 0.06) 0%, transparent 40%);
   pointer-events: none;
 }
 
@@ -702,8 +706,8 @@ img {
   position: absolute;
   inset: 0;
   background-image:
-    linear-gradient(rgba(0, 200, 150, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 200, 150, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
   background-size: 60px 60px;
   mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
   -webkit-mask-image: linear-gradient(to bottom, transparent, black 20%, black 80%, transparent);
@@ -713,15 +717,18 @@ img {
 .hero-content {
   position: relative;
   z-index: 1;
+  max-width: 1200px;
+  width: 100%;
+  padding: 2rem;
 }
 
 .hero-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(0, 200, 150, 0.1);
-  border: 1px solid rgba(0, 200, 150, 0.2);
-  color: var(--accent);
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  color: #00f0ff;
   padding: 0.5rem 1rem;
   border-radius: 50px;
   font-size: 0.85rem;
@@ -741,10 +748,11 @@ img {
   margin-bottom: 1.5rem;
   animation: fadeInUp 0.8s ease 0.1s forwards;
   opacity: 0;
+  color: #fff;
 }
 
 .hero-title .highlight {
-  background: linear-gradient(135deg, var(--accent), var(--accent-light));
+  background: linear-gradient(135deg, #00f0ff, #00dbee);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -757,6 +765,67 @@ img {
   margin-bottom: 2rem;
   animation: fadeInUp 0.8s ease 0.2s forwards;
   opacity: 0;
+  color: #ccc;
+}
+
+/* Breadcrumb in hero */
+.hero .breadcrumb {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  color: #00f0ff;
+}
+
+.hero .breadcrumb a {
+  color: #00f0ff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.hero .breadcrumb a:hover {
+  color: #00dbee;
+}
+
+.hero .breadcrumb .sep {
+  color: #666;
+  margin: 0 0.3rem;
+}
+
+.hero .breadcrumb .current {
+  color: #ccc;
+}
+
+/* Number overlay and circuit patterns */
+.numbers-overlay,
+.circuit-right {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.08;
+  font-size: 12rem;
+  font-weight: 900;
+  color: rgba(0, 240, 255, 0.3);
+  line-height: 1;
+}
+
+.numbers-overlay {
+  top: -50px;
+  left: -100px;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  overflow: hidden;
+}
+
+.circuit-right {
+  bottom: -100px;
+  right: -200px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.1) 1px, transparent 1px);
+  background-size: 30px 30px;
 }
 
 .hero-buttons {
@@ -4595,3 +4664,134 @@ select.form-control option {
   background-color: #ffffff !important;
 }
 
+/* ========================================
+   FAQ SECTION AND RELATED STYLES
+======================================== */
+.faq-section { max-width: 1100px; margin: 60px auto 80px; padding: 0 40px; }
+.faq-category-title { font-size: 22px; font-weight: 800; color: var(--text-primary); letter-spacing: 0.5px; margin-bottom: 24px; text-transform: uppercase; }
+.faq-list { border-top: 1px solid var(--border); }
+.faq-item { border-bottom: 1px solid var(--border); overflow: hidden; }
+.faq-question { display: flex; align-items: center; gap: 14px; padding: 13px 20px; cursor: pointer; transition: background 0.15s; user-select: none; }
+.faq-question:hover { background: var(--bg-secondary); }
+.faq-icon { width: 20px; height: 20px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-size: 18px; font-weight: 400; }
+.faq-item.open .faq-icon { color: var(--accent); }
+.faq-question-text { font-size: 15px; font-weight: 400; color: var(--text-secondary); line-height: 1.5; }
+.faq-item.open .faq-question-text { color: var(--text-primary); font-weight: 500; }
+.faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.25s; padding: 0 20px 0 54px; }
+.faq-item.open .faq-answer { max-height: 500px; padding: 0 20px 18px 54px; }
+.faq-answer p { font-size: 14.5px; color: var(--text-muted); line-height: 1.75; }
+
+/* quality banner reused on several pages */
+.quality-banner { background: #111; padding: 30px 20px; margin: 30px 0; }
+.quality-inner { max-width: 1200px; margin: auto; display: grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap: 20px; }
+.quality-item { display: flex; align-items: center; justify-content: center; gap: 16px; padding: 10px; }
+.quality-icon { width: 46px; height: 46px; border: 2px solid rgba(255,255,255,0.45); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.quality-label { font-size: 17px; font-weight: 700; color: #fff; }
+
+/* responsive tweaks for faq/quality-banner */
+@media (max-width: 1200px) { .faq-section { padding: 0 28px; margin: 48px auto 64px; } .quality-banner { margin: 20px 0; } }
+@media (max-width: 768px) { .faq-section { padding: 0 20px; margin: 36px auto 52px; } .faq-question { padding: 15px 14px; gap: 12px; } .faq-question-text { font-size: 14px; } .quality-banner { margin: 14px 0; padding: 22px 16px; } .quality-inner { grid-template-columns: 1fr; gap: 16px; } }
+@media (max-width: 480px) { .faq-section { padding: 0 16px; margin: 28px auto 44px; } .faq-question { padding: 13px 10px; gap: 10px; } .faq-question-text { font-size: 13px; } .faq-icon { font-size: 16px; } .quality-banner { margin: 10px 0; padding: 18px 14px; } .quality-icon { width: 40px; height: 40px; } .quality-label { font-size: 15px; } }
+
+/* VIDEO PAGE */
+.filter-section { background: var(--bg-secondary); padding: var(--section-padding) 0; }
+/* additional filter elements */
+.filter-section .filter-inner { display: flex; flex-wrap: wrap; align-items: center; gap: 2rem; justify-content: center; }
+.filter-section .category-select {
+    flex: 0 1 450px;
+    max-width: 100%;
+}
+.filter-section .category-select select {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 2px solid #333;
+    border-radius: 4px;
+    background: #fff;
+    color: #333;
+    font-size: 1rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.2em 1.2em;
+    padding-right: 2.5rem;
+}
+.filter-section .checkboxes-group {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+.filter-section .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+    color: #333;
+}
+/* Search box styling */
+.filter-section .search-box {
+    position: relative;
+    flex: 0 1 300px;
+    max-width: 100%;
+}
+.filter-section .search-box input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 2px solid #333;
+    border-radius: 4px;
+    background: #fff;
+    color: #333;
+    font-size: 1rem;
+}
+.filter-section .search-box input::placeholder {
+    color: #999;
+}
+.filter-section .search-box i {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    pointer-events: none;
+}
+
+.filter-inner { max-width: 1100px; margin: auto; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; }
+.filter-select-wrap { position: relative; }
+.filter-select { appearance: none; padding: 0.6rem 1rem; border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.select-arrow { position: absolute; right: 0.8rem; top: 50%; transform: translateY(-50%); pointer-events: none; }
+.checkboxes-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+.checkbox-label { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.9rem; }
+
+.videos-section { padding: var(--section-padding) 0; }
+.videos-inner { max-width: 1100px; margin: auto; }
+.video-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap: 1.5rem; }
+.video-card { display: block; text-decoration: none; color: inherit; }
+.video-thumb { position: relative; }
+.video-thumb img { width: 100%; border-radius: var(--radius-sm); }
+.play-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.4); opacity: 0; transition: opacity var(--transition-fast); border-radius: var(--radius-sm);} 
+.video-card:hover .play-overlay { opacity: 1; }
+.video-info { margin-top: 0.5rem; }
+.video-title { font-size: 1rem; font-weight: 600; }
+.video-cat-link { font-size: 0.85rem; color: var(--text-muted); pointer-events: none;}
+.modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; z-index: 2000; }
+.modal-bg.open { display: flex; }
+.modal-content { position: relative; width: 90%; max-width: 800px; background: #000; border-radius: var(--radius-md); overflow: hidden; }
+.modal-close-btn { position: absolute; top: 0.5rem; right: 0.5rem; background: none; border: none; color: #fff; font-size: 2rem; line-height: 1; cursor: pointer;}
+.modal-content iframe { width: 100%; height: 450px; border: none; }
+
+/* WARRANTY PAGE */
+.intro-section { padding: var(--section-padding) 0; background: var(--bg-secondary); }
+.intro-inner { max-width: 1100px; margin: auto; text-align: center; }
+.intro-tag { display: inline-block; font-size: 0.9rem; font-weight: 600; color: var(--accent); margin-bottom: 1rem; }
+.intro-heading { font-size: 2rem; font-weight: 700; margin: 0 auto; max-width: 800px; }
+
+.stats-section { padding: var(--section-padding) 0; }
+.stats-inner { max-width: 1100px; margin: auto; display: flex; flex-wrap: wrap; gap: 2rem; align-items: center; }
+.stats-image img { width: 100%; border-radius: var(--radius-md); }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 1.5rem; }
+.stat-card { background: var(--bg-card); padding: 1rem; border-radius: var(--radius-md); text-align: center; }
+.stat-number-row { font-size: 2.5rem; font-weight: 800; color: var(--accent); }
+
+.policy-section, .service-section, .why-section, .products-img-section, .news-section { padding: var(--section-padding) 0; }
+.policy-inner, .service-inner, .why-inner, .news-inner { max-width: 1100px; margin: auto; display: flex; flex-wrap: wrap; gap: 2rem; }
+.policy-col, .service-col, .why-item, .news-item { flex: 1; }

@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}Video Center - MATRIX{% endblock %}
+
+{% block content %}
+
+<!-- hero -->
+<div class="hero">
+  <div class="numbers-overlay" id="numOverlay"></div>
+  <div class="circuit-right"></div>
+  <div class="hero-content">
+    <div class="breadcrumb">
+      <a href="{% url 'core:index' %}">HOME</a>
+      <span class="sep">›</span>
+      <span class="current">VIDEO CENTER</span>
+    </div>
+    <h1 class="hero-title">VIDEO CENTER</h1>
+  </div>
+</div>
+
+<!-- filter -->
+<div class="filter-section">
+  <div class="filter-inner">
+    <!-- category dropdown -->
+    <div class="category-select">
+      <select id="categorySelect" onchange="applyFilters()">
+        <option value="any">Any</option>
+        {% for cat_value, cat_label in category_choices %}
+        <option value="{{ cat_value }}">{{ cat_label }} Video</option>
+        {% endfor %}
+      </select>
+    </div>
+    <!-- search box -->
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search videos..." onkeyup="applyFilters()" />
+      <i class="bi bi-search"></i>
+    </div>
+  </div>
+</div>
+
+<!-- videos grid -->
+<div class="videos-section">
+  <div class="videos-inner">
+    <div class="video-grid" id="videoGrid">
+      {% for video in videos %}
+      <a class="video-card" data-cat="{{ video.category }}" href="#" onclick="playVideo(event,'{{ video.youtube_id }}')">
+        <div class="video-thumb">
+          <img src="https://img.youtube.com/vi/{{ video.youtube_id }}/hqdefault.jpg" alt="{{ video.title }}" loading="lazy" />
+          <div class="play-overlay">
+            <i class="bi bi-play-fill" style="font-size:1.8rem;color:#fff;"></i>
+          </div>
+        </div>
+        <div class="video-info">
+          <div class="video-title">{{ video.title }}</div>
+          <a class="video-cat-link" href="#" onclick="return false;">
+            {% if video.category == 'intro' %}Introduction Video{% elif video.category == 'maint' %}Maintenance Video{% elif video.category == 'tutorial' %}Tutorial Video{% else %}Video{% endif %}
+          </a>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- news, quality-banner etc can be included if needed; reuse or copy from other templates -->
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// filter logic and modal from original page
+function applyFilters() {
+    const selectedCat = document.getElementById('categorySelect').value;
+    const searchText = document.getElementById('searchInput').value.toLowerCase();
+
+    document.querySelectorAll('#videoGrid .video-card').forEach(card => {
+        const cat = card.getAttribute('data-cat');
+        const title = card.querySelector('.video-title').textContent.toLowerCase();
+        let visible = true;
+
+        // apply dropdown filter
+        if (selectedCat !== 'any' && cat !== selectedCat) {
+            visible = false;
+        }
+        
+        // apply search filter
+        if (searchText && !title.includes(searchText)) {
+            visible = false;
+        }
+
+        card.classList.toggle('hidden', !visible);
+    });
+}
+
+// Video modal
+function playVideo(e, id) {
+    e.preventDefault();
+    document.getElementById('videoFrame').src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+    document.getElementById('videoModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+}
+function closeVideo() {
+    document.getElementById('videoFrame').src = '';
+    document.getElementById('videoModal').classList.remove('open');
+    document.body.style.overflow = '';
+}
+function handleModalBg(e) {
+    if (e.target === document.getElementById('videoModal')) closeVideo();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVideo(); });
+</script>
+
+<!-- modal markup appended to template so it sits at bottom of content -->
+<div class="modal-bg" id="videoModal" onclick="handleModalBg(event)">
+  <div class="modal-content">
+    <button class="modal-close-btn" onclick="closeVideo()">&times;</button>
+    <iframe id="videoFrame" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+  </div>
+</div>
+
+{% endblock %}

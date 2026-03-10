@@ -50,6 +50,26 @@ def cookie_policy(request):
     return render(request, 'cookie_policy.html')
 
 
+def faq(request):
+    # static FAQ content rendered from template
+    return render(request, 'faq.html')
+
+def videos(request):
+    from .models import YouTubeVideo
+    from django.db.models import Count
+
+    videos = YouTubeVideo.objects.all()
+    # compute counts by category for use in the UI
+    counts_qs = YouTubeVideo.objects.values('category').annotate(count=Count('id'))
+    category_counts = {item['category']: item['count'] for item in counts_qs}
+
+    return render(request, 'video.html', {
+        'videos': videos,
+        'category_counts': category_counts,
+        'category_choices': YouTubeVideo.CATEGORY_CHOICES,
+    })
+
+
 @require_http_methods(["POST"])
 def newsletter_subscribe(request):
     """Handle newsletter subscription"""

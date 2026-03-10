@@ -11,6 +11,8 @@ urlpatterns = [
     path('privacy-policy/', views.privacy_policy, name='privacy_policy'),
     path('terms-of-service/', views.terms_of_service, name='terms_of_service'),
     path('cookie-policy/', views.cookie_policy, name='cookie_policy'),
+    path('faqs/', views.faq, name='faq'),
+    path('videos/', views.videos, name='videos'),
     
     # Form submission endpoints
     path('api/newsletter-subscribe/', views.newsletter_subscribe, name='newsletter_subscribe'),
