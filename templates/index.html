@@ -14,45 +14,93 @@ instruments, educational kits, and professional services.{% endblock %}
             <!-- left text area -->
             <div class="col-lg-6 hero-details">
                 {% if hero_product %}
-                <h1 id="hero-title" class="hero-title mb-4">{{ hero_product.name|linebreaksbr }}</h1>
-                <ul class="hero-features list-unstyled mb-4">
-                    {% for feat in hero_product.features.all %}
-                    <li>{{ feat.title }}{% if feat.description %} - {{ feat.description }}{% endif %}</li>
-                    {% empty %}
-                    <li>No features listed.</li>
-                    {% endfor %}
-                </ul>
-                <a href="#" class="btn btn-quote" data-product="{{ hero_product.name }}">Get a Quote</a>
+                <!-- Hero Badge -->
+                <div class="hero-badge-wrapper mb-3">
+                    <span class="hero-badge">
+                        <i class="bi bi-lightning-fill"></i>
+                        Featured Product
+                    </span>
+                </div>
 
-                <div class="hero-bottom-stats d-flex flex-wrap align-items-center mt-5">
-                    <div class="stat-block me-5">
-                        <span class="stat-num">{{ hero_product.specs.count }}</span>
-                        <span class="stat-label">specs</span>
+                <!-- Main Title -->
+                <h1 id="hero-title" class="hero-title mb-4">{{ hero_product.name|linebreaksbr }}</h1>
+
+                <!-- Features List -->
+                <div class="hero-features-wrapper mb-4">
+                    <ul class="hero-features list-unstyled">
+                        {% for feat in hero_product.features.all %}
+                        <li class="feature-item">
+                            <span class="feature-icon"><i class="bi bi-check-circle-fill"></i></span>
+                            <span class="feature-text">{{ feat.title }}{% if feat.description %} - {{ feat.description }}{% endif %}</span>
+                        </li>
+                        {% empty %}
+                        <li class="feature-item">
+                            <span class="feature-icon"><i class="bi bi-check-circle-fill"></i></span>
+                            <span class="feature-text">No features listed.</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="hero-cta-section mb-5">
+                    <a href="#" class="btn btn-quote" data-product="{{ hero_product.name }}">
+                        <i class="bi bi-quote"></i>
+                        Get a Quote
+                    </a>
+                </div>
+
+                <!-- Stats Section -->
+                <div class="hero-bottom-stats">
+                    <div class="stat-block">
+                        <div class="stat-icon-wrapper">
+                            <i class="bi bi-list-check"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-num">{{ hero_product.specs.count }}</span>
+                            <span class="stat-label">Specifications</span>
+                        </div>
                     </div>
                     <div class="stat-block">
-                        <span class="stat-num">{{ hero_product.gallery.count }}</span>
-                        <span class="stat-label">images</span>
+                        <div class="stat-icon-wrapper">
+                            <i class="bi bi-image"></i>
+                        </div>
+                        <div class="stat-content">
+                            <span class="stat-num">{{ hero_product.gallery.count }}</span>
+                            <span class="stat-label">Images</span>
+                        </div>
                     </div>
                 </div>
+
                 {% else %}
-                <p>No featured product available at this time.</p>
+                <div class="hero-empty-state">
+                    <p>No featured product available at this time.</p>
+                </div>
                 {% endif %}
             </div>
+
             <!-- right image area -->
             <div class="col-lg-6 hero-carousel-wrap position-relative">
+                <div class="carousel-decoration"></div>
                 <div class="hero-carousel">
                     {% if hero_product %}
                         {% if hero_product.gallery.exists %}
                             {% for img in hero_product.gallery.all %}
-                            <img src="{{ img.url }}" alt="{{ hero_product.name }}" class="img-fluid">
+                            <img src="{{ img.url }}" alt="{{ hero_product.name }}" class="img-fluid{% if forloop.first %} active{% endif %}">
                             {% endfor %}
                         {% elif hero_product.image %}
-                            <img src="{{ hero_product.image.url }}" alt="{{ hero_product.name }}" class="img-fluid">
+                            <img src="{{ hero_product.image.url }}" alt="{{ hero_product.name }}" class="img-fluid active">
                         {% endif %}
                     {% endif %}
                 </div>
-                <button class="carousel-control prev"><i class="bi bi-chevron-left"></i></button>
-                <button class="carousel-control next"><i class="bi bi-chevron-right"></i></button>
+                <button class="carousel-control prev" aria-label="Previous image">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <button class="carousel-control next" aria-label="Next image">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+                <!-- Carousel indicators -->
+                <div class="carousel-indicators" id="carouselIndicators"></div>
             </div>
         </div>
     </div>

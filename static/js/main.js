@@ -34,15 +34,37 @@ const revealElements = document.querySelectorAll('.reveal, .reveal-left, .reveal
 // Hero carousel behavior (product showcase)
 const heroCarousel = document.querySelector('.hero-carousel');
 const heroImages = heroCarousel ? heroCarousel.querySelectorAll('img') : [];
+const carouselIndicators = document.getElementById('carouselIndicators');
 let currentHeroIndex = 0;
 
 function showHeroImage(index) {
     heroImages.forEach((img, i) => {
-        img.style.display = i === index ? 'block' : 'none';
+        img.classList.toggle('active', i === index);
     });
+    
+    // Update indicators
+    if (carouselIndicators) {
+        const indicators = carouselIndicators.querySelectorAll('.indicator');
+        indicators.forEach((indicator, i) => {
+            indicator.classList.toggle('active', i === index);
+        });
+    }
 }
 
 if (heroImages.length > 0) {
+    // Create indicators
+    if (carouselIndicators) {
+        heroImages.forEach((_, i) => {
+            const indicator = document.createElement('div');
+            indicator.className = 'indicator' + (i === 0 ? ' active' : '');
+            indicator.addEventListener('click', () => {
+                currentHeroIndex = i;
+                showHeroImage(currentHeroIndex);
+            });
+            carouselIndicators.appendChild(indicator);
+        });
+    }
+    
     showHeroImage(0);
     const prevBtn = document.querySelector('.carousel-control.prev');
     const nextBtn = document.querySelector('.carousel-control.next');
