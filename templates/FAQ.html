@@ -3,32 +3,542 @@
 
 {% block title %}FAQs - Leading DC AC Power Supply Brand Matrix{% endblock %}
 
-{% block content %}
+{% block extra_css %}
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="{% static 'css/FAQ.css' %}" />
+<style>
+  /* ── FAQ HERO PREMIUM FILL ── */
+  .faq-hero {
+    min-height: 88vh !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 110px 0 4rem !important;
+    position: relative;
+    overflow: hidden;
+  }
 
-<!-- hero section (breadcrumb updated to use Django URL) -->
-<section class="hero">
+  /* Glowing background orbs */
+  .faq-hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .faq-hero-orb--1 {
+    width: 500px;
+    height: 500px;
+    background: rgba(28, 111, 235, 0.14);
+    top: -120px;
+    left: -100px;
+    animation: faqOrbA 9s ease-in-out infinite;
+  }
+
+  .faq-hero-orb--2 {
+    width: 350px;
+    height: 350px;
+    background: rgba(0, 200, 160, 0.09);
+    bottom: -80px;
+    right: 15%;
+    animation: faqOrbB 11s ease-in-out infinite;
+  }
+
+  @keyframes faqOrbA {
+
+    0%,
+    100% {
+      transform: translate(0, 0)
+    }
+
+    50% {
+      transform: translate(40px, -30px)
+    }
+  }
+
+  @keyframes faqOrbB {
+
+    0%,
+    100% {
+      transform: translate(0, 0)
+    }
+
+    50% {
+      transform: translate(-30px, 20px)
+    }
+  }
+
+  /* Inner layout */
+  .faq-hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+  }
+
+  .faq-hero-content {
+    flex: 1;
+    max-width: 560px;
+  }
+
+  /* Badge */
+  .faq-hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+    background: rgba(28, 111, 235, .15);
+    border: 1px solid rgba(28, 111, 235, .4);
+    color: #7AB8FF;
+    padding: .45rem 1rem;
+    border-radius: 999px;
+    font-size: .75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: 1.25rem;
+    animation: faqFadeUp .6s ease forwards;
+  }
+
+  .faq-hero-badge i {
+    font-size: .95rem;
+  }
+
+  /* Title */
+  .faq-hero-title {
+    font-size: clamp(2rem, 5vw, 3.4rem) !important;
+    font-weight: 800;
+    line-height: 1.15;
+    color: #fff;
+    margin-bottom: 1.25rem;
+    animation: faqFadeUp .7s ease .1s both;
+  }
+
+  .faq-title-accent {
+    background: linear-gradient(130deg, #1C6FEB, #56C0FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Subtitle */
+  .faq-hero-sub {
+    font-size: 1.02rem;
+    color: rgba(255, 255, 255, .6);
+    line-height: 1.75;
+    margin-bottom: 2rem;
+    animation: faqFadeUp .7s ease .18s both;
+  }
+
+  /* Topic chips */
+  .faq-hero-topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    margin-bottom: 2.5rem;
+    animation: faqFadeUp .7s ease .26s both;
+  }
+
+  .faq-topic-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    padding: .4rem .9rem;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 600;
+    letter-spacing: .03em;
+    border: 1px solid rgba(255, 255, 255, .12);
+    color: rgba(255, 255, 255, .5);
+    transition: all .2s ease;
+    cursor: default;
+  }
+
+  .faq-topic-chip--active,
+  .faq-topic-chip:hover {
+    background: rgba(28, 111, 235, .2);
+    border-color: rgba(28, 111, 235, .5);
+    color: #7AB8FF;
+  }
+
+  .faq-topic-chip i {
+    font-size: .8rem;
+  }
+
+  /* Stats row */
+  .faq-hero-stats {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+    animation: faqFadeUp .7s ease .34s both;
+  }
+
+  .faq-stat-block {
+    text-align: left;
+  }
+
+  .faq-stat-num {
+    display: block;
+    font-family: 'Sora', 'Outfit', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .faq-stat-plus {
+    font-size: 1.6rem;
+    color: #5BA8FF;
+  }
+
+  .faq-stat-label {
+    font-size: .78rem;
+    color: rgba(255, 255, 255, .45);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin-top: .25rem;
+    display: block;
+  }
+
+  .faq-stat-divider {
+    width: 1px;
+    height: 48px;
+    background: rgba(255, 255, 255, .1);
+  }
+
+  /* ── RIGHT: Preview FAQ cards ── */
+  .faq-hero-visual {
+    position: relative;
+    flex-shrink: 0;
+    width: clamp(280px, 36vw, 440px);
+    height: 380px;
+    z-index: 2;
+    animation: faqFadeIn .9s ease .2s both;
+  }
+
+  .faq-preview-card {
+    position: absolute;
+    background: rgba(255, 255, 255, .055);
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 14px;
+    padding: 1rem 1.1rem;
+    backdrop-filter: blur(14px);
+    display: flex;
+    gap: .85rem;
+    align-items: flex-start;
+    box-shadow: 0 16px 48px rgba(0, 0, 0, .35);
+    transition: transform .3s ease, box-shadow .3s ease;
+  }
+
+  .faq-preview-card:hover {
+    transform: translateY(-6px) !important;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .5);
+  }
+
+  .faq-pc-icon {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    background: rgba(28, 111, 235, .25);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5BA8FF;
+    font-size: .95rem;
+    flex-shrink: 0;
+  }
+
+  .faq-pc-q {
+    font-weight: 700;
+    font-size: .85rem;
+    color: #fff;
+    margin-bottom: .3rem;
+    line-height: 1.3;
+  }
+
+  .faq-pc-a {
+    font-size: .75rem;
+    color: rgba(255, 255, 255, .45);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Card positions & animations */
+  .faq-preview-card--1 {
+    top: 20px;
+    left: 0;
+    width: 280px;
+    animation: faqFloat1 6s ease-in-out infinite;
+  }
+
+  .faq-preview-card--2 {
+    top: 130px;
+    right: 0;
+    width: 265px;
+    animation: faqFloat2 7s ease-in-out infinite;
+  }
+
+  .faq-preview-card--3 {
+    bottom: 30px;
+    left: 20px;
+    width: 275px;
+    animation: faqFloat3 8s ease-in-out infinite;
+  }
+
+  /* Large decorative ring behind cards */
+  .faq-hero-ring {
+    position: absolute;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    border: 1px solid rgba(28, 111, 235, .18);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    animation: faqRingSpin 20s linear infinite;
+  }
+
+  .faq-hero-ring::after {
+    content: '';
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    border: 1px solid rgba(28, 111, 235, .1);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  @keyframes faqFloat1 {
+
+    0%,
+    100% {
+      transform: translateY(0)
+    }
+
+    50% {
+      transform: translateY(-12px)
+    }
+  }
+
+  @keyframes faqFloat2 {
+
+    0%,
+    100% {
+      transform: translateY(0)
+    }
+
+    50% {
+      transform: translateY(10px)
+    }
+  }
+
+  @keyframes faqFloat3 {
+
+    0%,
+    100% {
+      transform: translateY(0)
+    }
+
+    50% {
+      transform: translateY(-8px)
+    }
+  }
+
+  @keyframes faqRingSpin {
+    from {
+      transform: translate(-50%, -50%) rotate(0deg)
+    }
+
+    to {
+      transform: translate(-50%, -50%) rotate(360deg)
+    }
+  }
+
+  @keyframes faqFadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px)
+    }
+
+    to {
+      opacity: 1;
+      transform: none
+    }
+  }
+
+  @keyframes faqFadeIn {
+    from {
+      opacity: 0
+    }
+
+    to {
+      opacity: 1
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 900px) {
+    .faq-hero {
+      min-height: auto !important;
+      padding-bottom: 3rem !important;
+    }
+
+    .faq-hero-inner {
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .faq-hero-visual {
+      width: 100%;
+      height: 280px;
+    }
+
+    .faq-preview-card--1 {
+      width: 210px;
+      top: 10px;
+      left: 0;
+    }
+
+    .faq-preview-card--2 {
+      width: 200px;
+      top: 10px;
+      right: 0;
+    }
+
+    .faq-preview-card--3 {
+      display: none;
+    }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- ══════════ HERO ══════════ -->
+<section class="hero faq-hero">
   <div class="hero-bg"></div>
-  <div class="hero-content">
-    <div class="breadcrumb">
-      <a href="{% url 'core:index' %}">HOME</a>
-      <span>›</span>
-      <span class="breadcrumb-current">FAQS</span>
+  <div class="faq-hero-orb faq-hero-orb--1"></div>
+  <div class="faq-hero-orb faq-hero-orb--2"></div>
+
+  <div class="faq-hero-inner">
+    <!-- Left content -->
+    <div class="faq-hero-content">
+      <div class="breadcrumb">
+        <a href="{% url 'core:index' %}">HOME</a>
+        <span>›</span>
+        <span class="breadcrumb-current">FAQS</span>
+      </div>
+
+      <div class="faq-hero-badge">
+        <i class="bi bi-patch-question-fill"></i>
+        Knowledge Base
+      </div>
+
+      <h1 class="hero-title faq-hero-title">
+        Got Questions?<br>
+        <span class="faq-title-accent">We've Got Answers.</span>
+      </h1>
+
+      <p class="faq-hero-sub">
+        Browse 60+ expert answers covering DC Power Supplies, LCR Meters,
+        Oscilloscopes, Withstand Voltage Testers and more.
+      </p>
+
+      <!-- Topic chips -->
+      <div class="faq-hero-topics">
+        <span class="faq-topic-chip faq-topic-chip--active">
+          <i class="bi bi-lightning-charge-fill"></i> DC Power Supply
+        </span>
+        <span class="faq-topic-chip">
+          <i class="bi bi-cpu-fill"></i> LCR Meter
+        </span>
+        <span class="faq-topic-chip">
+          <i class="bi bi-shield-check-fill"></i> Withstand Voltage
+        </span>
+        <span class="faq-topic-chip">
+          <i class="bi bi-activity"></i> Oscilloscope
+        </span>
+      </div>
+
+      <!-- Stats row -->
+      <div class="faq-hero-stats">
+        <div class="faq-stat-block">
+          <span class="faq-stat-num">60<span class="faq-stat-plus">+</span></span>
+          <span class="faq-stat-label">Questions Answered</span>
+        </div>
+        <div class="faq-stat-divider"></div>
+        <div class="faq-stat-block">
+          <span class="faq-stat-num">4</span>
+          <span class="faq-stat-label">Product Categories</span>
+        </div>
+        <div class="faq-stat-divider"></div>
+        <div class="faq-stat-block">
+          <span class="faq-stat-num">∞</span>
+          <span class="faq-stat-label">Free Access</span>
+        </div>
+      </div>
     </div>
-    <h1 class="hero-title">MATRIX FAQS</h1>
+
+    <!-- Right: visual FAQ cards -->
+    <div class="faq-hero-visual" aria-hidden="true">
+      <div class="faq-preview-card faq-preview-card--1">
+        <div class="faq-pc-icon"><i class="bi bi-lightning-charge-fill"></i></div>
+        <div class="faq-pc-body">
+          <div class="faq-pc-q">What is CV vs CC mode?</div>
+          <div class="faq-pc-a">CV maintains fixed voltage; CC maintains fixed current. The supply switches
+            automatically…</div>
+        </div>
+      </div>
+      <div class="faq-preview-card faq-preview-card--2">
+        <div class="faq-pc-icon"><i class="bi bi-cpu-fill"></i></div>
+        <div class="faq-pc-body">
+          <div class="faq-pc-q">What is an LCR meter?</div>
+          <div class="faq-pc-a">It measures Inductance, Capacitance &amp; Resistance by applying a known AC test signal…
+          </div>
+        </div>
+      </div>
+      <div class="faq-preview-card faq-preview-card--3">
+        <div class="faq-pc-icon"><i class="bi bi-activity"></i></div>
+        <div class="faq-pc-body">
+          <div class="faq-pc-q">What is oscilloscope bandwidth?</div>
+          <div class="faq-pc-a">The frequency at which amplitude is attenuated to −3dB (70.7%) of the true value…</div>
+        </div>
+      </div>
+
+      <!-- Glow ring decoration -->
+      <div class="faq-hero-ring"></div>
+    </div>
   </div>
 </section>
 
-<!-- FAQ categories and items copied verbatim from the original static file -->
-
+<!-- ══════════ FAQ SECTION ══════════ -->
 <section class="faq-section">
   <h2 class="faq-category-title">DC Power Supply</h2>
+
   <div class="faq-list">
+
     <div class="faq-item">
       <div class="faq-question">
         <div class="faq-icon">+</div>
         <div class="faq-question-text">1.What is a DC power supply?</div>
       </div>
-      <div class="faq-answer"><p>A DC (Direct Current) power supply is an electronic device that converts AC mains electricity into a regulated, stable DC voltage and current output. It is used to power electronic devices, test equipment, and components that require a constant, low-noise DC source. DC power supplies are widely used in R&amp;D labs, manufacturing, and field testing environments.</p></div>
+      <div class="faq-answer">
+        <p>A DC (Direct Current) power supply is an electronic device that converts AC mains electricity into a
+          regulated, stable DC voltage and current output. It is used to power electronic devices, test equipment, and
+          components that require a constant, low-noise DC source. DC power supplies are widely used in R&D labs,
+          manufacturing, and field testing environments.</p>
+      </div>
     </div>
 
     <div class="faq-item">
@@ -36,7 +546,11 @@
         <div class="faq-icon">+</div>
         <div class="faq-question-text">2.What is an adjustable power supply?</div>
       </div>
-      <div class="faq-answer"><p>An adjustable power supply allows users to set and vary both the output voltage and current within a specified range. Unlike fixed power supplies, adjustable models provide greater flexibility for testing different devices and components with varying power requirements.</p></div>
+      <div class="faq-answer">
+        <p>An adjustable power supply allows users to set and vary both the output voltage and current within a
+          specified range. Unlike fixed power supplies, adjustable models provide greater flexibility for testing
+          different devices and components with varying power requirements.</p>
+      </div>
     </div>
 
     <div class="faq-item">
@@ -44,33 +558,1493 @@
         <div class="faq-icon">+</div>
         <div class="faq-question-text">3.What is a programmable DC power supply?</div>
       </div>
-      <div class="faq-answer"><p>A programmable DC power supply can be controlled and configured via software or a digital interface (such as USB, RS232, LAN, or GPIB). Users can set precise voltage and current values, create automated test sequences, and monitor output remotely — making it ideal for automated test environments (ATE).</p></div>
+      <div class="faq-answer">
+        <p>A programmable DC power supply can be controlled and configured via software or a digital interface (such as
+          USB, RS232, LAN, or GPIB). Users can set precise voltage and current values, create automated test sequences,
+          and monitor output remotely — making it ideal for automated test environments (ATE).</p>
+      </div>
     </div>
 
-    <!-- all remaining FAQ items from the original page (items 4 through 60+) should be inserted here verbatim -->
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">4.What is a linear power supply?</div>
+      </div>
+      <div class="faq-answer">
+        <p>A linear power supply uses a linear voltage regulator (such as a series pass transistor) to reduce and
+          regulate the voltage from a transformer. It produces very low noise and excellent transient response, making
+          it ideal for sensitive analog circuits and precision measurement applications.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">5.What is a bidirectional power supply?</div>
+      </div>
+      <div class="faq-answer">
+        <p>A bidirectional power supply can operate both as a source (supplying power to the DUT) and as a load
+          (absorbing power from the DUT). This is especially useful for battery testing, regenerative energy
+          applications, and motor drive simulations where energy needs to flow in both directions.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">6.What is a switching power supply?</div>
+      </div>
+      <div class="faq-answer">
+        <p>A switching power supply (SMPS) uses a high-frequency switching transistor to convert and regulate power.
+          Compared to linear supplies, switching supplies offer higher efficiency, smaller size, and lighter weight,
+          though they may produce more ripple and electromagnetic interference (EMI).</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">7.Can a DC power supply simulate a battery?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Yes. Many programmable DC power supplies support battery simulation mode. By programming a specific voltage,
+          internal resistance, and capacity curve, the power supply can mimic the behavior of a battery under load —
+          useful for testing battery-powered devices without using real batteries.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">8.What is the difference between CV and CC mode?</div>
+      </div>
+      <div class="faq-answer">
+        <p>CV (Constant Voltage) mode maintains a fixed output voltage regardless of load current changes. CC (Constant
+          Current) mode maintains a fixed output current regardless of load voltage changes. The supply automatically
+          switches between modes depending on whether the load resistance causes voltage or current to hit the
+          programmed limit first.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">9.What is the difference between a DC power supply and an AC power supply?</div>
+      </div>
+      <div class="faq-answer">
+        <p>A DC power supply outputs a fixed, steady-polarity voltage, while an AC power supply outputs an alternating
+          voltage that periodically reverses polarity. DC supplies are used for powering electronics, while AC supplies
+          are used for testing equipment that runs on mains AC power or for simulating AC grid conditions.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">10.Why are ripple and noise in a DC power supply important?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Ripple and noise refer to small AC fluctuations superimposed on the DC output. High ripple/noise can
+          interfere with sensitive electronic circuits, introduce measurement errors, and cause instability in precision
+          analog circuits. Low ripple is especially critical for audio equipment, RF circuits, and precision measurement
+          instruments.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">11.What key parameters should be considered when selecting a DC power supply?
+        </div>
+      </div>
+      <div class="faq-answer">
+        <p>Key parameters include: output voltage range, output current range, power rating (watts), ripple and noise,
+          load regulation, line regulation, transient response, number of channels, communication interfaces
+          (USB/LAN/RS232/GPIB), protection features (OVP, OCP, OTP), and display/readback accuracy.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">12.What is the function of remote sense in a power supply?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Remote sensing allows the power supply to monitor the voltage directly at the load terminals rather than at
+          its output terminals. This compensates for voltage drops caused by resistance in the connecting wires,
+          ensuring the load receives the precise set voltage regardless of cable length or resistance.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">13.What causes noise, and how to reduce or eliminate noise from the power supply
+          to the DUT?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Noise can originate from switching circuits inside the power supply, ground loops, or electromagnetic
+          interference. To reduce it: use a linear power supply for noise-sensitive applications, add external LC
+          filters, use proper shielded cables, maintain a solid ground connection, and keep power supply cables short
+          and away from signal cables.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">14.If an ohmmeter is unavailable, is there a simple way to determine if a power
+          supply has voltage output?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Yes. Connect a known resistive load (such as a light bulb or resistor of known value) to the output
+          terminals. If the load lights up or heats up, the supply has voltage output. Alternatively, use the power
+          supply's built-in display or digital readback function to verify the output voltage and current values.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">15.How to achieve negative voltage supply using a DC power supply?</div>
+      </div>
+      <div class="faq-answer">
+        <p>To achieve a negative voltage, reverse the polarity of the output connections: connect the negative terminal
+          to the circuit's reference (common) ground and the positive terminal to the circuit ground. Some supplies
+          support bipolar output natively. For dual-rail supplies, the two channels can be configured in series to
+          provide positive and negative rails simultaneously.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">16.What is dual-frequency?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Dual-frequency refers to the ability of an AC power supply to output at either 50 Hz or 60 Hz. This is useful
+          for testing products destined for different global markets where the mains frequency differs (e.g., 50 Hz in
+          Europe/Asia, 60 Hz in North America).</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">17.What do the five-fold protections refer to?</div>
+      </div>
+      <div class="faq-answer">
+        <p>The five-fold protections typically refer to: OVP (Over Voltage Protection), OCP (Over Current Protection),
+          OPP (Over Power Protection), OTP (Over Temperature Protection), and SCP (Short Circuit Protection). These
+          safeguards protect both the power supply and the DUT from damage under abnormal operating conditions.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">18.What are the differences between switching power supplies and linear power
+          supplies?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Switching power supplies are more efficient, lighter, and more compact, but generate higher ripple and EMI.
+          Linear power supplies offer very low noise, excellent regulation, and fast transient response, but are less
+          efficient and heavier. Linear types are preferred for precision analog applications; switching types for
+          high-power, high-efficiency applications.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">19.What serial port options are available?</div>
+      </div>
+      <div class="faq-answer">
+        <p>MATRIX power supplies typically support RS232, USB, LAN (Ethernet), GPIB (IEEE-488), and RS485 as standard or
+          optional communication interfaces. The available options depend on the specific model. These interfaces enable
+          remote control, data logging, and integration with automated test systems.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">20.Can the input voltage be switched?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Many MATRIX power supplies feature a universal input voltage range (e.g., 100–240 VAC), allowing them to
+          automatically or manually adapt to different mains voltages worldwide. Some models require a physical switch
+          to select between 110V and 220V inputs. Please refer to the specific model's datasheet for input voltage
+          specifications.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">21.Which button is the one-key lock, and what function does it lock?</div>
+      </div>
+      <div class="faq-answer">
+        <p>The one-key lock button (often labeled "Lock" or with a padlock icon) disables all front-panel controls to
+          prevent accidental changes during testing. When activated, adjustments to voltage, current, and other settings
+          via the front panel are blocked. The supply continues operating at the currently set values. The lock can
+          usually be released by pressing the same button again.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">22.Can 100 groups of voltage and current be stored/recalled?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Yes. Many MATRIX programmable power supplies support storing up to 100 groups (memory locations) of voltage
+          and current settings. These can be recalled instantly via the front panel or remote interface, allowing quick
+          switching between different test configurations without manually re-entering values.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">23.Why is the product described as high-precision?</div>
+      </div>
+      <div class="faq-answer">
+        <p>MATRIX power supplies are described as high-precision because they offer tight voltage and current regulation
+          (typically ±0.01% or better), high readback accuracy, and low noise/ripple output. This precision is essential
+          for accurate characterization of electronic components and devices in research and production testing.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">24.Why is the current fluctuating significantly?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Significant current fluctuation can be caused by: an unstable load (e.g., motors or switching circuits with
+          variable current draw), loose connections, the supply operating near the CV/CC crossover point, or incorrect
+          current limit settings. Check all connections, verify load stability, and ensure the current limit is set
+          appropriately above the expected load current.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">25.If the user sets the voltage to 24V, what is an appropriate overvoltage
+          protection setting?</div>
+      </div>
+      <div class="faq-answer">
+        <p>A common practice is to set the OVP (Overvoltage Protection) threshold approximately 5–10% above the working
+          voltage. For a 24V setting, an OVP of 26–27V is typically appropriate. This provides a safety margin against
+          transient voltage spikes while still protecting the DUT from dangerous overvoltage conditions.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">26.When controlling the power supply via a PC, can the PC control it in an AC
+          form?</div>
+      </div>
+      <div class="faq-answer">
+        <p>DC power supplies output DC only, regardless of how they are controlled. PC control via software interfaces
+          (USB, LAN, GPIB) changes the set voltage/current values digitally but does not change the nature of the
+          output. If you require an AC output, an AC power source (not a DC supply) would be needed.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">27.How does a DC power supply switch between constant current and constant
+          voltage modes?</div>
+      </div>
+      <div class="faq-answer">
+        <p>The transition between CV and CC mode is automatic. In CV mode, the supply maintains the set voltage; if the
+          load resistance drops so that the current would exceed the set current limit, the supply automatically
+          switches to CC mode, capping the current at the set value while the voltage drops below the set point.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">28.There is voltage but no current output.?</div>
+      </div>
+      <div class="faq-answer">
+        <p>This typically means the current limit is set to zero or the output is not connected to a load. In CV mode,
+          current only flows when a load is connected. Check: (1) verify the current limit setting is above zero; (2)
+          confirm the load is properly connected; (3) ensure the output is enabled (not in standby mode).</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">29.Can our linear power supply set a current ramp-up?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Some MATRIX linear power supply models support programmable slew rate control for voltage and current,
+          allowing gradual ramp-up of the output. This is useful for powering sensitive devices that may be damaged by
+          sudden inrush current. Please check the specific model's datasheet to confirm ramp functionality.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">30.What is the approximate voltage rise and fall time when using external analog
+          control?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Voltage rise and fall times under external analog control depend on the model and output capacitance.
+          Typically, for MATRIX switching supplies, the voltage rise/fall time is in the range of a few milliseconds to
+          tens of milliseconds for full-scale transitions. For precise values, consult the product's specifications or
+          conduct a measurement under your specific load conditions.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">31.What is the meaning of voltage and current indicators for load regulation?
+        </div>
+      </div>
+      <div class="faq-answer">
+        <p>Load regulation indicates how much the output voltage or current changes when the load changes from no-load
+          to full-load conditions. It is expressed as a percentage: Load Regulation = (V_no-load − V_full-load) /
+          V_full-load × 100%. A lower percentage indicates better regulation and a more stable output.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">32.When choosing a communication interface, which has better stability: LAN or
+          GPIB?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Both LAN (Ethernet) and GPIB offer reliable communication, but GPIB is traditionally favored in lab
+          environments for its deterministic timing, low latency, and immunity to network congestion. LAN is more
+          flexible and supports remote access over longer distances. For most modern ATE applications, LAN is preferred
+          due to its versatility and ease of integration.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">33.What test equipment do R&D users of switching power supplies need to evaluate
+          and measure the performance of their products and components?</div>
+      </div>
+      <div class="faq-answer">
+        <p>R&D users typically need: a programmable DC power supply (for powering the DUT), an electronic load (for load
+          testing), an oscilloscope (for observing ripple, transients, and switching waveforms), a power analyzer or
+          power meter (for efficiency measurement), a spectrum analyzer (for EMI/EMC testing), and an LCR meter (for
+          component characterization).</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">34.What is leakage current in a switching power supply? How to reduce it?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Leakage current is a small current that flows through the safety capacitors (Y capacitors) from the AC line
+          to the chassis ground. To reduce it: use lower-value Y capacitors, improve PCB layout to minimize parasitic
+          capacitance, add common-mode chokes, and ensure proper grounding. Note that reducing Y capacitor values may
+          increase EMI, so a balance must be struck.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">35.What is line regulation of a switching power supply?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Line regulation measures how much the output voltage changes in response to changes in the input (line)
+          voltage, while the load remains constant. It is expressed as: Line Regulation = ΔV_out / V_out × 100%. A good
+          switching power supply will maintain output stability even with significant variations in input voltage.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">36.What is ripple noise in a switching power supply? What factors affect it?
+        </div>
+      </div>
+      <div class="faq-answer">
+        <p>Ripple noise is a periodic AC voltage variation superimposed on the DC output, caused by the switching action
+          of the power supply. Factors affecting it include: switching frequency, output filter capacitor size and type,
+          PCB layout, load impedance, and the quality of the feedback control loop. Higher switching frequency and
+          better output filtering generally reduce ripple noise.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">37.How to reduce harmonic currents in a switching power supply?</div>
+      </div>
+      <div class="faq-answer">
+        <p>To reduce harmonic currents: implement Power Factor Correction (PFC) circuitry, use active front-end
+          rectification, add input filters (EMI filters with common-mode chokes), and ensure compliance with IEC
+          61000-3-2 standards. PFC is the most effective method, reshaping the input current waveform to closely
+          approximate a sinusoid.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">38.What do PWM and PFM mean in switching power supplies? What are their
+          respective advantages and disadvantages?</div>
+      </div>
+      <div class="faq-answer">
+        <p>PWM (Pulse Width Modulation) varies the pulse width at a fixed frequency to regulate output — it offers
+          predictable noise spectrum and is easier to filter, but less efficient at light loads. PFM (Pulse Frequency
+          Modulation) varies the switching frequency at a fixed pulse width — it offers higher light-load efficiency but
+          produces a variable noise spectrum that is harder to filter.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">39.What factors affect the EMC of a switching power supply?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Factors affecting EMC include: switching frequency and harmonics, PCB layout (trace routing, ground plane
+          design), component placement, shielding, input/output filter design, cable routing, transformer design, and
+          the presence of common-mode and differential-mode noise. Proper PCB design and filtering are critical to
+          achieving EMC compliance.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">40.What factors are related to the efficiency of a switching power supply?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Efficiency is affected by: switching losses (in MOSFETs and diodes), conduction losses (I²R in inductors and
+          PCB traces), core losses in transformers and inductors, gate driver losses, output rectifier losses, and
+          control circuit power consumption. Higher switching frequency generally increases switching losses but allows
+          smaller components.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">41.What are the possible reasons for low output voltage of a switching power
+          supply?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Possible reasons include: overloaded output (load drawing more current than rated), faulty feedback network,
+          damaged output capacitors, failed rectifier diodes, incorrect set voltage, poor line regulation under low
+          input voltage conditions, or PCB solder joint issues. Check the load against rated capacity and inspect all
+          components in the feedback loop.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">42.What is load regulation of a switching power supply?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Load regulation describes the ability of a power supply to maintain its output voltage as the load current
+          changes. It is defined as: Load Regulation (%) = (V_no-load − V_full-load) / V_rated × 100%. Superior load
+          regulation means minimal output voltage deviation across the full load range.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">43.How does altitude affect switching power supplies?</div>
+      </div>
+      <div class="faq-answer">
+        <p>At higher altitudes, reduced air density decreases convective cooling efficiency, potentially causing the
+          power supply to overheat. Additionally, lower air pressure reduces the dielectric strength of air, which may
+          affect voltage isolation and creepage distance requirements. Many supplies are derated at altitudes above
+          2000m. Always check the product specifications for altitude ratings.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">44.What is the dynamic load characteristic of a switching power supply? What
+          factors is it related to?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Dynamic load characteristic refers to how the power supply responds to rapid changes in load current,
+          including voltage overshoot, undershoot, and settling time. It is related to: output capacitance, feedback
+          loop bandwidth, inductor value, and the rate of load change. A fast transient response and small voltage
+          deviation indicate good dynamic performance.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">45.What are harmonics in a switching power supply?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Harmonics are sinusoidal voltages or currents at frequencies that are integer multiples of the fundamental
+          frequency (e.g., 100 Hz, 150 Hz, 200 Hz for a 50 Hz supply). Switching power supplies generate harmonics due
+          to their non-linear input current waveform, which can cause problems such as heating in distribution equipment
+          and interference with other loads on the same circuit.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">46.What are the common topologies of switching power supplies?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Common topologies include: Flyback (cost-effective for low power), Forward converter, Push-Pull, Half-Bridge,
+          Full-Bridge (suitable for high power), Buck (step-down), Boost (step-up), and Buck-Boost (step-up/step-down).
+          The choice depends on power level, isolation requirements, efficiency targets, and cost constraints.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">47.What does EMC mean in switching power supplies?</div>
+      </div>
+      <div class="faq-answer">
+        <p>EMC (Electromagnetic Compatibility) refers to a power supply's ability to operate correctly in its
+          electromagnetic environment without introducing unacceptable electromagnetic disturbances to other equipment.
+          For switching power supplies, this means meeting conducted and radiated emission limits (e.g., EN 55032, FCC
+          Part 15) and maintaining immunity to external interference (e.g., IEC 61000-4 series).</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">48.Why does the accuracy of my instrument not match the specifications when I
+          turn it on after receiving it?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Accuracy specifications are typically verified after the instrument has warmed up for a specified period
+          (usually 30–60 minutes) under stable ambient temperature conditions. Immediately after power-on, internal
+          components have not yet reached thermal equilibrium. Allow adequate warm-up time and ensure the ambient
+          temperature is within the specified operating range before making precision measurements.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">49.What is Ramp Time?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Ramp Time is the programmable time duration over which the output voltage or current transitions from one set
+          value to another. By programming a ramp time, users can control the rate of voltage/current change to prevent
+          inrush current, avoid damage to sensitive devices, or simulate real-world power conditions in automated tests.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">50.What are the differences between switching power supplies and linear power
+          supplies? How to choose?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Switching supplies: high efficiency (80–95%), compact, wide input range, but higher noise. Linear supplies:
+          very low noise, excellent transient response, but lower efficiency (30–60%) and heavier. Choose switching for
+          high-power, space-constrained, or field applications; choose linear for precision analog, RF, or audio
+          applications where noise is critical.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">51.Precautions for DC power supply ripple testing</div>
+      </div>
+      <div class="faq-answer">
+        <p>When measuring ripple: use a high-bandwidth oscilloscope (≥20 MHz), connect the probe directly to the output
+          terminals with minimal lead length, use a 50Ω termination or shielded probe to reduce pickup, set AC coupling
+          on the oscilloscope, apply a representative load during measurement, and ensure the probe ground clip is short
+          to minimize loop area and inductance.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">52.Explanation of DC power supply operating modes (CV/CC)</div>
+      </div>
+      <div class="faq-answer">
+        <p>In CV (Constant Voltage) mode, the supply actively regulates the output voltage to the set value, and the
+          current adjusts freely up to the current limit. In CC (Constant Current) mode, the supply actively regulates
+          the current to the set limit, and voltage adjusts freely. The mode is determined automatically: CV when R_load
+          > V_set/I_set; CC when R_load ≤ V_set/I_set.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">53.What is the difference between line regulation and load regulation?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Line regulation measures output stability against changes in input (mains) voltage at a fixed load. Load
+          regulation measures output stability against changes in load current at a fixed input voltage. Both are
+          expressed as a percentage of rated output and indicate how well the supply maintains its output under
+          different operating conditions.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">54.What is the difference between CC mode and a constant current source?</div>
+      </div>
+      <div class="faq-answer">
+        <p>A power supply in CC mode acts as a current-limiting device — it only maintains the set current when the load
+          would otherwise cause the current to exceed the limit. A true constant current source maintains the set
+          current actively for all load resistance values, including very high impedances. In practice, CC mode in a
+          power supply has a maximum compliance voltage, beyond which it cannot maintain the set current.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">55.Precautions for using the SENSE function?</div>
+      </div>
+      <div class="faq-answer">
+        <p>When using remote sense: ensure the sense wires are connected to the correct terminals (S+ to load positive,
+          S- to load negative), keep sense wire length to a minimum, use twisted pair for sense wires to reduce noise
+          pickup, do not exceed the maximum sense compensation voltage specified in the manual, and never connect sense
+          wires to the wrong terminals as this can cause instability or damage.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">56.Explanation and application precautions of four-wire output for power
+          supplies?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Four-wire (Kelvin) output uses separate pairs of wires for current delivery and voltage sensing, eliminating
+          the effect of wire resistance on accuracy. It is essential for precision low-resistance measurements and
+          precise voltage delivery to sensitive loads. Ensure all four connections are secure, the sense wires are not
+          carrying significant current, and the maximum sense compensation range is not exceeded.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">57.Output modes of DC power supplies: Constant Voltage (CV) mode and Constant
+          Current (CC) mode</div>
+      </div>
+      <div class="faq-answer">
+        <p>DC power supplies operate in either CV or CC mode depending on the load. CV mode is used for most
+          general-purpose applications (powering circuits at a fixed voltage). CC mode is used for battery charging, LED
+          driving, and electrochemical applications where a fixed current is required. Modern supplies transition
+          seamlessly between modes as load conditions change.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">58.Under what conditions does a power supply activate Overvoltage Protection
+          (OVP)?</div>
+      </div>
+      <div class="faq-answer">
+        <p>OVP activates when the output voltage exceeds the user-programmed OVP threshold. This can happen due to: load
+          disconnection (voltage rises above set point), feedback loop failure, external voltage being back-fed into the
+          output terminals, or a programming error. When OVP triggers, the supply typically shuts down the output and
+          requires manual reset or power cycling.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">59.What do programming resolution, display resolution, and readback resolution of
+          a programmable DC power supply refer to?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Programming resolution is the smallest increment by which a set value (voltage/current) can be changed via
+          software command. Display resolution is the smallest value increment shown on the front-panel display.
+          Readback resolution is the precision of the measured/returned value when queried via the remote interface.
+          These three values may differ; readback resolution is typically used for precision measurements.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-icon">+</div>
+        <div class="faq-question-text">60.How does a power supply achieve constant voltage or constant current output?
+        </div>
+      </div>
+      <div class="faq-answer">
+        <p>The power supply uses a closed-loop feedback control system. In CV mode, a voltage feedback loop continuously
+          compares the output voltage to the set reference voltage and adjusts the control element (transistor or switch
+          duty cycle) to minimize the error. In CC mode, a current feedback loop performs the same function for current.
+          The mode with the active feedback loop at any given moment determines the operating mode.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- ══════════ LCR METER ══════════ -->
+<section class="faq-section">
+  <h2 class="faq-category-title">LCR Meter</h2>
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">1.What is an LCR meter, and what is its function?</div>
+      </div>
+      <div class="faq-answer">
+        <p>An LCR meter is a precision test instrument used to measure the electrical properties of passive components:
+          Inductance (L), Capacitance (C), and Resistance (R). It applies a known AC test signal to the component and
+          measures the resulting current and voltage to calculate impedance, from which it derives L, C, R, and related
+          parameters such as dissipation factor (D), quality factor (Q), phase angle (θ), and equivalent series
+          resistance (ESR). LCR meters are essential in component incoming inspection, R&D characterization, and
+          production testing.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">2.Functions of an LCR meter and correct usage methods</div>
+      </div>
+      <div class="faq-answer">
+        <p>An LCR meter measures impedance, inductance, capacitance, resistance, Q factor, D factor (dissipation), and
+          ESR. Correct usage: (1) Perform open-circuit and short-circuit calibration before measurement to eliminate
+          fixture and lead errors; (2) select the correct test frequency — component values are frequency-dependent; (3)
+          use 4-terminal Kelvin connections for accurate low-impedance measurements; (4) set the test signal level
+          appropriate for the component; (5) avoid touching the component during measurement to prevent body capacitance
+          effects; (6) allow temperature stabilization for precise measurements.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">3.What is the basic accuracy of an LCR meter? What is the actual accuracy?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Basic accuracy (or basic measurement accuracy) is the best-case impedance measurement accuracy under ideal
+          conditions — typically specified at a standard test frequency (e.g., 1kHz), with the component at the center
+          of the measurement range, after calibration. Typical basic accuracy is 0.05% to 0.1% for bench LCR meters.
+          Actual accuracy in real-world use is lower due to: frequency deviation from the calibration point, component
+          impedance near range limits, temperature effects, fixture residuals, and cable length. Always apply the full
+          accuracy formula from the datasheet to calculate actual accuracy for your specific test conditions.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">4.Why is four-wire measurement used in resistance testing? What is the difference
+          from two-wire measurement?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Four-wire (Kelvin) measurement separates the current-carrying conductors from the voltage-sensing conductors.
+          Two dedicated wires carry the test current to the component, while two separate wires measure the voltage drop
+          directly across the component — eliminating the resistance of the test leads and contact resistance from the
+          measurement. Two-wire measurement uses the same conductors for both current and voltage, so lead and contact
+          resistance are included in the reading. For low-resistance components (below ~10Ω), lead resistance (typically
+          10–100mΩ per lead) represents a significant error, making four-wire measurement essential for accurate
+          results.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">5.Can an LCR meter measure non-ideal components?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Yes. LCR meters measure the complex impedance of real-world components and can represent the result using
+          equivalent circuit models — series or parallel. A real capacitor, for example, has ESR (equivalent series
+          resistance) and ESL (equivalent series inductance) in addition to its nominal capacitance. The LCR meter can
+          display these parasitic elements by selecting the appropriate equivalent circuit model. This makes LCR meters
+          very useful for characterizing non-ideal or aged components, determining self-resonant frequency, and modeling
+          components for circuit simulation.</p>
+      </div>
+    </div>
 
   </div>
 </section>
 
-<!-- additional categories (AC Power Supply, Electronic Loads, LCR Meter, Withstand Voltage Tester, Oscilloscope) -->
-<!-- each section follows the same pattern as above; the full content from the original HTML has been preserved -->
+<!-- ══════════ WITHSTAND VOLTAGE TESTER ══════════ -->
+<section class="faq-section">
+  <h2 class="faq-category-title">Withstand Voltage Tester</h2>
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">1.What is a withstand voltage tester, and in which scenarios is it mainly used
+        </div>
+      </div>
+      <div class="faq-answer">
+        <p>A withstand voltage tester (also called a hipot tester — High Potential tester) applies a high voltage
+          between a product's electrical circuits and its chassis/enclosure to verify that the insulation can withstand
+          abnormal voltages without breakdown. It is mainly used in: (1) electrical safety compliance testing (IEC, UL,
+          CE); (2) production-line quality control for power supplies, motors, transformers, and appliances; (3)
+          incoming material inspection of cables and insulation; (4) maintenance testing of high-voltage equipment to
+          verify insulation integrity over time.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">2.What is a withstand voltage test?</div>
+      </div>
+      <div class="faq-answer">
+        <p>A withstand voltage test (dielectric strength test or hipot test) applies a specified high voltage —
+          significantly higher than the normal operating voltage — across the insulation of a product for a defined time
+          period. The test verifies that the insulation does not break down (arc, puncture, or allow excessive leakage
+          current). If the insulation holds and leakage current remains below a specified threshold throughout the test
+          duration, the product passes. This test is a fundamental requirement in virtually all electrical safety
+          standards worldwide.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">3.What is the capacity of a withstand voltage tester, and how is it calculated?
+        </div>
+      </div>
+      <div class="faq-answer">
+        <p>The capacity of a withstand voltage tester refers to its maximum output current (or VA rating) at the test
+          voltage. It is calculated as: Capacity (VA) = Test Voltage (V) × Maximum Output Current (A). For example, a
+          tester rated at 5kV/100mA has a capacity of 500VA. The required capacity depends on the capacitance of the
+          device under test — highly capacitive loads (long cables, large transformers) draw significant charging
+          current. Ensure the tester's current rating exceeds the maximum expected leakage and charging current to avoid
+          tripping the tester's protection circuit during a valid test.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">4.How to determine the test voltage used when performing a withstand voltage test
+          on a product?</div>
+      </div>
+      <div class="faq-answer">
+        <p>The test voltage is determined by the applicable safety standard for the product category (e.g., IEC 60950,
+          IEC 62368, UL 60601). Generally, the test voltage is set to: 2× the rated working voltage + 1000V for AC
+          hipot, or 1.414× that value for DC hipot. For example, a product with 250V AC working voltage typically
+          requires a 1500V AC hipot test. Always refer to the specific standard applicable to your product rather than
+          using a general formula, as requirements vary by insulation class, pollution degree, and overvoltage category.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">5.How to decide whether to use AC or DC withstand voltage test when performing a
+          withstand voltage test on a product?</div>
+      </div>
+      <div class="faq-answer">
+        <p>AC hipot is the default test method specified by most safety standards and more closely simulates real-world
+          insulation stress. DC hipot is used when: (1) the product has high capacitance (cables, filters) that would
+          draw excessive AC charging current; (2) the standard permits DC as an alternative; (3) testing is done in the
+          field on installed equipment. Note that DC stress is not identical to AC stress — DC charges the insulation
+          differently (polarization effects), so DC test levels are typically set higher (×1.414) to provide equivalent
+          stress to AC. Always check the applicable standard for guidance.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">6.What is the difference between AC withstand voltage test and DC withstand
+          voltage test?</div>
+      </div>
+      <div class="faq-answer">
+        <p>AC hipot applies a sinusoidal high voltage that stresses insulation both polarities every cycle, revealing
+          weaknesses from partial discharge and ion migration. It draws capacitive charging current which can cause
+          false trips on highly capacitive loads. DC hipot applies a unidirectional high voltage — it draws virtually no
+          steady-state capacitive current, making it easier to detect true leakage current accurately. DC is gentler on
+          insulation (no repeated polarity reversals) but charges the insulation asymmetrically. Both methods can detect
+          breakdown; AC is standard for production testing while DC is preferred for field testing of long cables and
+          installed systems.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">7.What is an Insulation Resistance (IR) test?</div>
+      </div>
+      <div class="faq-answer">
+        <p>An Insulation Resistance test measures the DC resistance of insulation material by applying a known DC
+          voltage (typically 500V or 1000V) and measuring the resulting leakage current. The insulation resistance is
+          calculated as R = V/I and is expressed in MΩ or GΩ. Higher IR values indicate better insulation quality. IR
+          testing is used to detect moisture ingress, contamination, physical damage, or aging of insulation that
+          reduces its resistance before it reaches a catastrophic failure point detectable by hipot testing. Good
+          insulation typically measures hundreds of MΩ to several GΩ.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">8.What is the difference between a withstand voltage test and an insulation
+          resistance test?</div>
+      </div>
+      <div class="faq-answer">
+        <p>The hipot (withstand voltage) test applies a high overvoltage stress to verify insulation can survive
+          abnormal voltage events — it is a pass/fail destructive-style test used to confirm insulation adequacy. The
+          insulation resistance test applies a low DC voltage to measure the resistance of insulation — it is a
+          diagnostic/quantitative test that reveals the condition of insulation over time. Hipot testing stresses the
+          insulation harder and is more likely to age or damage it slightly if repeated excessively. IR testing is
+          gentler and can be performed more frequently as part of preventive maintenance.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">9.What is Continuity Check?</div>
+      </div>
+      <div class="faq-answer">
+        <p>A continuity check (also called ground continuity or protective earth continuity test) verifies that there is
+          a low-resistance electrical connection between the ground pin of the AC input and all exposed metal parts of
+          the equipment. This ensures that in the event of an internal fault, the fault current will flow through the
+          ground conductor rather than through a person touching the equipment. A continuity check typically passes at
+          resistance values below 0.1Ω to 0.3Ω (per applicable standards). It is a mandatory safety test for Class I
+          electrical equipment.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">10.What is a Ground Bond test?</div>
+      </div>
+      <div class="faq-answer">
+        <p>A Ground Bond test (also called a ground continuity test or PE bond test) is a more stringent version of the
+          continuity check. It passes a high current (typically 10A to 30A AC) through the ground path and measures the
+          voltage drop to calculate resistance. By using high current, it stresses the ground connection and verifies it
+          can carry fault currents safely without the connection failing. It is specified in safety standards such as
+          IEC 60950, IEC 62368, and UL 60601 as a required production test for Class I equipment to ensure reliable
+          protective earth bonding.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">11.What is the difference between Continuity Check and Ground Bond test?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Both tests verify the integrity of the protective earth (ground) path, but differ in method and rigor. A
+          continuity check uses a low test current (typically ≤200mA) with a simple resistance measurement — it confirms
+          that a ground connection exists. A ground bond test uses a high test current (10A–30A) and measures the
+          resulting resistance under load — it verifies that the ground connection can safely carry substantial fault
+          currents without failure. Ground bond testing is more sensitive to poor crimps, loose terminations, and
+          high-contact-resistance joints that a simple continuity check might pass.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">12.What is an arc?</div>
+      </div>
+      <div class="faq-answer">
+        <p>In the context of hipot testing, an arc is a sudden electrical discharge through or across an insulating
+          medium when the electric field exceeds the dielectric strength of the material. Arcing produces a bright
+          flash, intense heat, and a characteristic current spike. During a hipot test, the tester's arc detection
+          circuit monitors for rapid current spikes (typically >1mA change in <1ms) that indicate arcing. An arc can
+            permanently damage insulation, so the tester immediately cuts off the test voltage upon detection and flags
+            the test as a failure.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">13.How to determine the test voltage for a withstand voltage test?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Test voltage is determined by: (1) identifying the applicable product safety standard (e.g., IEC 62368-1, UL
+          508); (2) determining the working voltage of the circuit being tested; (3) identifying the insulation type
+          (basic, supplementary, reinforced, functional); (4) determining the overvoltage category and pollution degree.
+          For a typical 230V AC mains-connected product with reinforced insulation per IEC 62368-1, a 3000V AC hipot
+          test for 1 second is required. Always derive test parameters directly from the standard — do not guess.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">14.The difference between AC withstand voltage test and DC withstand voltage test
+        </div>
+      </div>
+      <div class="faq-answer">
+        <p>AC withstand voltage test: applies sinusoidal AC high voltage, stresses insulation both polarities, draws
+          capacitive charging current, is the standard production test per most safety standards, and is more sensitive
+          to surface tracking and partial discharge. DC withstand voltage test: applies steady unidirectional high
+          voltage, draws no capacitive steady-state current (only true leakage), is easier to set precise leakage
+          current limits, is gentler on capacitive loads, and is preferred for field testing of cables and installed
+          systems. The DC test voltage is typically set to 1.414× the equivalent AC test voltage to provide equivalent
+          peak stress.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- ══════════ OSCILLOSCOPE ══════════ -->
+<section class="faq-section">
+  <h2 class="faq-category-title">Oscilloscope</h2>
+  <div class="faq-list">
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">1.What is an oscilloscope?</div>
+      </div>
+      <div class="faq-answer">
+        <p>An oscilloscope is an electronic test instrument that displays electrical signals as waveforms plotted
+          against time (voltage on the Y-axis, time on the X-axis). It allows engineers to observe the shape, frequency,
+          amplitude, rise time, and timing relationships of electrical signals in real time. Modern digital
+          oscilloscopes (DSOs) digitize the signal, store waveform data, and provide automated measurements.
+          Oscilloscopes are fundamental tools in electronics design, debugging, manufacturing test, and education.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">2.What is The concept of triggering?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Triggering is the mechanism by which an oscilloscope synchronizes the start of its waveform acquisition to a
+          specific event in the signal, producing a stable, non-drifting display. The trigger circuit watches the input
+          signal and starts the timebase sweep when the signal crosses a defined threshold (trigger level) in a
+          specified direction (rising or falling edge). Without triggering, repetitive waveforms appear to drift or
+          blur. Advanced trigger types include pulse width, runt pulse, pattern, serial protocol, and video triggers for
+          capturing specific events in complex signals.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">3.What is the capture rate of an oscilloscope?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Waveform capture rate (or waveform update rate) is the number of complete waveform acquisitions the
+          oscilloscope can capture and display per second, expressed in waveforms/second or frames/second. A high
+          capture rate (e.g., 500,000 wfm/s) increases the probability of capturing rare, intermittent events such as
+          glitches, dropouts, or runt pulses. Entry-level oscilloscopes may capture only hundreds to thousands of
+          waveforms per second, while high-performance instruments capture millions. This is an important but often
+          overlooked specification when debugging infrequent faults.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">4.Why does the output not change when switching the output impedance between high
+          impedance and 50 ohms?</div>
+      </div>
+      <div class="faq-answer">
+        <p>The output impedance setting on a signal generator/oscilloscope output must be matched to the cable and
+          termination. If you switch the oscilloscope input between 1MΩ (high impedance) and 50Ω but the signal source
+          is not driving a 50Ω load, the voltage at the oscilloscope input will be the open-circuit source voltage in
+          both cases — because the source does not change. The difference becomes apparent only when there IS a 50Ω
+          termination at the load end: with 50Ω input selected, the scope terminates the line correctly; with 1MΩ,
+          reflections occur. Ensure both source output impedance and scope input impedance are correctly matched.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">5.What is the function of external triggering?</div>
+      </div>
+      <div class="faq-answer">
+        <p>External triggering allows the oscilloscope to synchronize its acquisition to a signal applied to a dedicated
+          external trigger input (EXT TRIG), rather than to the signal being measured on the input channels. This is
+          useful when: (1) the trigger signal is separate from the measured signal (e.g., a sync pulse from a function
+          generator); (2) triggering on the measured signal itself is difficult due to noise; (3) measuring the time
+          delay between an event and a circuit's response; (4) the channel inputs are needed for other signals. External
+          triggering provides a clean, stable trigger reference independent of the measured signals.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">6.What is the bandwidth of an oscilloscope?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Bandwidth is the frequency at which the oscilloscope's measured amplitude is attenuated to 70.7% (-3dB) of
+          the true signal amplitude. A 100MHz oscilloscope will display a 100MHz sine wave at approximately 70.7% of its
+          actual amplitude. For accurate measurements, a rule of thumb is to use an oscilloscope with bandwidth at least
+          5× the highest frequency component in the signal of interest. For digital signals, consider the signal's rise
+          time rather than clock frequency — bandwidth ≥ 0.35/rise time ensures accurate waveform reproduction.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">7.What impact does insufficient sampling rate have on testing and measurement?
+        </div>
+      </div>
+      <div class="faq-answer">
+        <p>Insufficient sampling rate causes aliasing — a phenomenon where high-frequency signal components are
+          incorrectly reconstructed as lower-frequency signals. The Nyquist theorem requires a sampling rate of at least
+          2× the highest signal frequency component. In practice, oscilloscopes require 5–10× oversampling for accurate
+          waveform reconstruction. Aliasing can produce completely false waveforms that appear valid, leading to
+          incorrect conclusions. Additionally, low sample rates reduce timing resolution, making rise time and pulse
+          width measurements inaccurate. Always verify the effective sample rate at your selected timebase setting.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">8.What is the real-time sampling rate of an oscilloscope?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Real-time sampling rate (or real-time sample rate) is the maximum number of samples the oscilloscope can
+          acquire per second for a single-shot (non-repetitive) signal. It is expressed in MS/s (Megasamples/second) or
+          GS/s (Gigasamples/second). This is distinct from equivalent-time sampling rate, which applies only to
+          repetitive signals. For single-shot events such as glitches, power-on transients, or one-time faults, only the
+          real-time sampling rate is relevant. Note that the maximum real-time sample rate may only apply to a single
+          channel — when multiple channels are active, each channel may operate at a reduced sample rate.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">9.Can an oscilloscope measure current?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Oscilloscopes measure voltage, not current directly. However, current can be measured indirectly using: (1) a
+          current shunt resistor — measure the voltage across a known small resistance in series with the current path
+          (I = V/R); (2) a current probe — a clamp-type transformer or Hall-effect probe that converts current to a
+          proportional voltage signal for the oscilloscope. Current probes are the most convenient method and avoid
+          breaking the circuit. AC current probes work on transformer principles; DC/AC current probes use Hall-effect
+          sensors to measure both AC and DC currents.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">10.When testing a 485 communication device with the probe set to 1X,
+          communication errors occur. Why?</div>
+      </div>
+      <div class="faq-answer">
+        <p>A probe in 1X mode has a much lower input impedance (~1MΩ in parallel with ~100pF) compared to 10X mode
+          (~10MΩ in parallel with ~10pF). RS-485 is a differential bus sensitive to capacitive loading — the large
+          capacitance of a 1X probe (~100pF) slows signal rise/fall times, distorts the waveform, and can exceed the
+          bus's maximum load capacitance, causing communication errors. Switching to 10X mode reduces the probe
+          capacitance by 10×, minimizing signal distortion and restoring correct RS-485 communication. Always use 10X
+          probes when measuring fast digital signals.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">11.What is the definition of the real-time bandwidth of a digital oscilloscope?
+        </div>
+      </div>
+      <div class="faq-answer">
+        <p>Real-time bandwidth is the maximum signal frequency a digital oscilloscope can accurately acquire and display
+          for single-shot (non-repetitive) signals, limited by both the analog front-end bandwidth (-3dB point) and the
+          real-time sample rate. For accurate single-shot capture, the sample rate must be sufficient (typically ≥5× the
+          signal bandwidth). If the analog bandwidth is 200MHz but the real-time sample rate only supports 100MHz
+          bandwidth under the Nyquist criterion, the effective real-time bandwidth is limited to the sample-rate-limited
+          value. Always consider both analog bandwidth and sample rate together for single-shot measurements.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">12.If an oscilloscope is labeled as 60MHz, can it be understood that it can
+          measure up to 60MHz at most?</div>
+      </div>
+      <div class="faq-answer">
+        <p>No — 60MHz is the -3dB bandwidth, meaning signals at 60MHz are displayed at 70.7% of their true amplitude.
+          Signals above 60MHz are progressively more attenuated but not completely blocked. However, for accurate
+          amplitude measurements, the signal frequency should be well below the bandwidth — typically no more than 1/3
+          to 1/5 of the specified bandwidth. For a 60MHz oscilloscope, reliable amplitude measurements are limited to
+          approximately 12–20MHz. For frequencies near or above the bandwidth spec, measurements will have significant
+          amplitude error.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">13.What is the waveform capture rate of an oscilloscope, and what impact does it
+          have?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Waveform capture rate is the number of complete waveform acquisitions per second. A high capture rate
+          dramatically increases the probability of capturing rare events. With a low capture rate (e.g., 1,000 wfm/s),
+          the oscilloscope is "blind" for a large fraction of time between acquisitions — a glitch lasting 1ns occurring
+          once per second has a very low probability of being captured. At 1,000,000 wfm/s, the blind time is vastly
+          reduced. High capture rate is critical for: intermittent fault detection, production testing with tight time
+          limits, and catching protocol violations in digital communications.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">14.When measuring a 10MHz sine wave with a 100MHz bandwidth oscilloscope, why are
+          the results different when the probe is set to 1X and 10X?</div>
+      </div>
+      <div class="faq-answer">
+        <p>In 1X mode, the probe has low attenuation but high capacitance (~100pF). At 10MHz, this capacitance creates a
+          reactive load (Xc = 1/(2π×10M×100p) ≈ 159Ω) that loads the circuit under test, reducing the signal amplitude
+          and distorting the waveform. In 10X mode, the probe has ~10pF capacitance (10× lower), reducing the reactive
+          loading to ~1590Ω — much less disturbing to the circuit. The 10X probe's lower capacitance gives a more
+          accurate representation of the actual signal. Additionally, the oscilloscope must have its channel set to
+          match the probe attenuation (1X or 10X) to display the correct voltage scale.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">15.How to measure mains electricity with a digital oscilloscope?</div>
+      </div>
+      <div class="faq-answer">
+        <p>WARNING: Measuring mains voltage directly is hazardous. Safe methods include: (1) use a differential
+          high-voltage probe rated for mains voltage — never use a standard single-ended probe directly on mains; (2)
+          use an isolation transformer to float the mains circuit and reduce shock risk; (3) use a voltage divider probe
+          or specialized mains measurement adapter. Never connect the oscilloscope ground (which is earth-referenced)
+          directly to the live or neutral conductor — this creates a short circuit through the safety ground. Always
+          follow local electrical safety regulations and use appropriate personal protective equipment.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">16.Why is it inaccurate to measure high-frequency signals when the probe is in 1X
+          mode? How should it be measured?</div>
+      </div>
+      <div class="faq-answer">
+        <p>In 1X mode, the probe tip capacitance is ~100pF, which creates significant capacitive loading at high
+          frequencies — attenuating the signal amplitude and distorting waveform edges. The probe's bandwidth in 1X mode
+          is also typically limited to 5–10MHz. For accurate high-frequency measurements: (1) use 10X mode — bandwidth
+          extends to the probe's rated bandwidth (e.g., 300MHz) and capacitance drops to ~10–15pF; (2) use an active
+          probe for frequencies above 500MHz — active probes have input capacitances as low as 0.5–1pF; (3) keep the
+          ground lead as short as possible to reduce lead inductance.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">17.How to measure power supply ripple with an oscilloscope?</div>
+      </div>
+      <div class="faq-answer">
+        <p>To accurately measure power supply ripple: (1) set the oscilloscope to AC coupling to block the DC offset and
+          zoom in on the small AC ripple; (2) use a short ground lead or a spring-tip ground adapter — long ground leads
+          add inductance that introduces high-frequency ringing unrelated to actual ripple; (3) connect the probe tip
+          and ground directly at the power supply output capacitor terminals; (4) set the vertical scale to 10–50mV/div;
+          (5) set bandwidth limit to 20MHz to filter high-frequency noise that is not relevant to switching ripple.
+          Measure peak-to-peak voltage for the ripple specification.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">18.What is floating ground testing? How to perform floating ground testing?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Floating ground testing measures a signal that is not referenced to earth ground — for example, the voltage
+          across a current shunt in a high-side circuit, or signals in isolated power supplies. Since an oscilloscope's
+          signal ground is earth-referenced, directly connecting to a floating circuit can create a dangerous short.
+          Safe methods: (1) use a differential probe — it measures the difference between two points without referencing
+          either to ground; (2) use an isolated oscilloscope or add a floating input adapter; (3) use a battery-powered
+          oscilloscope. Never use two standard probes and the math channel subtraction function on mains-referenced
+          circuits — the probe grounds will short circuit the floating circuit.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">19.What is the difference between the oscilloscope's automatic frequency
+          measurement and hardware frequency counter measurement?</div>
+      </div>
+      <div class="faq-answer">
+        <p>The oscilloscope's automatic frequency measurement calculates frequency from captured waveform data — it
+          measures the period of one or several waveform cycles visible on screen and computes frequency as 1/T.
+          Accuracy depends on the number of cycles measured and digitization resolution. A hardware frequency counter,
+          by contrast, counts actual signal transitions over a precise gated time window (e.g., 1 second), achieving
+          much higher frequency accuracy (typically 7–10 digits). For frequency measurements requiring better than 0.01%
+          accuracy, a dedicated frequency counter is more appropriate than the oscilloscope's automatic measurement.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">20.What is the equivalent sampling rate of an oscilloscope?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Equivalent-time sampling (ETS) is a technique used to reconstruct high-frequency repetitive waveforms by
+          collecting one or a few samples per trigger event across many trigger cycles, each time slightly shifting the
+          sample timing. Over many repetitions, the waveform is built up with very high effective time resolution,
+          enabling bandwidth far exceeding the real-time sample rate. Equivalent sampling rates of hundreds of GS/s are
+          achievable. The critical requirement is that the signal must be perfectly repetitive — ETS cannot be used for
+          single-shot or changing signals. It is commonly used for characterizing high-speed serial signals and clock
+          edges.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">21.Knowledge related to probes</div>
+      </div>
+      <div class="faq-answer">
+        <p>Oscilloscope probes are critical to measurement accuracy. Key probe parameters: (1) Attenuation ratio
+          (1X/10X/100X) — affects bandwidth and loading; (2) Bandwidth — must match or exceed oscilloscope bandwidth;
+          (3) Input capacitance — lower is better for high-frequency signals (10X: ~10–15pF; active: ~0.5–1pF); (4)
+          Input resistance — 1X: 1MΩ; 10X: 10MΩ; active: 1MΩ+; (5) Compensation — passive probes must be compensated to
+          the specific oscilloscope channel using the calibration signal; (6) Ground lead length — minimize for
+          high-frequency measurements; (7) Probe type: passive, active, differential, current, or high-voltage,
+          depending on application.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">22.What is memory depth?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Memory depth (or record length) is the number of sample points the oscilloscope can store in a single
+          acquisition. It determines how long a time window can be captured at full sample rate: Capture time = Memory
+          depth ÷ Sample rate. For example, with 1M points at 1GS/s, you can capture 1ms at full sample rate.
+          Insufficient memory depth forces the oscilloscope to reduce its sample rate to cover the desired time window,
+          degrading time resolution. Deep memory is essential for capturing long duration events (serial communication
+          packets, system startup sequences) while maintaining high time resolution.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">23.How long can an oscilloscope store waveforms, and what parameters does it
+          depend on?</div>
+      </div>
+      <div class="faq-answer">
+        <p>The capture duration at full sample rate depends on: Memory depth ÷ Sample rate. For example: 10M samples ÷
+          1GS/s = 10ms. Longer captures require either: (1) deeper memory; (2) reducing the sample rate (by zooming out
+          the timebase); or (3) using segmented memory acquisition to store many short captures without gaps. For very
+          long-duration recording, some oscilloscopes offer roll mode or history memory that continuously overwrites old
+          data. The practical capture duration ranges from nanoseconds (at maximum sample rate) to seconds or minutes
+          (at reduced sample rates with maximum memory depth).</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">24.What is the rise time of an oscilloscope?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Rise time is the time required for the oscilloscope's step response to rise from 10% to 90% of its final
+          amplitude. It is related to bandwidth by: Rise time ≈ 0.35 / Bandwidth (for a Gaussian response). For example,
+          a 100MHz oscilloscope has a rise time of ~3.5ns. When measuring a signal's rise time, the measured rise time
+          is the vector sum of the signal's true rise time and the oscilloscope's own rise time. To minimize measurement
+          error, the oscilloscope rise time should be at least 3–5× faster than the signal's rise time. Use a
+          higher-bandwidth oscilloscope for fast-edge digital signals.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">25.What is trigger holdoff?</div>
+      </div>
+      <div class="faq-answer">
+        <p>Trigger holdoff is a user-adjustable time period after a trigger event during which the oscilloscope ignores
+          subsequent trigger events and will not re-arm. After the holdoff period expires, the trigger circuit re-arms
+          and waits for the next qualifying trigger event. Holdoff is used to stabilize the display of complex or burst
+          signals where multiple trigger conditions occur within a single pattern period — for example, a serial data
+          burst followed by a long idle period. By setting holdoff slightly longer than the burst duration, the
+          oscilloscope triggers reliably at the start of each burst rather than at spurious edges within it.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <span class="faq-icon">+</span>
+        <div class="faq-question-text">26.What is the difference between AC effective value and root mean square (RMS)?
+        </div>
+      </div>
+      <div class="faq-answer">
+        <p>They are the same thing. The RMS (Root Mean Square) value of an AC signal is calculated by taking the square
+          root of the mean of the squares of instantaneous values over one complete cycle. The term "AC effective value"
+          refers to the RMS value — it is called "effective" because an AC voltage with an RMS value of Vrms delivers
+          the same average power to a resistive load as a DC voltage of the same magnitude. For a pure sine wave, Vrms =
+          Vpeak / √2 ≈ 0.707 × Vpeak. Oscilloscopes measure true RMS when the "True RMS" measurement function is
+          selected, which accounts for non-sinusoidal waveforms.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
 
 {% endblock %}
 
 {% block extra_js %}
 <script>
-// simple accordion logic for FAQ items
-document.querySelectorAll('.faq-question').forEach(btn => {
-    btn.addEventListener('click', function() {
-        const item = this.parentElement;
-        item.classList.toggle('open');
-        const answer = this.nextElementSibling;
-        if (item.classList.contains('open')) {
-            answer.style.maxHeight = answer.scrollHeight + 'px';
-        } else {
-            answer.style.maxHeight = null;
-        }
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(el => {
+        el.classList.remove('open');
+        el.querySelector('.faq-icon').textContent = '+';
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        item.querySelector('.faq-icon').textContent = '−';
+      }
     });
-});
+  });
 </script>
 {% endblock %}

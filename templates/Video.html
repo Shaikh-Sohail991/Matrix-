@@ -1,123 +1,480 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load custom_filters %}
 
-{% block title %}Video Center - MATRIX{% endblock %}
+{% block title %}Video Center - Leading DC AC Power Supply Brand Matrix{% endblock %}
+
+{% block extra_css %}
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'css/Video.css' %}" />
+  <style>
+    /* ── VIDEO HERO PREMIUM FILL ── */
+    .vh-hero {
+      min-height: 88vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3rem;
+      padding: 110px 6vw 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Glowing orbs in background */
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .hero-orb--1 {
+      width: 420px; height: 420px;
+      background: rgba(28, 111, 235, 0.18);
+      top: -80px; left: -80px;
+      animation: orbFloat 8s ease-in-out infinite;
+    }
+    .hero-orb--2 {
+      width: 320px; height: 320px;
+      background: rgba(0, 200, 160, 0.10);
+      bottom: 0; right: 30%;
+      animation: orbFloat 10s ease-in-out infinite reverse;
+    }
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0); }
+      50%       { transform: translate(30px, -30px); }
+    }
+
+    .vid-hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 600px;
+      flex-shrink: 0;
+    }
+
+    /* Badge */
+    .vid-hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      background: rgba(28,111,235,.15);
+      border: 1px solid rgba(28,111,235,.4);
+      color: #7AB8FF;
+      padding: .45rem 1rem;
+      border-radius: 999px;
+      font-size: .75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 1.25rem;
+      animation: fadeUp .6s ease forwards;
+    }
+    .vid-hero-badge i { font-size: .95rem; }
+
+    /* Title */
+    .vid-hero-title {
+      font-size: clamp(2rem, 5vw, 3.5rem) !important;
+      font-weight: 800;
+      line-height: 1.15;
+      color: #fff;
+      margin-bottom: 1.25rem;
+      animation: fadeUp .7s ease .1s both;
+    }
+    .vid-title-accent {
+      background: linear-gradient(130deg, #1C6FEB, #56C0FF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Subtitle */
+    .vid-hero-sub {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,.62);
+      line-height: 1.75;
+      margin-bottom: 2rem;
+      animation: fadeUp .7s ease .18s both;
+    }
+
+    /* Stats pills */
+    .vid-hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .75rem;
+      margin-bottom: 1.5rem;
+      animation: fadeUp .7s ease .26s both;
+    }
+    .vid-stat-pill {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      padding: .45rem 1.1rem;
+      font-size: .85rem;
+      color: rgba(255,255,255,.8);
+      backdrop-filter: blur(8px);
+    }
+    .vid-stat-pill i { color: #5BA8FF; font-size: .9rem; }
+    .vid-stat-pill strong { color: #fff; font-weight: 700; }
+
+    /* Category chips */
+    .vid-hero-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .55rem;
+      animation: fadeUp .7s ease .34s both;
+    }
+    .vid-chip {
+      padding: .35rem .9rem;
+      border-radius: 999px;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      cursor: default;
+      border: 1px solid rgba(255,255,255,.14);
+      color: rgba(255,255,255,.5);
+      transition: all .2s ease;
+    }
+    .vid-chip--active,
+    .vid-chip:hover {
+      background: rgba(28,111,235,.2);
+      border-color: rgba(28,111,235,.5);
+      color: #7AB8FF;
+    }
+
+    /* ── RIGHT: floating video preview cards ── */
+    .vid-hero-visual {
+      position: relative;
+      flex-shrink: 0;
+      width: clamp(280px, 38vw, 460px);
+      height: 420px;
+      z-index: 2;
+      animation: fadeIn .9s ease .2s both;
+    }
+
+    .vid-float-card {
+      position: absolute;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,.55);
+      border: 1px solid rgba(255,255,255,.12);
+      cursor: pointer;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .vid-float-card:hover {
+      transform: translateY(-8px) scale(1.03) !important;
+      box-shadow: 0 28px 72px rgba(0,0,0,.7);
+    }
+    .vid-float-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(.75);
+      transition: filter .3s ease;
+    }
+    .vid-float-card:hover img { filter: brightness(.9); }
+
+    /* Play button overlay */
+    .vid-float-play {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 42px; height: 42px;
+      background: rgba(28,111,235,.85);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-size: 1rem;
+      backdrop-filter: blur(6px);
+      transition: background .2s;
+    }
+    .vid-float-card:hover .vid-float-play { background: #1C6FEB; }
+
+    /* Label strip at bottom */
+    .vid-float-label {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(to top, rgba(0,0,0,.85), transparent);
+      color: rgba(255,255,255,.9);
+      font-size: .72rem;
+      font-weight: 600;
+      padding: 1.5rem .75rem .6rem;
+      line-height: 1.35;
+    }
+
+    /* Card sizing & positions */
+    .vid-float-card--1 {
+      width: 240px; height: 155px;
+      top: 30px; left: 0;
+      animation: floatA 6s ease-in-out infinite;
+    }
+    .vid-float-card--2 {
+      width: 210px; height: 140px;
+      top: 0; right: 10px;
+      animation: floatB 7s ease-in-out infinite;
+    }
+    .vid-float-card--3 {
+      width: 230px; height: 148px;
+      bottom: 60px; right: 20px;
+      animation: floatC 8s ease-in-out infinite;
+    }
+
+    @keyframes floatA { 0%,100%{transform:translateY(0)}  50%{transform:translateY(-12px)} }
+    @keyframes floatB { 0%,100%{transform:translateY(0)}  50%{transform:translateY(10px)}  }
+    @keyframes floatC { 0%,100%{transform:translateY(0)}  50%{transform:translateY(-8px)}  }
+
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+    /* Mobile */
+    @media (max-width: 900px) {
+      .vh-hero { flex-direction: column; padding: 100px 5vw 3rem; min-height: auto; }
+      .vid-hero-visual { width: 100%; height: 220px; }
+      .vid-float-card--1 { width: 160px; height: 100px; top: 10px; left: 0; }
+      .vid-float-card--2 { width: 145px; height: 95px; top: 0; right: 0; }
+      .vid-float-card--3 { display: none; }
+    }
+  </style>
+{% endblock %}
 
 {% block content %}
+  <!-- ══ HERO ══ -->
+  <div class="hero vh-hero">
+    <div class="numbers-overlay" id="numOverlay"></div>
+    <div class="circuit-right"></div>
+    <div class="hero-orb hero-orb--1"></div>
+    <div class="hero-orb hero-orb--2"></div>
 
-<!-- hero -->
-<div class="hero">
-  <div class="numbers-overlay" id="numOverlay"></div>
-  <div class="circuit-right"></div>
-  <div class="hero-content">
-    <div class="breadcrumb">
-      <a href="{% url 'core:index' %}">HOME</a>
-      <span class="sep">›</span>
-      <span class="current">VIDEO CENTER</span>
+    <div class="hero-content vid-hero-content">
+      <div class="breadcrumb">
+        <a href="{% url 'core:index' %}">HOME</a>
+        <span class="sep">›</span>
+        <span class="current">VIDEO CENTER</span>
+      </div>
+
+      <div class="vid-hero-badge">
+        <i class="bi bi-play-circle-fill"></i>
+        MATRIX Official Content
+      </div>
+
+      <h1 class="hero-title vid-hero-title">
+        Watch. Learn.<br><span class="vid-title-accent">Master Matrix.</span>
+      </h1>
+
+      <p class="vid-hero-sub">
+        Step-by-step tutorials, product introductions &amp; maintenance guides
+        for MATRIX DC power supplies and test instruments.
+      </p>
+
+      <div class="vid-hero-stats">
+        <div class="vid-stat-pill">
+          <i class="bi bi-camera-video-fill"></i>
+          <span><strong>5</strong> Videos</span>
+        </div>
+        <div class="vid-stat-pill">
+          <i class="bi bi-collection-play-fill"></i>
+          <span><strong>3</strong> Categories</span>
+        </div>
+        <div class="vid-stat-pill">
+          <i class="bi bi-clock-fill"></i>
+          <span>Free to Watch</span>
+        </div>
+      </div>
+
+      <div class="vid-hero-chips">
+        <span class="vid-chip vid-chip--active">All Videos</span>
+        <span class="vid-chip">Introduction</span>
+        <span class="vid-chip">Tutorial</span>
+        <span class="vid-chip">Maintenance</span>
+      </div>
     </div>
-    <h1 class="hero-title">VIDEO CENTER</h1>
+
+    <!-- Floating preview cards -->
+    <div class="vid-hero-visual" aria-hidden="true">
+      <div class="vid-float-card vid-float-card--1">
+        <img src="https://img.youtube.com/vi/uhJnwBsiviQ/hqdefault.jpg" alt="">
+        <div class="vid-float-play"><i class="bi bi-play-fill"></i></div>
+        <div class="vid-float-label">MPS 300 Series Intro</div>
+      </div>
+      <div class="vid-float-card vid-float-card--2">
+        <img src="https://img.youtube.com/vi/KZLWcZbhbe8/hqdefault.jpg" alt="">
+        <div class="vid-float-play"><i class="bi bi-play-fill"></i></div>
+        <div class="vid-float-label">MPS-200 Operation Guide</div>
+      </div>
+      <div class="vid-float-card vid-float-card--3">
+        <img src="https://img.youtube.com/vi/pmlaEnID3Uw/hqdefault.jpg" alt="">
+        <div class="vid-float-play"><i class="bi bi-play-fill"></i></div>
+        <div class="vid-float-label">OCP &amp; OVP Setup</div>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- filter -->
-<div class="filter-section">
-  <div class="filter-inner">
-    <!-- category dropdown -->
-    <div class="category-select">
-      <select id="categorySelect" onchange="applyFilters()">
-        <option value="any">Any</option>
-        {% for cat_value, cat_label in category_choices %}
-        <option value="{{ cat_value }}">{{ cat_label }} Video</option>
-        {% endfor %}
-      </select>
-    </div>
-    <!-- search box -->
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Search videos..." onkeyup="applyFilters()" />
-      <i class="bi bi-search"></i>
+  <!-- ══ FILTER ══ -->
+  <div class="filter-section">
+    <div class="filter-inner">
+      <div class="filter-select-wrap">
+        <select class="filter-select" id="categorySelect" onchange="applyFilters()">
+          <option value="single">Single Channel DC Power Supply (2)</option>
+          <option value="all">All Videos (5)</option>
+          <option value="dual">Dual Channel DC Power Supply</option>
+          <option value="triple">Triple Channel DC Power Supply</option>
+        </select>
+        <span class="select-arrow">
+          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </span>
+      </div>
+      <div class="checkboxes-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="chkIntro" onchange="applyFilters()" />
+          Introduction Video (1)
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" id="chkMaint" onchange="applyFilters()" />
+          Maintenance Video (1)
+        </label>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- videos grid -->
-<div class="videos-section">
-  <div class="videos-inner">
-    <div class="video-grid" id="videoGrid">
-      {% for video in videos %}
-      <a class="video-card" data-cat="{{ video.category }}" href="#" onclick="playVideo(event,'{{ video.youtube_id }}')">
-        <div class="video-thumb">
-          <img src="https://img.youtube.com/vi/{{ video.youtube_id }}/hqdefault.jpg" alt="{{ video.title }}" loading="lazy" />
-          <div class="play-overlay">
-            <i class="bi bi-play-fill" style="font-size:1.8rem;color:#fff;"></i>
+  <!-- ══ VIDEOS ══ -->
+  <div class="videos-section">
+    <div class="videos-inner">
+      <div class="video-grid" id="videoGrid">
+
+        <a class="video-card" data-cat="intro" href="#" onclick="playVideo(event,'uhJnwBsiviQ')">
+          <div class="video-thumb">
+            <img src="https://img.youtube.com/vi/uhJnwBsiviQ/hqdefault.jpg" alt="MPS 300 series" loading="lazy" />
+            <div class="play-overlay">
+              <div class="play-triangle"></div>
+            </div>
           </div>
-        </div>
-        <div class="video-info">
-          <div class="video-title">{{ video.title }}</div>
-          <a class="video-cat-link" href="#" onclick="return false;">
-            {% if video.category == 'intro' %}Introduction Video{% elif video.category == 'maint' %}Maintenance Video{% elif video.category == 'tutorial' %}Tutorial Video{% else %}Video{% endif %}
-          </a>
-        </div>
-      </a>
-      {% endfor %}
+          <div class="video-info">
+            <div class="video-title">General introduction of MATRIX new DC linear power supply MPS 300 series</div>
+            <a class="video-cat-link" href="#" onclick="return false;">Introduction Video</a>
+          </div>
+        </a>
+
+        <a class="video-card" data-cat="maint" href="#" onclick="playVideo(event,'7KEKM5qnyzE')">
+          <div class="video-thumb">
+            <img src="https://img.youtube.com/vi/7KEKM5qnyzE/hqdefault.jpg" alt="Display tube replacement"
+              loading="lazy" />
+            <div class="play-overlay">
+              <div class="play-triangle"></div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div class="video-title">How to replace the display tube of MATRIX dc power supply MPS-H-1 and MPS-H-3
+              series</div>
+            <a class="video-cat-link" href="#" onclick="return false;">Maintenance Video</a>
+          </div>
+        </a>
+
+        <a class="video-card" data-cat="tutorial" href="#" onclick="playVideo(event,'pmlaEnID3Uw')">
+          <div class="video-thumb">
+            <img src="https://img.youtube.com/vi/pmlaEnID3Uw/hqdefault.jpg" alt="OCP OVP function" loading="lazy" />
+            <div class="play-overlay">
+              <div class="play-triangle"></div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div class="video-title">How to set MATRIX dc power supply MPS-H-1 series single channel OCP and OVP
+              function</div>
+            <a class="video-cat-link" href="#" onclick="return false;">Tutorial Video</a>
+          </div>
+        </a>
+
+        <a class="video-card" data-cat="tutorial" href="#" onclick="playVideo(event,'KZLWcZbhbe8')">
+          <div class="video-thumb">
+            <img src="https://img.youtube.com/vi/KZLWcZbhbe8/hqdefault.jpg" alt="MPS-200 operation" loading="lazy" />
+            <div class="play-overlay">
+              <div class="play-triangle"></div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div class="video-title">MPS-200 / WPS-300S Series Operation Guide</div>
+            <a class="video-cat-link" href="#" onclick="return false;">Tutorial Video</a>
+          </div>
+        </a>
+
+        <a class="video-card" data-cat="intro" href="#" onclick="playVideo(event,'DHM68McKXY8')">
+          <div class="video-thumb">
+            <img src="https://img.youtube.com/vi/DHM68McKXY8/hqdefault.jpg" alt="MPS-H-3 series" loading="lazy" />
+            <div class="play-overlay">
+              <div class="play-triangle"></div>
+            </div>
+          </div>
+          <div class="video-info">
+            <div class="video-title">MATRIX triple channel DC power supply MPS-H-3 series introduction</div>
+            <a class="video-cat-link" href="#" onclick="return false;">Introduction Video</a>
+          </div>
+        </a>
+
+      </div>
     </div>
   </div>
-</div>
 
-<!-- news, quality-banner etc can be included if needed; reuse or copy from other templates -->
+  <!-- VIDEO MODAL -->
+  <div class="modal-bg" id="videoModal" onclick="handleModalBg(event)">
+    <div class="modal-content">
+      <button class="modal-close-btn" onclick="closeVideo()">&times;</button>
+      <iframe id="videoFrame" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+    </div>
+  </div>
 
 {% endblock %}
 
 {% block extra_js %}
-<script>
-// filter logic and modal from original page
-function applyFilters() {
-    const selectedCat = document.getElementById('categorySelect').value;
-    const searchText = document.getElementById('searchInput').value.toLowerCase();
+  <script>
+    // Floating numbers hero
+    const overlay = document.getElementById('numOverlay');
+    const nums = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'];
+    for (let i = 0; i < 50; i++) {
+        const el = document.createElement('span');
+        el.className = 'float-num';
+        el.textContent = nums[Math.floor(Math.random() * nums.length)];
+        el.style.left = Math.random() * 100 + '%';
+        el.style.top = (20 + Math.random() * 80) + '%';
+        el.style.fontSize = (12 + Math.random() * 14) + 'px';
+        el.style.animationDuration = (4 + Math.random() * 8) + 's';
+        el.style.animationDelay = (Math.random() * 6) + 's';
+        if (overlay) overlay.appendChild(el);
+    }
 
-    document.querySelectorAll('#videoGrid .video-card').forEach(card => {
+    // Filter
+    function applyFilters() {
+      const introChecked = document.getElementById('chkIntro').checked;
+      const maintChecked = document.getElementById('chkMaint').checked;
+      document.querySelectorAll('#videoGrid .video-card').forEach(card => {
         const cat = card.getAttribute('data-cat');
-        const title = card.querySelector('.video-title').textContent.toLowerCase();
-        let visible = true;
-
-        // apply dropdown filter
-        if (selectedCat !== 'any' && cat !== selectedCat) {
-            visible = false;
+        if (!introChecked && !maintChecked) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.toggle('hidden', !((introChecked && cat === 'intro') || (maintChecked && cat === 'maint')));
         }
-        
-        // apply search filter
-        if (searchText && !title.includes(searchText)) {
-            visible = false;
-        }
+      });
+    }
 
-        card.classList.toggle('hidden', !visible);
-    });
-}
+    // Video modal
+    function playVideo(e, id) {
+      e.preventDefault();
+      document.getElementById('videoFrame').src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+      document.getElementById('videoModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
 
-// Video modal
-function playVideo(e, id) {
-    e.preventDefault();
-    document.getElementById('videoFrame').src = `https://www.youtube.com/embed/${id}?autoplay=1`;
-    document.getElementById('videoModal').classList.add('open');
-    document.body.style.overflow = 'hidden';
-}
-function closeVideo() {
-    document.getElementById('videoFrame').src = '';
-    document.getElementById('videoModal').classList.remove('open');
-    document.body.style.overflow = '';
-}
-function handleModalBg(e) {
-    if (e.target === document.getElementById('videoModal')) closeVideo();
-}
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVideo(); });
-</script>
+    function closeVideo() {
+      document.getElementById('videoFrame').src = '';
+      document.getElementById('videoModal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
 
-<!-- modal markup appended to template so it sits at bottom of content -->
-<div class="modal-bg" id="videoModal" onclick="handleModalBg(event)">
-  <div class="modal-content">
-    <button class="modal-close-btn" onclick="closeVideo()">&times;</button>
-    <iframe id="videoFrame" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
-  </div>
-</div>
-
+    function handleModalBg(e) {
+      if (e.target === document.getElementById('videoModal')) closeVideo();
+    }
+    
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeVideo(); });
+  </script>
 {% endblock %}

@@ -1,4 +1,41 @@
-// Helper function to get CSRF token
+// ─── Inline toast notification (replaces all alert() calls) ─────────────────
+function showToast(message, type) {
+    var existing = document.getElementById('mx-toast');
+    if (existing) existing.remove();
+
+    var toast = document.createElement('div');
+    toast.id = 'mx-toast';
+    toast.setAttribute('role', 'alert');
+    toast.setAttribute('aria-live', 'assertive');
+    toast.style.cssText = [
+        'position:fixed', 'bottom:24px', 'right:24px', 'z-index:9999',
+        'padding:14px 20px', 'border-radius:10px', 'max-width:360px',
+        'font-size:0.9rem', 'font-weight:500', 'box-shadow:0 8px 24px rgba(0,0,0,.4)',
+        'display:flex', 'align-items:center', 'gap:10px',
+        'background:' + (type === 'success' ? 'rgba(16,185,129,.15)' : 'rgba(239,68,68,.15)'),
+        'border:1px solid ' + (type === 'success' ? 'rgba(16,185,129,.5)' : 'rgba(239,68,68,.5)'),
+        'color:' + (type === 'success' ? '#6ee7b7' : '#fca5a5'),
+        'transition:opacity .4s ease',
+    ].join(';');
+
+    var icon = document.createElement('i');
+    icon.className = type === 'success' ? 'bi bi-check-circle-fill' : 'bi bi-exclamation-triangle-fill';
+    icon.style.fontSize = '1.1rem';
+
+    var text = document.createElement('span');
+    text.textContent = message;
+
+    toast.appendChild(icon);
+    toast.appendChild(text);
+    document.body.appendChild(toast);
+
+    setTimeout(function () {
+        toast.style.opacity = '0';
+        setTimeout(function () { toast.remove(); }, 450);
+    }, 4000);
+}
+
+
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -129,6 +166,9 @@ if (contactForm) {
         const formData = new FormData(contactForm);
         const actionUrl = contactForm.getAttribute('action');
         const csrftoken = getCookie('csrftoken');
+        const submitBtn = document.getElementById('contactSubmitBtn');
+        const origHtml = submitBtn ? submitBtn.innerHTML : null;
+        if (submitBtn) { submitBtn.disabled = true; submitBtn.innerHTML = '<span>Sending…</span>'; }
 
         fetch(actionUrl, {
             method: 'POST',
@@ -141,19 +181,19 @@ if (contactForm) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Show success message
-                alert(data.message);
-
-                // Reset form and remove validation state
+                showToast(data.message || 'Message sent! We\'ll be in touch within 24 hours.', 'success');
                 contactForm.reset();
                 contactForm.classList.remove('was-validated');
             } else {
-                alert(data.message || 'An error occurred. Please try again.');
+                showToast(data.message || 'An error occurred. Please try again.', 'error');
             }
         })
-        .catch(error => {
+        .catch(function(error) {
             console.error('Error:', error);
-            alert('An error occurred. Please try again.');
+            showToast('An error occurred. Please try again.', 'error');
+        })
+        .finally(function() {
+            if (submitBtn && origHtml) { submitBtn.disabled = false; submitBtn.innerHTML = origHtml; }
         });
     });
 }
@@ -229,7 +269,10 @@ if (thumbs) {
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<span>Submitting...</span>';
 
-            fetch('{% url "products:quote_request" %}', {
+            // Read the URL from the data-attribute set in base.html (template tags
+            // are NOT processed in static files, so we cannot use {% url %} here).
+            const quoteUrl = document.getElementById('quoteModal')?.dataset?.quoteUrl || '/products/quote-request/';
+            fetch(quoteUrl, {
                 method: 'POST',
                 body: formData,
             })
@@ -337,21 +380,18 @@ if (serviceForm) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Show success message
-                alert(data.message);
-
-                // Close modal and reset form
+                showToast(data.message || 'Request submitted! Our team will contact you shortly.', 'success');
                 const modal = bootstrap.Modal.getInstance(serviceModal);
                 modal.hide();
                 serviceForm.reset();
                 serviceForm.classList.remove('was-validated');
             } else {
-                alert(data.message || 'An error occurred. Please try again.');
+                showToast(data.message || 'An error occurred. Please try again.', 'error');
             }
         })
-        .catch(error => {
+        .catch(function(error) {
             console.error('Error:', error);
-            alert('An error occurred. Please try again.');
+            showToast('An error occurred. Please try again.', 'error');
         });
     });
 }

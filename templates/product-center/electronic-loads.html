@@ -1,0 +1,325 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electronic Loads | MATRIX Technology Product Center</title>
+  <meta name="description" content="Explore Matrix Technology's Electronic Loads range. DC & AC Electronic Load Systems.">
+  <link rel="stylesheet" href="{% static 'css/awesome.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="container">
+    <a href="{% url 'products:center_page' page_name='index' %}" class="brand">
+      <span class="brand-strips"><i></i><i></i><i></i></span>
+      <span>MATRIX</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="{% url 'products:center_page' page_name='index' %}">Product Center</a></li>
+      <li class="nav-dropdown">
+        <a href="#" class="active">Categories <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 6 8 10 12 6"/></svg></a>
+        <ul class="dropdown-menu">
+          <li><a href="{% url 'products:center_page' page_name='dc-power-supply' %}" ><span class="dropdown-icon">⚡</span> DC Power Supply</a></li>
+          <li><a href="{% url 'products:center_page' page_name='ac-power-supply' %}" ><span class="dropdown-icon">〜</span> AC Power Supply</a></li>
+          <li><a href="{% url 'products:center_page' page_name='electronic-loads' %}" class="active"><span class="dropdown-icon">🔌</span> Electronic Loads</a></li>
+          <li><a href="{% url 'products:center_page' page_name='lcr-meter' %}" ><span class="dropdown-icon">📡</span> LCR Meter</a></li>
+          <li><a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}" ><span class="dropdown-icon">⚠</span> Withstand Voltage Tester</a></li>
+          <li><a href="{% url 'products:center_page' page_name='oscilloscope' %}" ><span class="dropdown-icon">📊</span> Oscilloscope</a></li>
+          <li><div class="divider"></div></li>
+          <li><a href="{% url 'products:center_page' page_name='all-products' %}"><span class="dropdown-icon">🗂</span> All Products</a></li>
+        </ul>
+      </li>
+      <li><a href="#">About</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <div class="nav-end">
+      <button class="btn-nav-search" aria-label="Search"><i class="bi bi-search"></i></button>
+      <a href="#" class="btn-contact-nav">Get Quote</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Nav -->
+<nav class="mobile-nav" id="mobileNav">
+  <ul>
+    <li><a href="{% url 'products:center_page' page_name='index' %}">Product Center</a></li>
+    <li><a href="{% url 'products:center_page' page_name='dc-power-supply' %}" >DC Power Supply</a></li>
+    <li><a href="{% url 'products:center_page' page_name='ac-power-supply' %}" >AC Power Supply</a></li>
+    <li><a href="{% url 'products:center_page' page_name='electronic-loads' %}" class="active">Electronic Loads</a></li>
+    <li><a href="{% url 'products:center_page' page_name='lcr-meter' %}" >LCR Meter</a></li>
+    <li><a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}" >Withstand Voltage Tester</a></li>
+    <li><a href="{% url 'products:center_page' page_name='oscilloscope' %}" >Oscilloscope</a></li>
+    <li><a href="{% url 'products:center_page' page_name='all-products' %}">All Products</a></li>
+  </ul>
+</nav>
+
+<!-- PAGE WRAPPER -->
+<div class="page-wrapper">
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb-bar">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li><a href="{% url 'products:center_page' page_name='index' %}">Home</a></li>
+        <li><a href="{% url 'products:center_page' page_name='index' %}">Product Center</a></li>
+        <li class="active">Electronic Loads</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- MAIN LAYOUT -->
+  <div class="layout-with-sidebar">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-title">Product Center</div>
+      <ul class="sidebar-nav">
+        <li><a href="{% url 'products:center_page' page_name='dc-power-supply' %}" class=""><span class="icon">⚡</span>DC Power Supply</a></li>
+<li><a href="{% url 'products:center_page' page_name='ac-power-supply' %}" class=""><span class="icon">〜</span>AC Power Supply</a></li>
+<li><a href="{% url 'products:center_page' page_name='electronic-loads' %}" class="active"><span class="icon">🔌</span>Electronic Loads</a></li>
+<li><a href="{% url 'products:center_page' page_name='lcr-meter' %}" class=""><span class="icon">📡</span>LCR Meter</a></li>
+<li><a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}" class=""><span class="icon">⚠</span>Withstand Voltage Tester</a></li>
+<li><a href="{% url 'products:center_page' page_name='oscilloscope' %}" class=""><span class="icon">📊</span>Oscilloscope</a></li>
+
+      </ul>
+      <div class="sidebar-all">
+        <ul class="sidebar-nav">
+          <li><a href="{% url 'products:center_page' page_name='all-products' %}"><span class="icon">🗂</span> All Products</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- CONTENT -->
+    <main class="main-content">
+
+      <!-- Mobile sidebar trigger -->
+      <button class="sidebar-mobile-trigger" id="sidebarTrigger" style="display:none;">
+        <i class="bi bi-layout-sidebar-inset"></i> Browse Categories
+      </button>
+
+      <!-- HERO -->
+      <section class="product-hero">
+        <div class="hero-grid-pattern"></div>
+        <div class="product-hero-inner">
+          <div class="hero-badge"><span class="dot"></span> Category 03</div>
+          <h1>Electronic <span class="highlight">Loads</span></h1>
+          <p>DC & AC Electronic Load Systems. Simulate realistic loads on power supplies, batteries, chargers, and inverters. Matrix Electronic Loads offer CC/CV/CR/C...</p>
+          <div class="hero-stats">
+            <div class="hero-stat"><div class="num">6</div><p class="lbl">Models</p></div>
+            <div class="hero-stat"><div class="num">CE</div><p class="lbl">Certified</p></div>
+            <div class="hero-stat"><div class="num">2yr</div><p class="lbl">Warranty</p></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PRODUCTS SECTION -->
+      <section class="products-section">
+        <div class="products-section-header">
+          <div>
+            <span class="section-label">Products</span>
+            <h2 class="section-title">Electronic Loads Series</h2>
+          </div>
+          <div class="filter-bar">
+            <button class="filter-btn active" data-filter="all">All</button>
+<button class="filter-btn" data-filter="dc">Dc</button>
+<button class="filter-btn" data-filter="ac">Ac</button>
+<button class="filter-btn" data-filter="battery">Battery</button>
+
+          </div>
+        </div>
+
+        <!-- Search -->
+        <div class="search-bar-wrap">
+          <div class="search-bar">
+            <span class="si"><i class="bi bi-search"></i></span>
+            <input type="text" id="productSearch" placeholder="Search electronic loads models…">
+          </div>
+        </div>
+
+        <!-- Cards -->
+        <div class="products-grid" style="margin-top:24px;">
+          
+<article class="product-card" data-type="dc">
+  <div class="card-image">
+    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MEL-300W" alt="DC Electronic Load 300W" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
+    <span class="card-badge">DC</span>
+    <div class="card-image-overlay"></div>
+  </div>
+  <div class="card-body">
+    <div class="card-model">MEL-300W</div>
+    <h3 class="card-title">DC Electronic Load 300W</h3>
+    <p class="card-desc">Programmable DC electronic load with CC/CV/CR/CP modes and LED display for benchtop use.</p>
+    <div class="card-features"><span class="card-feature">300W</span><span class="card-feature">CC/CV/CR/CP</span><span class="card-feature">Dynamic Mode</span><span class="card-feature">USB</span></div>
+  </div>
+  <div class="card-footer">
+    <a href="#" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
+    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
+  </div>
+</article>
+<article class="product-card" data-type="dc">
+  <div class="card-image">
+    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MEL-1200W" alt="DC Electronic Load 1200W" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
+    <span class="card-badge">DC</span>
+    <div class="card-image-overlay"></div>
+  </div>
+  <div class="card-body">
+    <div class="card-model">MEL-1200W</div>
+    <h3 class="card-title">DC Electronic Load 1200W</h3>
+    <p class="card-desc">High-power single-channel DC load with parallel operation capability for up to 6kW system.</p>
+    <div class="card-features"><span class="card-feature">1200W</span><span class="card-feature">Parallel</span><span class="card-feature">OCP Test</span><span class="card-feature">LAN</span></div>
+  </div>
+  <div class="card-footer">
+    <a href="#" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
+    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
+  </div>
+</article>
+<article class="product-card" data-type="ac">
+  <div class="card-image">
+    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MEL-ACH" alt="AC/DC Electronic Load" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
+    <span class="card-badge">AC</span>
+    <div class="card-image-overlay"></div>
+  </div>
+  <div class="card-body">
+    <div class="card-model">MEL-ACH</div>
+    <h3 class="card-title">AC/DC Electronic Load</h3>
+    <p class="card-desc">Dual-mode AC/DC load for testing inverters, UPS, and AC/DC converters with PF simulation.</p>
+    <div class="card-features"><span class="card-feature">AC+DC</span><span class="card-feature">PF Control</span><span class="card-feature">Inverter Test</span><span class="card-feature">UPS Test</span></div>
+  </div>
+  <div class="card-footer">
+    <a href="#" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
+    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
+  </div>
+</article>
+<article class="product-card" data-type="battery">
+  <div class="card-image">
+    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MEL-BAT" alt="Battery Discharge Load Tester" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
+    <span class="card-badge">BATTERY</span>
+    <div class="card-image-overlay"></div>
+  </div>
+  <div class="card-body">
+    <div class="card-model">MEL-BAT</div>
+    <h3 class="card-title">Battery Discharge Load Tester</h3>
+    <p class="card-desc">Dedicated battery discharge tester with capacity analysis, internal resistance, and cycle testing.</p>
+    <div class="card-features"><span class="card-feature">Battery Test</span><span class="card-feature">Capacity Calc</span><span class="card-feature">IR Measure</span><span class="card-feature">Cycle Mode</span></div>
+  </div>
+  <div class="card-footer">
+    <a href="#" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
+    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
+  </div>
+</article>
+<article class="product-card" data-type="dc">
+  <div class="card-image">
+    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MEL-MCH" alt="Multi-Channel Electronic Load" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
+    <span class="card-badge">DC</span>
+    <div class="card-image-overlay"></div>
+  </div>
+  <div class="card-body">
+    <div class="card-model">MEL-MCH</div>
+    <h3 class="card-title">Multi-Channel Electronic Load</h3>
+    <p class="card-desc">4-channel independent programmable loads in a single rack unit for multi-output PSU testing.</p>
+    <div class="card-features"><span class="card-feature">4-Channel</span><span class="card-feature">Independent</span><span class="card-feature">Rack 1U</span><span class="card-feature">GPIB/LAN</span></div>
+  </div>
+  <div class="card-footer">
+    <a href="#" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
+    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
+  </div>
+</article>
+<article class="product-card" data-type="dc">
+  <div class="card-image">
+    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MEL-6KW" alt="High-Power Load System 6kW" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
+    <span class="card-badge">DC</span>
+    <div class="card-image-overlay"></div>
+  </div>
+  <div class="card-body">
+    <div class="card-model">MEL-6KW</div>
+    <h3 class="card-title">High-Power Load System 6kW</h3>
+    <p class="card-desc">Modular 6 kW DC system built from 1200W modules. Fully parallel/series configurable.</p>
+    <div class="card-features"><span class="card-feature">6kW System</span><span class="card-feature">Modular</span><span class="card-feature">Auto-Range</span><span class="card-feature">Master/Slave</span></div>
+  </div>
+  <div class="card-footer">
+    <a href="#" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
+    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
+  </div>
+</article>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <div class="cta-section">
+        <div class="cta-inner">
+          <div>
+            <h2>Need a Custom Solution?</h2>
+            <p>Our engineers can tailor Electronic Loads specifications to your application requirements.</p>
+          </div>
+          <div class="cta-buttons">
+            <a href="#" class="btn-primary"><i class="bi bi-envelope"></i> Request Quote</a>
+            <a href="#" class="btn-outline"><i class="bi bi-file-earmark-text"></i> Download Catalog</a>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div><!-- /layout-with-sidebar -->
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="{% url 'products:center_page' page_name='index' %}" class="brand" style="margin-bottom:14px;display:inline-flex;">
+            <span class="brand-strips"><i></i><i></i><i></i></span>
+            <span>MATRIX</span>
+          </a>
+          <p style="font-size:0.875rem;color:var(--text-muted);">Precision test &amp; measurement instruments trusted by engineers worldwide.</p>
+          <div class="footer-social" style="margin-top:16px;">
+            <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="social-icon"><i class="bi bi-youtube"></i></a>
+            <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
+            <a href="#" class="social-icon"><i class="bi bi-envelope"></i></a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-col-title">Products</div>
+          <ul class="footer-links">
+            <li><a href="{% url 'products:center_page' page_name='dc-power-supply' %}">DC Power Supply</a></li><li><a href="{% url 'products:center_page' page_name='ac-power-supply' %}">AC Power Supply</a></li><li><a href="{% url 'products:center_page' page_name='electronic-loads' %}">Electronic Loads</a></li><li><a href="{% url 'products:center_page' page_name='lcr-meter' %}">LCR Meter</a></li><li><a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}">Withstand Voltage Tester</a></li><li><a href="{% url 'products:center_page' page_name='oscilloscope' %}">Oscilloscope</a></li><li><a href="{% url 'products:center_page' page_name='all-products' %}">All Products</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Company</div>
+          <ul class="footer-links">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Videos</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Contact</div>
+          <div class="footer-contact-item"><span class="ic"><i class="bi bi-geo-alt"></i></span><span>Room 601, Block C, Huachuangda Industrial Park, Shenzhen, Guangdong</span></div>
+          <div class="footer-contact-item"><span class="ic"><i class="bi bi-telephone"></i></span><span>0086 755 2836 4276</span></div>
+          <div class="footer-contact-item"><span class="ic"><i class="bi bi-envelope"></i></span><span>sales@szmatrix.com</span></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 MATRIX Technology Inc. All rights reserved.</p>
+        <div style="display:flex;gap:16px;">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#" class="floating-contact"><i class="bi bi-chat-fill"></i> Contact us</a>
+</div><!-- /page-wrapper -->
+
+<script src="{% static 'js/product_main.js' %}"></script>
+</body>
+</html>

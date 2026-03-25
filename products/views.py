@@ -179,6 +179,17 @@ def product_list(request):
     )
 
 
+def center_page_view(request, page_name):
+    valid_pages = [
+        "index", "dc-power-supply", "ac-power-supply", 
+        "electronic-loads", "lcr-meter", "withstand-voltage-tester", 
+        "oscilloscope", "all-products"
+    ]
+    if page_name in valid_pages:
+        return render(request, f"product-center/{page_name}.html")
+    return redirect("products:product_list")
+
+
 def product_missing(request):
     """User navigated to /products/product/ without specifying a slug.
 

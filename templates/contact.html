@@ -1,226 +1,226 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Contact Us | ElectroTech Industries{% endblock %}
+{% block title %}Contact Us | Matrix Technology Inc.{% endblock %}
 
-{% block meta_description %}Contact ElectroTech Industries for electrical & electronic equipment manufacturing, services, and support. Get in touch today.{% endblock %}
+{% block meta_description %}Contact Matrix Technology Inc. for DC/AC power supply inquiries, technical support, pricing, and partnership opportunities. Located in Shenzhen, China.{% endblock %}
 
 {% block content %}
-        <!-- Page Header -->
-        <section class="page-header">
-            <div class="container">
-                <div class="page-header-content">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Contact</li>
-                        </ol>
-                    </nav>
-                    <h1>Contact Us</h1>
-                    <p>Get in touch with our team for inquiries, support, or partnership opportunities.</p>
+
+<!-- ─── HERO ─────────────────────────────────────────────── -->
+<section class="hero" style="min-height:45vh; padding-top:140px; background:linear-gradient(135deg,#0a0e27 0%,#1a0a35 50%,#0d0620 100%);">
+  <div class="hero-bg"></div>
+  <div class="container position-relative" style="z-index:2;">
+    <nav aria-label="breadcrumb" class="mb-3">
+      <ol class="breadcrumb" style="background:none;padding:0;">
+        <li class="breadcrumb-item"><a href="{% url 'core:index' %}" style="color:var(--text-muted);">Home</a></li>
+        <li class="breadcrumb-item active" style="color:var(--text-secondary);">Contact Us</li>
+      </ol>
+    </nav>
+    <div class="hero-badge-wrapper mb-4">
+      <span class="hero-badge"><i class="bi bi-headset"></i> 24/5 Support</span>
+    </div>
+    <h1 style="font-size:clamp(2.2rem,5vw,3.5rem); font-weight:800; max-width:600px;">
+      Get in <span style="background:linear-gradient(135deg,#7b3fe4,#00f0ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Touch</span>
+    </h1>
+    <p style="color:var(--text-secondary); max-width:500px; font-size:1.05rem; margin-top:1rem; line-height:1.7;">
+      Reach our sales team for pricing, support, or partnership opportunities. We typically respond within 24 hours.
+    </p>
+  </div>
+</section>
+
+<!-- ─── CONTACT INFO + FORM ───────────────────────────── -->
+<section class="section-padding" style="background:var(--bg-secondary);">
+  <div class="container">
+    <div class="row g-5">
+
+      <!-- LEFT: Contact information -->
+      <div class="col-lg-5 reveal-left">
+        <span class="hero-badge mb-4 d-inline-flex" style="font-size:0.7rem;"><i class="bi bi-info-circle me-2"></i>Our Details</span>
+        <h2 class="mb-4">Contact <span style="color:var(--accent);">Information</span></h2>
+
+        <!-- Address -->
+        <div class="d-flex gap-3 mb-4">
+          <div style="width:44px;height:44px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <i class="bi bi-geo-alt" style="color:var(--accent);font-size:1.1rem;"></i>
+          </div>
+          <div>
+            <h6 style="color:var(--text-primary);margin-bottom:4px;">Our Address</h6>
+            <p style="color:var(--text-muted);margin:0;font-size:0.9rem;line-height:1.6;">Room 601, Block C, Huachuangda Industrial Park,<br>Xinhe Avenue, Shajing, Baoan District,<br>Shenzhen, Guangdong, China</p>
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="d-flex gap-3 mb-4">
+          <div style="width:44px;height:44px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <i class="bi bi-telephone" style="color:var(--accent);font-size:1.1rem;"></i>
+          </div>
+          <div>
+            <h6 style="color:var(--text-primary);margin-bottom:4px;">Call Us</h6>
+            <p style="color:var(--text-muted);margin:0;font-size:0.9rem;">
+              <a href="tel:+8675528364276" style="color:var(--text-muted);text-decoration:none;">(0086) 755 2836 4276</a><br>
+              <a href="tel:+8618826522688" style="color:var(--text-muted);text-decoration:none;">(0086) 188 2652 2688</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="d-flex gap-3 mb-4">
+          <div style="width:44px;height:44px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <i class="bi bi-envelope" style="color:var(--accent);font-size:1.1rem;"></i>
+          </div>
+          <div>
+            <h6 style="color:var(--text-primary);margin-bottom:4px;">Have an Enquiry?</h6>
+            <p style="color:var(--text-muted);margin:0;font-size:0.9rem;">
+              <a href="mailto:sales@szmatrix.com" style="color:var(--accent);">sales@szmatrix.com</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Support -->
+        <div class="d-flex gap-3 mb-4">
+          <div style="width:44px;height:44px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <i class="bi bi-tools" style="color:var(--accent);font-size:1.1rem;"></i>
+          </div>
+          <div>
+            <h6 style="color:var(--text-primary);margin-bottom:4px;">Technical Support</h6>
+            <p style="color:var(--text-muted);margin:0;font-size:0.9rem;">
+              <a href="mailto:support@szmatrix.com" style="color:var(--accent);">support@szmatrix.com</a>
+            </p>
+          </div>
+        </div>
+
+        <!-- Working hours -->
+        <div class="d-flex gap-3 mb-5">
+          <div style="width:44px;height:44px;background:rgba(59,130,246,.12);border:1px solid rgba(59,130,246,.3);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <i class="bi bi-clock" style="color:var(--accent);font-size:1.1rem;"></i>
+          </div>
+          <div>
+            <h6 style="color:var(--text-primary);margin-bottom:4px;">Working Hours</h6>
+            <p style="color:var(--text-muted);margin:0;font-size:0.9rem;line-height:1.7;">
+              Mon – Fri: 9:00 AM – 6:00 PM (CST)<br>
+              Saturday: 9:00 AM – 2:00 PM<br>
+              Sunday: Closed
+            </p>
+          </div>
+        </div>
+
+        <!-- Social links -->
+        <div>
+          <h6 style="color:var(--text-primary);margin-bottom:12px;">Connect With Us</h6>
+          <div class="d-flex gap-2">
+            <a href="#" style="width:40px;height:40px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--accent);text-decoration:none;transition:all .2s;" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+            <a href="#" style="width:40px;height:40px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--accent);text-decoration:none;transition:all .2s;" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+            <a href="#" style="width:40px;height:40px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--accent);text-decoration:none;transition:all .2s;" aria-label="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+            <a href="#" style="width:40px;height:40px;background:rgba(59,130,246,.1);border:1px solid rgba(59,130,246,.2);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--accent);text-decoration:none;transition:all .2s;" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: Contact form -->
+      <div class="col-lg-7 reveal-right">
+        <div class="glass-effect p-4 p-md-5" style="border-radius:20px;">
+          <h3 class="mb-2">Send Us a <span style="color:var(--accent);">Message</span></h3>
+          <p style="color:var(--text-muted);margin-bottom:2rem;font-size:0.9rem;">Fill in the form and our team will get back to you within 24 hours.</p>
+
+          <form id="contactForm" action="{% url 'core:contact_submit' %}" method="POST" novalidate>
+            {% csrf_token %}
+            <div class="row g-3">
+
+              <div class="col-md-6">
+                <label for="firstName" class="form-label" style="color:var(--text-secondary);font-size:.85rem;">First Name <span style="color:var(--accent);">*</span></label>
+                <input type="text" class="form-control" id="firstName" name="firstName" required
+                  placeholder="John" style="background:rgba(255,255,255,.04);border-color:var(--border);color:var(--text-primary);">
+                <div class="invalid-feedback">Please enter your first name.</div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="lastName" class="form-label" style="color:var(--text-secondary);font-size:.85rem;">Last Name <span style="color:var(--accent);">*</span></label>
+                <input type="text" class="form-control" id="lastName" name="lastName" required
+                  placeholder="Doe" style="background:rgba(255,255,255,.04);border-color:var(--border);color:var(--text-primary);">
+                <div class="invalid-feedback">Please enter your last name.</div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="email" class="form-label" style="color:var(--text-secondary);font-size:.85rem;">Email Address <span style="color:var(--accent);">*</span></label>
+                <input type="email" class="form-control" id="email" name="email" required
+                  placeholder="john@company.com" style="background:rgba(255,255,255,.04);border-color:var(--border);color:var(--text-primary);">
+                <div class="invalid-feedback">Please enter a valid email address.</div>
+              </div>
+
+              <div class="col-md-6">
+                <label for="phone" class="form-label" style="color:var(--text-secondary);font-size:.85rem;">Phone Number <span style="color:var(--accent);">*</span></label>
+                <input type="tel" class="form-control" id="phone" name="phone" required
+                  placeholder="+1 234 567 8900" style="background:rgba(255,255,255,.04);border-color:var(--border);color:var(--text-primary);">
+                <div class="invalid-feedback">Please enter your phone number.</div>
+              </div>
+
+              <div class="col-12">
+                <label for="subject" class="form-label" style="color:var(--text-secondary);font-size:.85rem;">Subject</label>
+                <select class="form-control" id="subject" name="subject" style="background:rgba(30,41,59,.9);border-color:var(--border);color:var(--text-primary);">
+                  <option value="">Select a subject</option>
+                  <option value="general">General Inquiry</option>
+                  <option value="pricing">Pricing &amp; Quotation</option>
+                  <option value="technical">Technical Support</option>
+                  <option value="calibration">Calibration &amp; Testing</option>
+                  <option value="repair">Repair &amp; Maintenance</option>
+                  <option value="partnership">Partnership Opportunity</option>
+                  <option value="custom">Custom Development</option>
+                </select>
+              </div>
+
+              <div class="col-12">
+                <label for="message" class="form-label" style="color:var(--text-secondary);font-size:.85rem;">Your Message <span style="color:var(--accent);">*</span></label>
+                <textarea class="form-control" id="message" name="message" rows="5" required
+                  placeholder="Please describe your inquiry or requirements..."
+                  style="background:rgba(255,255,255,.04);border-color:var(--border);color:var(--text-primary);resize:vertical;"></textarea>
+                <div class="invalid-feedback">Please enter your message.</div>
+              </div>
+
+              <div class="col-12">
+                <div class="form-check">
+                  <input type="checkbox" class="form-check-input" id="termsCheck" name="termsCheck" required>
+                  <label class="form-check-label" for="termsCheck" style="color:var(--text-muted);font-size:.85rem;">
+                    I agree to the <a href="#" style="color:var(--accent);">Terms of Service</a> and
+                    <a href="#" style="color:var(--accent);">Privacy Policy</a>
+                    <span style="color:var(--accent);">*</span>
+                  </label>
+                  <div class="invalid-feedback">You must agree to the terms.</div>
                 </div>
+              </div>
+
+              <div class="col-12">
+                <div id="contactResponseMsg" class="mt-1" style="display:none;"></div>
+                <button type="submit" class="btn btn-primary-custom w-100" id="contactSubmitBtn">
+                  <i class="bi bi-send me-2"></i><span>Send Message</span>
+                </button>
+              </div>
+
             </div>
-        </section>
+          </form>
+        </div>
+      </div>
 
-        <!-- Contact Section -->
-        <section class="contact-section section-padding" aria-labelledby="contact-title">
-            <div class="container">
-                <!-- contact information container -->
-                    <!-- Contact Information -->
-                    <div class="contact-info reveal-left">
-                        <div class="row">
-                            <!-- left column (address + hours) -->
-                            <div class="col-md-6">
-                                <div class="contact-info-card">
-                                    <div class="contact-info-icon">
-                                        <i class="bi bi-geo-alt"></i>
-                                    </div>
-                                    <div class="contact-info-content">
-                                        <h5>OUR ADDRESS</h5>
-                                        <p>ElectroTech Industries Pvt. Ltd.<br>
-                                            Industrial Area, Sector 25<br>
-                                            New Delhi - 110025, India</p>
-                                    </div>
-                                </div>
+    </div>
+  </div>
+</section>
 
-                                <div class="contact-info-card">
-                                    <div class="contact-info-icon">
-                                        <i class="bi bi-clock"></i>
-                                    </div>
-                                    <div class="contact-info-content">
-                                        <h5>WORKING HOURS</h5>
-                                        <p>Monday - Friday: 9:00 AM - 6:00 PM<br>
-                                            Saturday: 9:00 AM - 2:00 PM<br>
-                                            Sunday: Closed</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- right column (inquiries & support) -->
-                            <div class="col-md-6">
-                                <div class="contact-info-card">
-                                    <div class="contact-info-icon">
-                                        <i class="bi bi-envelope"></i>
-                                    </div>
-                                    <div class="contact-info-content">
-                                        <h5>HAVE A INQUIRE?</h5>
-                                        <p><a href="mailto:info@electrotech.com">info@electrotech.com</a></p>
-                                    </div>
-                                </div>
-
-                                <div class="contact-info-card">
-                                    <div class="contact-info-icon">
-                                        <i class="bi bi-tools"></i>
-                                    </div>
-                                    <div class="contact-info-content">
-                                        <h5>TECHNICAL SUPPORT</h5>
-                                        <p><a href="mailto:support@electrotech.com">support@electrotech.com</a></p>
-                                    </div>
-                                </div>
-
-                                <div class="contact-info-card">
-                                    <div class="contact-info-icon">
-                                        <i class="bi bi-telephone"></i>
-                                    </div>
-                                    <div class="contact-info-content">
-                                        <h5>CALL US</h5>
-                                        <ul class="list-unstyled mb-0">
-                                            <li><a href="tel:+911234567890">(0086) 755 2836 4276</a></li>
-                                            <li><a href="tel:+911234567891">(0086) 188 2652 2688</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="contact-social">
-                            <h5>Connect With Us</h5>
-                            <div class="social-links">
-                                <a href="#" class="social-link" aria-label="LinkedIn">
-                                    <i class="bi bi-linkedin"></i>
-                                </a>
-                                <a href="#" class="social-link" aria-label="X">
-                                    <i class="bi bi-twitter-x"></i>
-                                </a>
-                                <a href="#" class="social-link" aria-label="WhatsApp">
-                                    <i class="bi bi-whatsapp"></i>
-                                </a>
-                                <a href="#" class="social-link" aria-label="Facebook">
-                                    <i class="bi bi-facebook"></i>
-                                </a>
-                                <a href="#" class="social-link" aria-label="Instagram">
-                                    <i class="bi bi-instagram"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                <!-- second row: image + form -->
-                <div class="row align-items-center mt-5">
-                    <div class="col-md-6">
-                        <img src="{% static 'images/contact-photo.jpg' %}" alt="Contact" class="img-fluid rounded shadow-sm">
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-container reveal-right">
-                        <div class="form-header">
-                            <h3>GET IN TOUCH</h3>
-                            <p>Contact Matrix Technical Support online, email, and phone support options for reaching technical experts across the globe.</p>
-                        </div>
-
-                        <form id="contactForm" action="{% url 'core:contact_submit' %}" method="POST" novalidate>
-                            {% csrf_token %}
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label for="firstName" class="form-label">First Name <span
-                                            class="text-accent">*</span></label>
-                                    <input type="text" class="form-control" id="firstName" name="firstName" required
-                                        aria-required="true" placeholder="Enter your first name">
-                                    <div class="invalid-feedback">Please enter your first name.</div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="lastName" class="form-label">Last Name <span
-                                            class="text-accent">*</span></label>
-                                    <input type="text" class="form-control" id="lastName" name="lastName" required
-                                        aria-required="true" placeholder="Enter your last name">
-                                    <div class="invalid-feedback">Please enter your last name.</div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="email" class="form-label">Email Address <span
-                                            class="text-accent">*</span></label>
-                                    <input type="email" class="form-control" id="email" name="email" required
-                                        aria-required="true" placeholder="Enter your email">
-                                    <div class="invalid-feedback">Please enter a valid email address.</div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="phone" class="form-label">Phone Number <span
-                                            class="text-accent">*</span></label>
-                                    <input type="tel" class="form-control" id="phone" name="phone" required
-                                        aria-required="true" placeholder="Enter your phone number">
-                                    <div class="invalid-feedback">Please enter your phone number.</div>
-                                </div>
-
-                                <div class="col-12">
-                                    <label for="subject" class="form-label">Subject</label>
-                                    <select class="form-control" id="subject" name="subject">
-                                        <option value="">Select a subject</option>
-                                        <option value="general">General Inquiry</option>
-                                        <option value="manufacturing">Manufacturing Services</option>
-                                        <option value="installation">Installation & Commissioning</option>
-                                        <option value="calibration">Calibration & Testing</option>
-                                        <option value="repair">Repair & Maintenance</option>
-                                        <option value="amc">Annual Maintenance Contract</option>
-                                        <option value="custom">Custom Development</option>
-                                        <option value="partnership">Partnership Opportunity</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-12">
-                                    <label for="message" class="form-label">Your Message <span
-                                            class="text-accent">*</span></label>
-                                    <textarea class="form-control" id="message" name="message" rows="5" required
-                                        aria-required="true"
-                                        placeholder="Please describe your inquiry or requirements..."></textarea>
-                                    <div class="invalid-feedback">Please enter your message.</div>
-                                </div>
-
-                                <div class="col-12">
-                                    <div class="form-check">
-                                        <input type="checkbox" class="form-check-input" id="termsCheck" name="termsCheck" required
-                                            aria-required="true">
-                                        <label class="form-check-label" for="termsCheck">
-                                            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy
-                                                Policy</a> <span class="text-accent">*</span>
-                                        </label>
-                                        <div class="invalid-feedback">You must agree to the terms.</div>
-                                    </div>
-                                </div>
-
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-primary-custom w-100">
-                                        <span><i class="bi bi-send me-2"></i>Send Message</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Map Section (placeholder) -->
-        <section class="bg-secondary py-5">
-            <div class="container">
-                <div class="bg-card rounded-4 p-5 text-center" style="border: 1px solid var(--border);">
-                    <i class="bi bi-geo-alt-fill text-accent" style="font-size: 3rem;"></i>
-                    <h4 class="mt-3 mb-2">Visit Our Facility</h4>
-                    <p class="text-muted mb-0">
-                        Industrial Area, Sector 25, New Delhi - 110025, India
-                    </p>
-                </div>
-            </div>
-        </section>
+<!-- ─── MAP PLACEHOLDER ────────────────────────────────── -->
+<section style="background:var(--bg-primary); padding:0 0 4rem;">
+  <div class="container">
+    <div class="glass-effect p-4 text-center" style="border-radius:16px; overflow:hidden;">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3686.7!2d113.83!3d22.63!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjLCsDM3JzQ4LjAiTiAxMTLCsDQ5JzQ4LjAiRQ!5e0!3m2!1sen!2sus!4v1234567890"
+        width="100%" height="350" style="border:0;border-radius:12px;filter:invert(90%) hue-rotate(180deg);"
+        allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        title="MATRIX Technology Inc. Location"></iframe>
+      <div class="mt-3">
+        <i class="bi bi-geo-alt-fill" style="color:var(--accent);font-size:1.2rem;"></i>
+        <span style="color:var(--text-secondary);font-size:0.88rem;margin-left:6px;">Room 601, Block C, Huachuangda Industrial Park, Shenzhen, Guangdong, China</span>
+      </div>
+    </div>
+  </div>
+</section>
 
 {% endblock %}

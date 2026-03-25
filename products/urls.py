@@ -10,6 +10,8 @@ urlpatterns = [
     path("categories/<slug:slug>/", views.category_details, name="category_details"),
     path("subcategories/", views.subcategory_list, name="subcategory_list"),
     path("subcategories/<slug:slug>/", views.subcategory_details, name="subcategory_details"),
+    # product center static pages
+    path("center/<str:page_name>/", views.center_page_view, name="center_page"),
     # catch bare "product/" path and show friendly message instead of 404
     path("product/", views.product_missing, name="product_missing"),
     path("product/<slug:slug>/", views.product_details, name="product_details"),

@@ -1,173 +1,651 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}ElectroTech Industries | Electrical & Electronic Solutions{% endblock %}
+{% block title %}MATRIX | Precision Power Solutions & Test Equipment{% endblock %}
 
 {% block meta_description %}Leading manufacturer of electrical & electronic products. Industrial equipment, laboratory
 instruments, educational kits, and professional services.{% endblock %}
 
+{% block extra_css %}
+<style>
+    /* ─── BRAND HERO SECTION ─── */
+    .main-hero {
+        position: relative;
+        min-height: 100vh;
+        padding-top: 130px;
+        padding-bottom: 80px;
+        display: flex;
+        align-items: center;
+        background: #0a0e27;
+        overflow: hidden;
+    }
+
+    /* Deep animated background gradients */
+    .main-hero::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 80% -20%, rgba(0, 240, 255, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 0% 120%, rgba(123, 63, 228, 0.2) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    /* Floating grid pattern */
+    .hero-grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 40px 40px;
+        background-position: center center;
+        opacity: 0.5;
+        z-index: 0;
+        transform: perspective(600px) rotateX(60deg) translateY(-100px) scale(3);
+        pointer-events: none;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 3;
+    }
+
+    .hero-tagline {
+        display: inline-block;
+        padding: 6px 16px;
+        background: rgba(0, 240, 255, 0.1);
+        border: 1px solid rgba(0, 240, 255, 0.3);
+        color: #00f0ff;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 24px;
+        backdrop-filter: blur(4px);
+        animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .hero-main-title {
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        font-weight: 800;
+        line-height: 1.1;
+        color: #ffffff;
+        margin-bottom: 24px;
+        letter-spacing: -1px;
+        animation: slideInLeft 0.8s ease 0.1s forwards;
+        opacity: 0;
+    }
+
+    .hero-main-title span {
+        background: linear-gradient(135deg, #00f0ff 0%, #3b82f6 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .hero-description {
+        font-size: 1.15rem;
+        color: var(--text-secondary);
+        max-width: 600px;
+        margin-bottom: 40px;
+        line-height: 1.8;
+        animation: slideInLeft 0.8s ease 0.2s forwards;
+        opacity: 0;
+    }
+
+    .hero-actions {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        animation: slideInLeft 0.8s ease 0.3s forwards;
+        opacity: 0;
+    }
+
+    .hero-actions .btn {
+        padding: 14px 32px;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary-glow {
+        background: var(--accent-dark);
+        color: #fff;
+        border: 1px solid var(--accent);
+        box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
+    }
+
+    .btn-primary-glow:hover {
+        background: var(--accent);
+        box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
+        transform: translateY(-2px);
+        color: #fff;
+    }
+
+    .btn-outline-glass {
+        background: rgba(255, 255, 255, 0.05);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(8px);
+    }
+
+    .btn-outline-glass:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.3);
+        color: #fff;
+    }
+
+    /* Optional Featured Product Card inside Hero */
+    .hero-featured-card {
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        animation: scaleIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+        opacity: 0;
+        position: relative;
+        z-index: 3;
+    }
+
+    .hero-featured-card::before {
+        content: '';
+        position: absolute;
+        inset: -1px;
+        background: linear-gradient(135deg, rgba(0, 240, 255, 0.4) 0%, transparent 50%, rgba(123, 63, 228, 0.4) 100%);
+        border-radius: 16px;
+        z-index: -1;
+        mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        padding: 1px;
+    }
+
+    .featured-img-wrap {
+        background: #000;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+        min-height: 240px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .featured-img-wrap img {
+        max-height: 220px;
+        max-width: 100%;
+        width: auto;
+        object-fit: contain;
+        transition: transform 0.5s ease;
+        display: block;
+    }
+
+    .hero-featured-card:hover .featured-img-wrap img {
+        transform: scale(1.05);
+    }
+
+    .featured-info h3 {
+        font-size: 1.25rem;
+        color: #fff;
+        margin-bottom: 8px;
+    }
+
+    .featured-info p {
+        font-size: 0.9rem;
+        color: #CBD5E1;
+        margin-bottom: 16px;
+    }
+
+    .explore-link {
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #00f0ff;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .explore-link:hover {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    /* ─── WHY CHOOSE MATRIX (CORE VALUES) ─── */
+    .core-values {
+        padding: 100px 0;
+        background: #0f172a;
+        position: relative;
+        border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .value-card {
+        background: rgba(30, 41, 59, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        padding: 40px 30px;
+        height: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .value-card:hover {
+        background: rgba(30, 41, 59, 0.8);
+        border-color: rgba(255, 255, 255, 0.1);
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .value-icon {
+        width: 60px;
+        height: 60px;
+        background: rgba(59, 130, 246, 0.1);
+        color: #3b82f6;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        margin-bottom: 24px;
+        transition: all 0.3s ease;
+    }
+
+    .value-card:hover .value-icon {
+        background: #3b82f6;
+        color: #fff;
+    }
+
+    .value-card h4 {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+    }
+
+    .value-card p {
+        font-size: 0.95rem;
+        color: #CBD5E1;
+        margin: 0;
+    }
+
+    /* ─── FEATURED CATEGORIES ─── */
+    .categories-section {
+        padding: 100px 0;
+        background: #0d1117;
+    }
+
+    .cat-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 24px;
+    }
+
+    .cat-card {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 24px;
+        background: rgba(30, 41, 59, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 12px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .cat-card:hover {
+        background: rgba(30, 41, 59, 0.7);
+        border-color: rgba(0, 240, 255, 0.3);
+        transform: translateX(5px);
+    }
+
+    .cat-icon {
+        width: 50px;
+        height: 50px;
+        background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(59, 130, 246, 0.1));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        color: #00f0ff;
+        flex-shrink: 0;
+    }
+
+    .cat-info h4 {
+        color: #fff;
+        font-size: 1.1rem;
+        margin-bottom: 4px;
+        transition: color 0.3s;
+    }
+
+    .cat-info span {
+        font-size: 0.85rem;
+        color: #CBD5E1;
+    }
+
+    .cat-card:hover .cat-info h4 {
+        color: #00f0ff;
+    }
+
+    /* ─── SCRIPTED REVEALS ─── */
+    .reveal {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: all 0.8s ease;
+    }
+
+    .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<!-- Hero Section -->
-<section class="hero product-hero" aria-labelledby="hero-title">
-    <div class="container-fluid">
-        <div class="row g-0 align-items-center">
-            <!-- left text area -->
-            <div class="col-lg-6 hero-details">
+<!-- ══════════ BRAND HERO SECTION ══════════ -->
+<section class="main-hero" aria-labelledby="hero-title">
+    <div class="hero-grid"></div>
+    <div class="container hero-content">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-7">
+                <span class="hero-tagline"><i class="bi bi-cpu me-2"></i> Engineered for Excellence</span>
+                <h1 id="hero-title" class="hero-main-title">Precision Power <br><span>Solutions</span> for Advanced
+                    Engineering</h1>
+                <p class="hero-description">
+                    Matrix Technology delivers industry-leading DC/AC power supplies, electronic loads, and automated
+                    testing equipment tailored for high-performance R&D and manufacturing environments worldwide.
+                </p>
+                <div class="hero-actions">
+                    <a href="{% url 'products:product_list' %}" class="btn btn-primary-glow">Explore Solutions</a>
+                    <a href="{% url 'core:contact' %}" class="btn btn-outline-glass">Contact Sales</a>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
                 {% if hero_product %}
-                <!-- Hero Badge -->
-                <div class="hero-badge-wrapper mb-3">
-                    <span class="hero-badge">
-                        <i class="bi bi-lightning-fill"></i>
-                        Featured Product
-                    </span>
-                </div>
-
-                <!-- Main Title -->
-                <h1 id="hero-title" class="hero-title mb-4">{{ hero_product.name|linebreaksbr }}</h1>
-
-                <!-- Features List -->
-                <div class="hero-features-wrapper mb-4">
-                    <ul class="hero-features list-unstyled">
-                        {% for feat in hero_product.features.all %}
-                        <li class="feature-item">
-                            <span class="feature-icon"><i class="bi bi-check-circle-fill"></i></span>
-                            <span class="feature-text">{{ feat.title }}{% if feat.description %} - {{ feat.description }}{% endif %}</span>
-                        </li>
-                        {% empty %}
-                        <li class="feature-item">
-                            <span class="feature-icon"><i class="bi bi-check-circle-fill"></i></span>
-                            <span class="feature-text">No features listed.</span>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-
-                <!-- CTA Button -->
-                <div class="hero-cta-section mb-5">
-                    <a href="#" class="btn btn-quote" data-product="{{ hero_product.name }}">
-                        <i class="bi bi-quote"></i>
-                        Get a Quote
-                    </a>
-                </div>
-
-                <!-- Stats Section -->
-                <div class="hero-bottom-stats">
-                    <div class="stat-block">
-                        <div class="stat-icon-wrapper">
-                            <i class="bi bi-list-check"></i>
-                        </div>
-                        <div class="stat-content">
-                            <span class="stat-num">{{ hero_product.specs.count }}</span>
-                            <span class="stat-label">Specifications</span>
-                        </div>
+                <div class="hero-featured-card">
+                    <div class="featured-img-wrap">
+                        {% if hero_product.image %}
+                        <img src="{{ hero_product.image.url }}" alt="{{ hero_product.name }}">
+                        {% endif %}
                     </div>
-                    <div class="stat-block">
-                        <div class="stat-icon-wrapper">
-                            <i class="bi bi-image"></i>
-                        </div>
-                        <div class="stat-content">
-                            <span class="stat-num">{{ hero_product.gallery.count }}</span>
-                            <span class="stat-label">Images</span>
-                        </div>
+                    <div class="featured-info">
+                        <span class="badge bg-secondary mb-2 border border-secondary">Featured Innovation</span>
+                        <h3>{{ hero_product.name }}</h3>
+                        <p>{{ hero_product.short_description|truncatechars:80|default:"High-precision programmable DC
+                            power supply unit." }}</p>
+                        <a href="{% url 'products:product_details' hero_product.slug %}" class="explore-link">
+                            View Specifications <i class="bi bi-arrow-right"></i>
+                        </a>
                     </div>
                 </div>
-
                 {% else %}
-                <div class="hero-empty-state">
-                    <p>No featured product available at this time.</p>
+                <div class="hero-featured-card text-center py-5">
+                    <div class="value-icon mx-auto text-muted mb-3" style="font-size: 3rem; background:transparent;">
+                        <i class="bi bi-lightning-charge"></i>
+                    </div>
+                    <h3 class="text-muted">Matrix Intelligence</h3>
+                    <p>Powering the next generation of technological advancement.</p>
                 </div>
                 {% endif %}
             </div>
+        </div>
+    </div>
+</section>
 
-            <!-- right image area -->
-            <div class="col-lg-6 hero-carousel-wrap position-relative">
-                <div class="carousel-decoration"></div>
-                <div class="hero-carousel">
-                    {% if hero_product %}
-                        {% if hero_product.gallery.exists %}
-                            {% for img in hero_product.gallery.all %}
-                            <img src="{{ img.url }}" alt="{{ hero_product.name }}" class="img-fluid{% if forloop.first %} active{% endif %}">
-                            {% endfor %}
-                        {% elif hero_product.image %}
-                            <img src="{{ hero_product.image.url }}" alt="{{ hero_product.name }}" class="img-fluid active">
-                        {% endif %}
-                    {% endif %}
+<!-- ══════════ CORE VALUES SECTION ══════════ -->
+<section class="core-values">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3 reveal">
+                <div class="value-card">
+                    <div class="value-icon"><i class="bi bi-bullseye"></i></div>
+                    <h4>High Precision</h4>
+                    <p>Industry-leading regulation, low ripple, and nanosecond response times for critical measurements.
+                    </p>
                 </div>
-                <button class="carousel-control prev" aria-label="Previous image">
-                    <i class="bi bi-chevron-left"></i>
-                </button>
-                <button class="carousel-control next" aria-label="Next image">
-                    <i class="bi bi-chevron-right"></i>
-                </button>
-                <!-- Carousel indicators -->
-                <div class="carousel-indicators" id="carouselIndicators"></div>
+            </div>
+            <div class="col-md-6 col-lg-3 reveal">
+                <div class="value-card">
+                    <div class="value-icon"><i class="bi bi-shield-check"></i></div>
+                    <h4>Ultimate Reliability</h4>
+                    <p>Built for 24/7 operation with 5-fold protection circuitry to safeguard your valuable equipment.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 reveal">
+                <div class="value-card">
+                    <div class="value-icon"><i class="bi bi-bounding-box-circles"></i></div>
+                    <h4>ATE Integration</h4>
+                    <p>Seamlessly integrates into automated test environments via LAN, USB, RS232, and GPIB.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 reveal">
+                <div class="value-card">
+                    <div class="value-icon"><i class="bi bi-globe2"></i></div>
+                    <h4>Global Standards</h4>
+                    <p>Fully compliant with CE, RoHS, and international safety certifications for worldwide deployment.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Featured Products Section -->
-<section class="featured-products section-padding" aria-labelledby="featured-title">
+<!-- ══════════ FEATURED CATEGORIES ══════════ -->
+<section class="categories-section">
     <div class="container">
-        <div class="section-header reveal">
-            <h2 id="featured-title" class="section-title">OUR FEATURED PRODUCTS</h2>
+        <div class="text-center mb-5 reveal">
+            <h2 class="section-title text-white mb-2"
+                style="font-size: 2.2rem; font-weight: 800; letter-spacing: 0.5px;">SYSTEM CATEGORIES</h2>
+            <p class="text-muted">A complete ecosystem of precision testing instruments.</p>
         </div>
-        <div class="product-grid">
+
+        <div class="cat-grid reveal">
+            <!-- Hardcoded categories to ensure beautiful matrix UI -->
+            <a href="{% url 'products:category_list' %}?category=dc-power-supply" class="cat-card">
+                <div class="cat-icon"><i class="bi bi-battery-charging"></i></div>
+                <div class="cat-info">
+                    <h4>DC Power Supply</h4>
+                    <span>Programmable & Linear Series</span>
+                </div>
+            </a>
+
+            <a href="{% url 'products:category_list' %}?category=ac-power-supply" class="cat-card">
+                <div class="cat-icon"><i class="bi bi-plug"></i></div>
+                <div class="cat-info">
+                    <h4>AC Power Supply</h4>
+                    <span>Variable Frequency Sources</span>
+                </div>
+            </a>
+
+            <a href="{% url 'products:category_list' %}?category=electronic-loads" class="cat-card">
+                <div class="cat-icon"><i class="bi bi-speedometer2"></i></div>
+                <div class="cat-info">
+                    <h4>Electronic Loads</h4>
+                    <span>DC Programmable Loads</span>
+                </div>
+            </a>
+
+            <a href="{% url 'products:category_list' %}?category=lcr-meter" class="cat-card">
+                <div class="cat-icon"><i class="bi bi-sliders"></i></div>
+                <div class="cat-info">
+                    <h4>LCR Meter</h4>
+                    <span>Precision Component Testers</span>
+                </div>
+            </a>
+
+            <a href="{% url 'products:category_list' %}?category=withstand-voltage-tester" class="cat-card">
+                <div class="cat-icon"><i class="bi bi-lightning"></i></div>
+                <div class="cat-info">
+                    <h4>Voltage Tester</h4>
+                    <span>Hipot Safety Testing</span>
+                </div>
+            </a>
+
+            <a href="{% url 'products:category_list' %}?category=oscilloscope" class="cat-card">
+                <div class="cat-icon"><i class="bi bi-activity"></i></div>
+                <div class="cat-info">
+                    <h4>Oscilloscope</h4>
+                    <span>Digital Storage Scopes</span>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ FEATURED PRODUCTS ══════════ -->
+<section class="featured-products py-5" style="background: var(--bg-primary);">
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-end mb-5 reveal">
+            <div>
+                <h2 class="section-title text-white mb-0" style="font-size: 2rem; font-weight: 800;">FEATURED EQUIPMENT
+                </h2>
+            </div>
+            <a href="{% url 'products:product_list' %}"
+                class="btn btn-outline-glass btn-sm px-4 py-2 d-none d-md-inline-block">View Catalog</a>
+        </div>
+
+        <div class="row g-4 reveal">
             {% for prod in daily_products %}
-            <div class="product-card">
-                <div class="product-card-image">
-                    {% if prod.image %}
-                    <img src="{{ prod.image.url }}" alt="{{ prod.name }}">
-                    {% endif %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card bg-card text-white h-100 border-0"
+                    style="border: 1px solid rgba(255,255,255,0.05) !important; border-radius: 12px; transition: transform 0.3s, box-shadow 0.3s;">
+                    <div class="card-img-top bg-black p-4 text-center" style="border-radius: 12px 12px 0 0;">
+                        {% if prod.image %}
+                        <img src="{{ prod.image.url }}" alt="{{ prod.name }}"
+                            style="max-height: 180px; object-fit: contain;">
+                        {% else %}
+                        <div class="text-muted d-flex align-items-center justify-content-center" style="height: 180px;">
+                            <i class="bi bi-image" style="font-size: 2rem;"></i></div>
+                        {% endif %}
+                    </div>
+                    <div class="card-body p-4 d-flex flex-column">
+                        <h4 class="card-title" style="font-size: 1.1rem; margin-bottom: 12px;">{{ prod.name }}</h4>
+                        <p class="card-text text-muted" style="font-size: 0.9rem; flex-grow: 1;">{{
+                            prod.short_description|truncatechars:100 }}</p>
+                        <a href="{% url 'products:product_details' prod.slug %}"
+                            class="text-accent text-decoration-none mt-3 fw-bold" style="font-size: 0.9rem;">
+                            View Details <i class="bi bi-arrow-right ms-1"></i>
+                        </a>
+                    </div>
                 </div>
-                <div class="product-card-content">
-                    <h4><a href="{% url 'products:product_details' prod.slug %}">{{ prod.name }}</a></h4>
-                    <p>{{ prod.short_description }}</p>
-                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center text-muted py-5">
+                <i class="bi bi-box-seam" style="font-size: 3rem;"></i>
+                <p class="mt-3">Featured products will populate here.</p>
             </div>
             {% endfor %}
         </div>
-        <div class="text-center mt-4">
-            <a href="{% url 'products:product_list' %}" class="btn btn-primary-custom">View all Products</a>
+
+        <div class="text-center mt-5 d-md-none reveal">
+            <a href="{% url 'products:product_list' %}" class="btn btn-outline-glass px-4 py-2 w-100">View Complete
+                Catalog</a>
         </div>
     </div>
 </section>
 
-<!-- Customers Section -->
-<section class="customers-section section-padding" aria-labelledby="customers-title">
-    <div class="container text-center">
-        <h2 id="customers-title" class="section-title reveal">MATRIX'S CUSTOMERS</h2>
-        <div class="customers-grid reveal">
+<!-- ══════════ PROMO VIDEO ══════════ -->
+<section class="promo-video-section position-relative"
+    style="background: #000; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.05); padding: 100px 0;">
+    <!-- Abstract cinematic backdrop -->
+    <div
+        style="position: absolute; inset: 0; background: radial-gradient(circle at center, rgba(37,99,235,0.1), transparent 70%); pointer-events: none;">
+    </div>
+
+    <div class="container position-relative z-index-2">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6 reveal">
+                <span class="badge bg-primary mb-3 text-uppercase tracking-wide"
+                    style="letter-spacing: 1px; padding: 6px 12px;">Spotlight Solution</span>
+                <h2 class="text-white fw-bold mb-4" style="font-size: 2.5rem; line-height: 1.2;">MPS-H-3 SERIES<br><span
+                        class="text-accent">TRIPPLE CHANNEL DC POWER</span></h2>
+                <ul class="list-unstyled text-muted mb-4" style="font-size: 1.05rem; line-height: 1.8;">
+                    <li class="mb-2"><i class="bi bi-check-circle text-accent me-2"></i> Current and voltage adjustable
+                        in precision range</li>
+                    <li class="mb-2"><i class="bi bi-check-circle text-accent me-2"></i> Direct display in series and
+                        parallel modes</li>
+                    <li class="mb-2"><i class="bi bi-check-circle text-accent me-2"></i> Data save function for last
+                        output status</li>
+                    <li class="mb-2"><i class="bi bi-check-circle text-accent me-2"></i> Independent channel switch
+                        controls</li>
+                    <li class="mb-2"><i class="bi bi-check-circle text-accent me-2"></i> Four digits display, 10mV/1mA
+                        resolution</li>
+                </ul>
+                <a href="{% url 'core:videos' %}" class="btn btn-primary-glow btn-lg mt-2">
+                    <i class="bi bi-play-circle-fill me-2"></i> Watch Overview
+                </a>
+            </div>
+            <div class="col-lg-6 reveal text-center">
+                <!-- Wrapper for elegant hover scale -->
+                <div
+                    style="background: rgba(255,255,255,0.02); padding: 20px; border-radius: 24px; border: 1px solid rgba(255,255,255,0.05);">
+                    <img src="{% static 'images/promo-supply.jpg' %}" alt="MPS-H-3 Promo"
+                        class="img-fluid rounded shadow-lg" style="border: 1px solid rgba(255,255,255,0.1);">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ══════════ TRUSTED PARTNERS ══════════ -->
+<section class="customers-section py-5"
+    style="background: var(--bg-primary); border-top: 1px solid rgba(255,255,255,0.05);">
+    <div class="container text-center py-4">
+        <p class="text-uppercase text-muted fw-bold mb-5 reveal" style="letter-spacing: 2px; font-size: 0.9rem;">Trusted
+            by Global Industry Leaders</p>
+        <div class="d-flex flex-wrap justify-content-center align-items-center gap-4 gap-md-5 opacity-50 reveal">
             {% for cust in customers %}
-            <div class="customer-logo">
+            <div style="filter: grayscale(100%) contrast(150%); transition: all 0.3s; max-width: 140px;"
+                onmouseover="this.style.filter='none'; this.style.opacity='1'"
+                onmouseout="this.style.filter='grayscale(100%) contrast(150%)'; this.style.opacity='0.5'">
                 <img src="{{ cust.logo.url }}" alt="{{ cust.name }}" class="img-fluid">
             </div>
+            {% empty %}
+            <!-- Fallback icons if no logos in DB -->
+            <i class="bi bi-microsoft fs-1"></i>
+            <i class="bi bi-apple fs-1"></i>
+            <i class="bi bi-google fs-1"></i>
+            <i class="bi bi-nvidia fs-1"></i>
+            <i class="bi bi-building fs-1"></i>
             {% endfor %}
         </div>
     </div>
 </section>
 
-<!-- Promo Video Section (hardcoded) -->
-<section class="promo-video-section section-padding">
-    <div class="container">
-        <div class="row align-items-center g-5">
-            <div class="col-lg-6">
-                <img src="{% static 'images/promo-supply.jpg' %}" alt="Promo product" class="img-fluid">
-            </div>
-            <div class="col-lg-6">
-                <h2 class="promo-title">MPS-H-3 SERIES TRIPPLE CHANNEL DC LINEAR POWER SUPPLY</h2>
-                <ol class="promo-features">
-                    <li>Current and voltage can be set to adjust in a certain range;</li>
-                    <li>Direct display of voltage and current in series and parallel mode;</li>
-                    <li>Can save last time output data and last time output status;</li>
-                    <li>Optional USB, RS-232, RS-485 interface;</li>
-                    <li>Channel 1 and channel 2 are independent switch control;</li>
-                    <li>Four digits display, 10mV/1mA resolution;</li>
-                </ol>
-                <a href="#" class="btn btn-watch"><i class="bi bi-play-fill me-2"></i>Watch Now</a>
-            </div>
-        </div>
-    </div>
-</section>
+{% endblock %}
 
+{% block extra_js %}
+<script>
+    // Add simple intersection observer for reveal animations built into the new styles
+    document.addEventListener("DOMContentLoaded", () => {
+        const reveals = document.querySelectorAll('.reveal');
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            root: null,
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        });
+
+        reveals.forEach(el => revealObserver.observe(el));
+
+        // Add card hover physics
+        document.querySelectorAll('.card, .value-card, .cat-card').forEach(card => {
+            card.addEventListener('mouseenter', () => card.style.boxShadow = '0 15px 35px rgba(0,0,0,0.3)');
+            card.addEventListener('mouseleave', () => card.style.boxShadow = 'none');
+        });
+    });
+</script>
 {% endblock %}
