@@ -376,8 +376,7 @@ instruments, educational kits, and professional services.{% endblock %}
                     <div class="featured-info">
                         <span class="badge bg-secondary mb-2 border border-secondary">Featured Innovation</span>
                         <h3>{{ hero_product.name }}</h3>
-                        <p>{{ hero_product.short_description|truncatechars:80|default:"High-precision programmable DC
-                            power supply unit." }}</p>
+                        <p>{{ hero_product.short_description|truncatechars:80|default:"High-precision programmable DC power supply unit." }}</p>
                         <a href="{% url 'products:product_details' hero_product.slug %}" class="explore-link">
                             View Specifications <i class="bi bi-arrow-right"></i>
                         </a>
