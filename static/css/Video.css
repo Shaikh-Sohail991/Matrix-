@@ -7,9 +7,9 @@
 /* ─── HERO ─── */
 .hero {
   position: relative;
-  height: 260px;
+  /* height is intentionally removed — let .vh-hero control its own size */
   background: #0a1a14;
-  overflow: hidden;
+  /* overflow: hidden removed — premium hero needs overflow: visible */
   display: flex;
   flex-direction: column;
   justify-content: flex-end;

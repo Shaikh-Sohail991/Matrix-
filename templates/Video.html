@@ -7,16 +7,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="{% static 'css/Video.css' %}" />
   <style>
-    /* ── VIDEO HERO PREMIUM FILL ── */
+    /* ── Override Video.css base .hero to allow full premium layout ── */
     .vh-hero {
-      min-height: 88vh;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      /* Reset conflicting Video.css .hero fixed height */
+      height: auto !important;
+      min-height: 92vh;
+      overflow: visible !important;  /* allow content to expand */
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: space-between !important;
       gap: 3rem;
-      padding: 110px 6vw 4rem;
+      padding: 130px 6vw 5rem !important;
+      padding-bottom: 5rem !important;
       position: relative;
-      overflow: hidden;
     }
 
     /* Glowing orbs in background */
@@ -73,9 +77,11 @@
     /* Title */
     .vid-hero-title {
       font-size: clamp(2rem, 5vw, 3.5rem) !important;
-      font-weight: 800;
-      line-height: 1.15;
-      color: #fff;
+      font-weight: 800 !important;
+      line-height: 1.15 !important;
+      color: #fff !important;
+      letter-spacing: normal !important;
+      text-transform: none !important;
       margin-bottom: 1.25rem;
       animation: fadeUp .7s ease .1s both;
     }
@@ -227,13 +233,33 @@
     @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:none} }
     @keyframes fadeIn { from{opacity:0} to{opacity:1} }
 
-    /* Mobile */
+    /* ── Filter section — ensure it sits below hero with no overlap ── */
+    .filter-section {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Mobile ── */
     @media (max-width: 900px) {
-      .vh-hero { flex-direction: column; padding: 100px 5vw 3rem; min-height: auto; }
+      .vh-hero {
+        flex-direction: column !important;
+        padding: 110px 5vw 3rem !important;
+        min-height: auto !important;
+        height: auto !important;
+        overflow: visible !important;
+      }
       .vid-hero-visual { width: 100%; height: 220px; }
       .vid-float-card--1 { width: 160px; height: 100px; top: 10px; left: 0; }
       .vid-float-card--2 { width: 145px; height: 95px; top: 0; right: 0; }
       .vid-float-card--3 { display: none; }
+    }
+
+    @media (max-width: 480px) {
+      .vh-hero {
+        padding: 100px 4vw 3rem !important;
+      }
+      .vid-hero-title { font-size: 1.6rem !important; }
+      .vid-hero-visual { height: 180px; }
     }
   </style>
 {% endblock %}

@@ -75,6 +75,7 @@ body {
   overflow-x: hidden;
 }
 
+
 /* ensure page headers on light theme use white background */
 .page-header {
   background: var(--bg-secondary);
@@ -159,6 +160,17 @@ img {
 
 .text-secondary {
   color: var(--text-secondary) !important;
+}
+
+/* Add to static/css/style.css */
+.vh-hero {
+  min-height: 100vh;
+}
+
+@media (max-width: 991.98px) {
+  .vh-hero {
+    min-height: 60vh;
+  }
 }
 
 /* ── Fix: middle-section headings & body text visibility on dark backgrounds ── */

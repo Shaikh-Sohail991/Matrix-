@@ -6,58 +6,68 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Electronic Loads | MATRIX Technology Product Center</title>
   <meta name="description" content="Explore Matrix Technology's Electronic Loads range. DC & AC Electronic Load Systems.">
-  <link rel="stylesheet" href="{% static 'css/awesome.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/awesome.css' %}">
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar">
-  <div class="container">
-    <a href="{% url 'products:center_page' page_name='index' %}" class="brand">
-      <span class="brand-strips"><i></i><i></i><i></i></span>
-      <span>MATRIX</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="{% url 'products:center_page' page_name='index' %}">Product Center</a></li>
-      <li class="nav-dropdown">
-        <a href="#" class="active">Categories <svg class="chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 6 8 10 12 6"/></svg></a>
-        <ul class="dropdown-menu">
-          <li><a href="{% url 'products:center_page' page_name='dc-power-supply' %}" ><span class="dropdown-icon">⚡</span> DC Power Supply</a></li>
-          <li><a href="{% url 'products:center_page' page_name='ac-power-supply' %}" ><span class="dropdown-icon">〜</span> AC Power Supply</a></li>
-          <li><a href="{% url 'products:center_page' page_name='electronic-loads' %}" class="active"><span class="dropdown-icon">🔌</span> Electronic Loads</a></li>
-          <li><a href="{% url 'products:center_page' page_name='lcr-meter' %}" ><span class="dropdown-icon">📡</span> LCR Meter</a></li>
-          <li><a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}" ><span class="dropdown-icon">⚠</span> Withstand Voltage Tester</a></li>
-          <li><a href="{% url 'products:center_page' page_name='oscilloscope' %}" ><span class="dropdown-icon">📊</span> Oscilloscope</a></li>
-          <li><div class="divider"></div></li>
-          <li><a href="{% url 'products:center_page' page_name='all-products' %}"><span class="dropdown-icon">🗂</span> All Products</a></li>
-        </ul>
-      </li>
-      <li><a href="#">About</a></li>
-      <li><a href="#">Contact</a></li>
-    </ul>
-    <div class="nav-end">
-      <button class="btn-nav-search" aria-label="Search"><i class="bi bi-search"></i></button>
-      <a href="#" class="btn-contact-nav">Get Quote</a>
+<!-- NAVBAR (main site) -->
+<nav class="navbar navbar-expand-lg fixed-top" role="navigation" aria-label="Main navigation">
+    <div class="container navbar-container">
+        <div class="navbar-top d-flex w-100 align-items-center justify-content-between">
+            <a class="navbar-brand" href="{% url 'core:index' %}"><span class="brand-logo-wrap"><span class="brand-strips" aria-hidden="true"><i></i><i></i><i></i></span><span class="brand-name">MATRIX</span></span></a>
+            <div class="d-flex align-items-center gap-3">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            </div>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarMain">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item"><a class="nav-link" href="{% url 'core:index' %}">Home</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown" aria-expanded="false">Product Center</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='dc-power-supply' %}">DC Power Supply</a></li>
+                        <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='ac-power-supply' %}">AC Power Supply</a></li>
+                        <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='electronic-loads' %}">Electronic Loads</a></li>
+                        <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='lcr-meter' %}">LCR Meter</a></li>
+                        <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}">Withstand Voltage Tester</a></li>
+                        <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='oscilloscope' %}">Oscilloscope</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'products:product_list' %}">All Products</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Service</a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'core:videos' %}">Video</a></li>
+                        <li><a class="dropdown-item" href="{% url 'core:faq' %}">FAQ</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'core:services' %}">All Services</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">About Us</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'core:contact' %}">Contact Us</a></li>
+            </ul>
+            <div class="navbar-end-controls d-flex align-items-center gap-3">
+                <button class="btn btn-link nav-search-btn p-0" id="navSearchToggle" aria-label="Search" aria-expanded="false" aria-controls="navSearchOverlay"><i class="bi bi-search"></i></button>
+            </div>
+            <div class="nav-search-overlay" id="navSearchOverlay" aria-hidden="true">
+                <form method="get" action="{% url 'products:search' %}" class="nav-search-form" role="search">
+                    <div class="nav-search-inner container">
+                        <i class="bi bi-search nav-search-icon" aria-hidden="true"></i>
+                        <input type="search" name="q" class="nav-search-field" placeholder="Search products…" autocomplete="off" aria-label="Search site" id="navSearchField">
+                        <button type="submit" class="btn btn-primary-custom btn-sm-custom ms-2"><span>Go</span></button>
+                        <button type="button" class="btn btn-link nav-search-close ms-1" id="navSearchClose" aria-label="Close search"><i class="bi bi-x-lg"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
-
-<!-- Mobile Nav -->
-<nav class="mobile-nav" id="mobileNav">
-  <ul>
-    <li><a href="{% url 'products:center_page' page_name='index' %}">Product Center</a></li>
-    <li><a href="{% url 'products:center_page' page_name='dc-power-supply' %}" >DC Power Supply</a></li>
-    <li><a href="{% url 'products:center_page' page_name='ac-power-supply' %}" >AC Power Supply</a></li>
-    <li><a href="{% url 'products:center_page' page_name='electronic-loads' %}" class="active">Electronic Loads</a></li>
-    <li><a href="{% url 'products:center_page' page_name='lcr-meter' %}" >LCR Meter</a></li>
-    <li><a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}" >Withstand Voltage Tester</a></li>
-    <li><a href="{% url 'products:center_page' page_name='oscilloscope' %}" >Oscilloscope</a></li>
-    <li><a href="{% url 'products:center_page' page_name='all-products' %}">All Products</a></li>
-  </ul>
 </nav>
 
 <!-- PAGE WRAPPER -->
@@ -268,58 +278,22 @@
     </main>
   </div><!-- /layout-with-sidebar -->
 
-  <!-- FOOTER -->
-  <footer>
+  <footer class="footer" role="contentinfo">
     <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <a href="{% url 'products:center_page' page_name='index' %}" class="brand" style="margin-bottom:14px;display:inline-flex;">
-            <span class="brand-strips"><i></i><i></i><i></i></span>
-            <span>MATRIX</span>
-          </a>
-          <p style="font-size:0.875rem;color:var(--text-muted);">Precision test &amp; measurement instruments trusted by engineers worldwide.</p>
-          <div class="footer-social" style="margin-top:16px;">
-            <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="social-icon"><i class="bi bi-youtube"></i></a>
-            <a href="#" class="social-icon"><i class="bi bi-linkedin"></i></a>
-            <a href="#" class="social-icon"><i class="bi bi-envelope"></i></a>
-          </div>
-        </div>
-        <div>
-          <div class="footer-col-title">Products</div>
-          <ul class="footer-links">
-            <li><a href="{% url 'products:center_page' page_name='dc-power-supply' %}">DC Power Supply</a></li><li><a href="{% url 'products:center_page' page_name='ac-power-supply' %}">AC Power Supply</a></li><li><a href="{% url 'products:center_page' page_name='electronic-loads' %}">Electronic Loads</a></li><li><a href="{% url 'products:center_page' page_name='lcr-meter' %}">LCR Meter</a></li><li><a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}">Withstand Voltage Tester</a></li><li><a href="{% url 'products:center_page' page_name='oscilloscope' %}">Oscilloscope</a></li><li><a href="{% url 'products:center_page' page_name='all-products' %}">All Products</a></li>
-          </ul>
-        </div>
-        <div>
-          <div class="footer-col-title">Company</div>
-          <ul class="footer-links">
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">Videos</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-          </ul>
-        </div>
-        <div>
-          <div class="footer-col-title">Contact</div>
-          <div class="footer-contact-item"><span class="ic"><i class="bi bi-geo-alt"></i></span><span>Room 601, Block C, Huachuangda Industrial Park, Shenzhen, Guangdong</span></div>
-          <div class="footer-contact-item"><span class="ic"><i class="bi bi-telephone"></i></span><span>0086 755 2836 4276</span></div>
-          <div class="footer-contact-item"><span class="ic"><i class="bi bi-envelope"></i></span><span>sales@szmatrix.com</span></div>
-        </div>
+      <div class="row g-5">
+        <div class="col-lg-3 col-md-6"><h5 class="footer-col-title">Product</h5><ul class="footer-links"><li><a href="{% url 'products:center_page' page_name='dc-power-supply' %}">DC Power Supply</a></li><li><a href="{% url 'products:center_page' page_name='ac-power-supply' %}">AC Power Supply</a></li><li><a href="{% url 'products:center_page' page_name='electronic-loads' %}">Electronic Loads</a></li><li><a href="{% url 'products:center_page' page_name='lcr-meter' %}">LCR Meter</a></li><li><a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}">Withstand Voltage Tester</a></li><li><a href="{% url 'products:center_page' page_name='oscilloscope' %}">Oscilloscope</a></li></ul></div>
+        <div class="col-lg-2 col-md-6"><h5 class="footer-col-title">Service</h5><ul class="footer-links"><li><a href="{% url 'core:videos' %}">Video</a></li><li><a href="{% url 'core:faq' %}">FAQ</a></li></ul></div>
+        <div class="col-lg-4 col-md-6"><h5 class="footer-col-title">About Us</h5><div class="footer-about-info"><p class="footer-company-name">MATRIX TECHNOLOGY INC.</p><p class="footer-address">Room 601, Block C, Huachuangda Cultural and Technological Industrial Park, Haihui Road, District 49th, Bao'an District, Shenzhen, Guangdong Province</p><p class="footer-contact-line">Tel: 0086 755 2836 4276</p><p class="footer-contact-line">Email: sales@szmatrix.com</p></div></div>
+        <div class="col-lg-3 col-md-6"><h5 class="footer-col-title">Work Hours</h5><div class="footer-hours"><p>Mon-Fri 08:00AM - 08:00PM</p><p>Sat-Sun 09:00AM - 06:00PM</p></div><div class="footer-social-icons"><a href="#" class="footer-social-icon" aria-label="Facebook"><i class="bi bi-facebook"></i></a><a href="#" class="footer-social-icon" aria-label="YouTube"><i class="bi bi-youtube"></i></a><a href="#" class="footer-social-icon" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a><a href="#" class="footer-social-icon" aria-label="Email"><i class="bi bi-envelope"></i></a></div></div>
       </div>
-      <div class="footer-bottom">
-        <p>© 2025 MATRIX Technology Inc. All rights reserved.</p>
-        <div style="display:flex;gap:16px;">
-          <a href="#">Privacy</a>
-          <a href="#">Terms</a>
-        </div>
-      </div>
+      <div class="footer-bottom"><p class="footer-copyright">Copyright &copy; 2025 MATRIX TECHNOLOGY INC.</p></div>
     </div>
+    <a href="{% url 'core:contact' %}" class="floating-contact-btn" aria-label="Contact us"><span class="floating-contact-label">Contact us</span><span class="floating-contact-icon-wrap"><i class="bi bi-chat-fill"></i></span></a>
   </footer>
-
-  <a href="#" class="floating-contact"><i class="bi bi-chat-fill"></i> Contact us</a>
 </div><!-- /page-wrapper -->
-
+<script>(function(){var t=document.getElementById('navSearchToggle'),o=document.getElementById('navSearchOverlay'),f=document.getElementById('navSearchField'),c=document.getElementById('navSearchClose');function op(){o.classList.add('open');t.setAttribute('aria-expanded','true');o.setAttribute('aria-hidden','false');setTimeout(function(){f.focus();},120);}function cl(){o.classList.remove('open');t.setAttribute('aria-expanded','false');o.setAttribute('aria-hidden','true');}if(t)t.addEventListener('click',function(){o.classList.contains('open')?cl():op();});if(c)c.addEventListener('click',cl);document.addEventListener('keydown',function(e){if(e.key==='Escape')cl();});}());</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/main.js' %}"></script>
 <script src="{% static 'js/product_main.js' %}"></script>
 </body>
 </html>

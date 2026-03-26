@@ -13,7 +13,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding-bottom: 40px;
+  padding-bottom: 20px;
 }
 
 .numbers-overlay {
