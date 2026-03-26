@@ -1,864 +1,164 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>All Products | MATRIX Technology Product Center</title>
-  
-  <!-- Bootstrap 5.3 + Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-  
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- Main Styles -->
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <!-- Keep awesome.css for internal page styling -->
-  <link rel="stylesheet" href="{% static 'css/awesome.css' %}">
-</head>
-<body>
 
-<nav class="navbar navbar-expand-lg fixed-top">
-  <div class="container navbar-container">
-    <a class="navbar-brand d-flex align-items-center" href="{% url 'core:index' %}">
-      <div class="brand-strips me-2"><i></i><i></i><i></i></div>
-      <span class="brand-text">MATRIX</span>
-    </a>
+{% block title %}All Products | MATRIX Technology Product Center{% endblock %}
+{% block meta_description %}Browse our complete range of precision test and measurement instruments across all categories.{% endblock %}
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+{% block extra_css %}
+<!-- Product-center supplemental CSS -->
+<link rel="stylesheet" href="{% static 'css/awesome.css' %}">
+<style>
+    .premium-hero { margin-bottom: 0; }
+    .category-tabs {
+        display: flex;
+        gap: 10px;
+        overflow-x: auto;
+        padding: 20px 0;
+        margin-bottom: 20px;
+        border-bottom: 1px solid var(--border);
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .category-tabs::-webkit-scrollbar { display: none; }
+    
+    .cat-tab {
+        white-space: nowrap;
+        padding: 10px 20px;
+        border-radius: 50px;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        color: var(--text-secondary);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: all var(--t-base);
+    }
+    .cat-tab:hover, .cat-tab.active {
+        background: var(--accent);
+        border-color: var(--accent);
+        color: #000;
+    }
+    .cat-tab .count {
+        font-size: 0.75rem;
+        opacity: 0.7;
+        margin-left: 5px;
+    }
+    
+    .search-bar-wrap {
+        position: relative;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+</style>
+{% endblock %}
 
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto align-items-lg-center">
-        <li class="nav-item"><a class="nav-link" href="{% url 'core:index' %}">Home</a></li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">Product Center</a>
-          <ul class="dropdown-menu shadow-lg border-0">
-            <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='dc-power-supply' %}">DC Power Supply</a></li>
-            <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='ac-power-supply' %}">AC Power Supply</a></li>
-            <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='electronic-loads' %}">Electronic Loads</a></li>
-            <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='lcr-meter' %}">LCR Meter</a></li>
-            <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}">Withstand Voltage Tester</a></li>
-            <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='oscilloscope' %}">Oscilloscope</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='all-products' %}">All Products</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Service</a>
-          <ul class="dropdown-menu shadow-lg border-0">
-            <li><a class="dropdown-item" href="{% url 'core:services' %}">Corporate Services</a></li>
-            <li><a class="dropdown-item" href="{% url 'core:faq' %}">FAQ Center</a></li>
-            <li><a class="dropdown-item" href="{% url 'core:videos' %}">Video Center</a></li>
-          </ul>
-        </li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">About Us</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'core:contact' %}">Contact Us</a></li>
-        <li class="nav-item ms-lg-3 d-none d-lg-block">
-          <button class="btn-search-trigger" id="searchTrigger"><i class="bi bi-search"></i></button>
-        </li>
-      </ul>
+{% block content %}
+<!-- BREADCRUMB -->
+<div class="breadcrumb-bar">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{% url 'products:center_page' page_name='index' %}" class="text-secondary text-decoration-none">Product Center</a></li>
+                <li class="breadcrumb-item active text-accent" aria-current="page">All Products</li>
+            </ol>
+        </nav>
     </div>
-  </div>
-</nav>
-
-<!-- SEARCH OVERLAY (Standardized) -->
-<div class="search-overlay" id="searchOverlay">
-  <div class="overlay-close" id="overlayClose"></div>
-  <div class="search-box-container">
-    <div class="search-box-header">
-      <i class="bi bi-search search-box-icon"></i>
-      <input type="text" id="searchInput" placeholder="Search for products, documentation, manuals..." autofocus>
-      <button class="search-box-close" id="searchBoxClose"><i class="bi bi-x-lg"></i></button>
-    </div>
-    <div class="search-results-area" id="searchResults">
-      <div class="search-hint">Type at least 2 characters to search...</div>
-    </div>
-  </div>
 </div>
 
-<div class="page-wrapper">
-  <div class="breadcrumb-bar">
+<!-- HERO -->
+<section class="premium-hero">
+    <div class="technical-grid"></div>
+    <div class="container position-relative" style="z-index: 1;">
+        <div class="row align-items-center min-vh-40 py-5">
+            <div class="col-lg-8">
+                <div class="hero-badge mb-3"><span class="dot"></span> Complete Product Catalog</div>
+                <h1 class="display-4 fw-bold mb-3">All <span class="highlight">Products</span></h1>
+                <p class="lead text-secondary opacity-75 mb-0">Browse our complete range of precision test and measurement instruments across all categories.</p>
+            </div>
+            <div class="col-lg-4 d-none d-lg-block">
+                <div class="hero-stats d-flex gap-4 justify-content-end">
+                    <div class="hero-stat text-center">
+                        <div class="num h4 fw-bold text-accent mb-0">36+</div>
+                        <p class="lbl small text-muted mb-0">Models</p>
+                    </div>
+                    <div class="hero-stat text-center">
+                        <div class="num h4 fw-bold text-accent mb-0">6</div>
+                        <p class="lbl small text-muted mb-0">Categories</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MAIN CONTENT -->
+<div class="bg-darker py-5">
     <div class="container">
-      <ol class="breadcrumb">
-        <li><a href="{% url 'products:center_page' page_name='index' %}">Home</a></li>
-        <li><a href="{% url 'products:center_page' page_name='index' %}">Product Center</a></li>
-        <li class="active">All Products</li>
-      </ol>
-    </div>
-  </div>
-
-  <!-- HERO -->
-  <section class="product-hero">
-    <div class="hero-grid-pattern"></div>
-    <div class="product-hero-inner">
-      <div class="hero-badge"><span class="dot"></span> Complete Product Catalog</div>
-      <h1>All <span class="highlight">Products</span></h1>
-      <p>Browse our complete range of precision test and measurement instruments across all categories.</p>
-      <div class="hero-stats">
-        <div class="hero-stat"><div class="num">36</div><p class="lbl">Total Models</p></div>
-        <div class="hero-stat"><div class="num">6</div><p class="lbl">Categories</p></div>
-        <div class="hero-stat"><div class="num">CE</div><p class="lbl">Certified</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CATEGORY TABS -->
-  <div class="category-tabs">
-    <a href="#all" class="cat-tab active" data-cat="all">🗂 All Products <span class="count">36</span></a>
-<a href="#dc-power-supply" class="cat-tab" data-cat="dc-power-supply">⚡ DC Power Supply <span class="count">6</span></a>
-<a href="#ac-power-supply" class="cat-tab" data-cat="ac-power-supply">〜 AC Power Supply <span class="count">6</span></a>
-<a href="#electronic-loads" class="cat-tab" data-cat="electronic-loads">🔌 Electronic Loads <span class="count">6</span></a>
-<a href="#lcr-meter" class="cat-tab" data-cat="lcr-meter">📡 LCR Meter <span class="count">6</span></a>
-<a href="#withstand-voltage-tester" class="cat-tab" data-cat="withstand-voltage-tester">⚠ Withstand Voltage Tester <span class="count">6</span></a>
-<a href="#oscilloscope" class="cat-tab" data-cat="oscilloscope">📊 Oscilloscope <span class="count">6</span></a>
-
-  </div>
-
-  <!-- SEARCH -->
-  <div class="search-bar-wrap">
-    <div class="search-bar">
-      <span class="si"><i class="bi bi-search"></i></span>
-      <input type="text" id="productSearch" placeholder="Search all products, models, features…">
-    </div>
-  </div>
-
-  <!-- PRODUCTS GRID -->
-  <section class="products-section">
-    <div class="products-grid">
-      
-<article class="product-card" data-type="benchtop" data-cat="dc-power-supply">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MPS-3005D" alt="Programmable DC Power Supply 30V/5A" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">⚡</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MPS-3005D</div>
-    <h3 class="card-title">Programmable DC Power Supply 30V/5A</h3>
-    <p class="card-desc">High-precision benchtop supply with 4-digit LED display, CV/CC modes, and USB/RS232 interface.</p>
-    <div class="card-features"><span class="card-feature">30V / 5A</span><span class="card-feature">4-Wire Sensing</span><span class="card-feature">USB Interface</span><span class="card-feature">OVP/OCP</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">DC Power Supply</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='dc-power-supply' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="benchtop" data-cat="dc-power-supply">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MPS-6003D" alt="Dual-Channel DC Supply 60V/3A" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">⚡</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MPS-6003D</div>
-    <h3 class="card-title">Dual-Channel DC Supply 60V/3A</h3>
-    <p class="card-desc">Independent dual-output programmable supply with tracking modes and isolated channels.</p>
-    <div class="card-features"><span class="card-feature">Dual Output</span><span class="card-feature">60V / 3A</span><span class="card-feature">Tracking Mode</span><span class="card-feature">GPIB</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">DC Power Supply</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='dc-power-supply' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="benchtop" data-cat="dc-power-supply">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MPS-1530T" alt="Triple-Output DC Supply" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">⚡</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MPS-1530T</div>
-    <h3 class="card-title">Triple-Output DC Supply</h3>
-    <p class="card-desc">Three independent outputs: ±15V/3A fixed + 0–30V/5A variable. Perfect for analog circuit testing.</p>
-    <div class="card-features"><span class="card-feature">Triple Output</span><span class="card-feature">±15V Fixed</span><span class="card-feature">Variable 30V</span><span class="card-feature">Low Ripple</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">DC Power Supply</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='dc-power-supply' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="rack" data-cat="dc-power-supply">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MPH-600W" alt="High-Power Programmable Supply 600W" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">⚡</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MPH-600W</div>
-    <h3 class="card-title">High-Power Programmable Supply 600W</h3>
-    <p class="card-desc">Rack-mount 600W supply with LAN/GPIB interface, CC/CV operation, and remote sense.</p>
-    <div class="card-features"><span class="card-feature">600W</span><span class="card-feature">Rack Mount</span><span class="card-feature">LAN/GPIB</span><span class="card-feature">Remote Sense</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">DC Power Supply</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='dc-power-supply' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="rack" data-cat="dc-power-supply">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MPH-2KW" alt="2kW System Power Supply" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">⚡</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MPH-2KW</div>
-    <h3 class="card-title">2kW System Power Supply</h3>
-    <p class="card-desc">Modular 2kW supply designed for automated test systems, fuel cell simulation, and battery formation.</p>
-    <div class="card-features"><span class="card-feature">2000W</span><span class="card-feature">Modular</span><span class="card-feature">RS485 Bus</span><span class="card-feature">4Q Output</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">DC Power Supply</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='dc-power-supply' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="battery" data-cat="dc-power-supply">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MBT-500" alt="Battery Test Power Supply 500W" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">⚡</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MBT-500</div>
-    <h3 class="card-title">Battery Test Power Supply 500W</h3>
-    <p class="card-desc">Optimised for battery charge/discharge cycling with cell balancing and data logging.</p>
-    <div class="card-features"><span class="card-feature">Battery Test</span><span class="card-feature">500W</span><span class="card-feature">Data Logger</span><span class="card-feature">4-Ch Monitor</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">DC Power Supply</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='dc-power-supply' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="single" data-cat="ac-power-supply">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MAP-1000S" alt="1kVA Programmable AC Source" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">〜</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MAP-1000S</div>
-    <h3 class="card-title">1kVA Programmable AC Source</h3>
-    <p class="card-desc">Single-phase programmable AC source, 0–300 Vrms, 15–1000 Hz. Ideal for IEC 61000-3-2 testing.</p>
-    <div class="card-features"><span class="card-feature">1kVA</span><span class="card-feature">0–300Vrms</span><span class="card-feature">15–1000Hz</span><span class="card-feature">USB Control</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">AC Power Supply</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='ac-power-supply' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="three-phase" data-cat="ac-power-supply">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MAP-3000T" alt="3kVA Three-Phase AC Source" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">〜</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MAP-3000T</div>
-    <h3 class="card-title">3kVA Three-Phase AC Source</h3>
-    <p class="card-desc">Balanced three-phase AC source with independent phase amplitude/angle control.</p>
-    <div class="card-features"><span class="card-feature">3kVA</span><span class="card-feature">3-Phase</span><span class="card-feature">Phase Angle</span><span class="card-feature">GPIB/LAN</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">AC Power Supply</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='ac-power-supply' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="three-phase" data-cat="ac-power-supply">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MAP-6000T" alt="6kVA Three-Phase AC Power System" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">〜</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MAP-6000T</div>
-    <h3 class="card-title">6kVA Three-Phase AC Power System</h3>
-    <p class="card-desc">Rack-mount 6 kVA three-phase system with arbitrary waveform generation and IEC compliance testing.</p>
-    <div class="card-features"><span class="card-feature">6kVA</span><span class="card-feature">Arbitrary Wave</span><span class="card-feature">IEC Tests</span><span class="card-feature">Rack Mount</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">AC Power Supply</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='ac-power-supply' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="frequency" data-cat="ac-power-supply">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MFC-2000" alt="2kVA Frequency Converter" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">〜</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MFC-2000</div>
-    <h3 class="card-title">2kVA Frequency Converter</h3>
-    <p class="card-desc">Convert 50Hz to 60Hz (and vice versa) with stabilized output for international equipment testing.</p>
-    <div class="card-features"><span class="card-feature">50/60Hz</span><span class="card-feature">2kVA</span><span class="card-feature">Stabilized</span><span class="card-feature">Compact</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">AC Power Supply</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='ac-power-supply' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="single" data-cat="ac-power-supply">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MAP-500M" alt="500VA Benchtop AC Source" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">〜</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MAP-500M</div>
-    <h3 class="card-title">500VA Benchtop AC Source</h3>
-    <p class="card-desc">Compact benchtop AC source for lab use. 0–300 V, 40–500 Hz, color touchscreen.</p>
-    <div class="card-features"><span class="card-feature">500VA</span><span class="card-feature">Touchscreen</span><span class="card-feature">40–500Hz</span><span class="card-feature">Data Log</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">AC Power Supply</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='ac-power-supply' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="three-phase" data-cat="ac-power-supply">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MAP-15KT" alt="15kVA High-Power 3-Phase Source" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">〜</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MAP-15KT</div>
-    <h3 class="card-title">15kVA High-Power 3-Phase Source</h3>
-    <p class="card-desc">High-power three-phase AC system for aviation, military, and industrial equipment testing.</p>
-    <div class="card-features"><span class="card-feature">15kVA</span><span class="card-feature">3-Phase</span><span class="card-feature">High Power</span><span class="card-feature">LAN/RS485</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">AC Power Supply</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='ac-power-supply' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="dc" data-cat="electronic-loads">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MEL-300W" alt="DC Electronic Load 300W" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">🔌</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MEL-300W</div>
-    <h3 class="card-title">DC Electronic Load 300W</h3>
-    <p class="card-desc">Programmable DC electronic load with CC/CV/CR/CP modes and LED display for benchtop use.</p>
-    <div class="card-features"><span class="card-feature">300W</span><span class="card-feature">CC/CV/CR/CP</span><span class="card-feature">Dynamic Mode</span><span class="card-feature">USB</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">Electronic Loads</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='electronic-loads' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="dc" data-cat="electronic-loads">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MEL-1200W" alt="DC Electronic Load 1200W" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">🔌</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MEL-1200W</div>
-    <h3 class="card-title">DC Electronic Load 1200W</h3>
-    <p class="card-desc">High-power single-channel DC load with parallel operation capability for up to 6kW system.</p>
-    <div class="card-features"><span class="card-feature">1200W</span><span class="card-feature">Parallel</span><span class="card-feature">OCP Test</span><span class="card-feature">LAN</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">Electronic Loads</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='electronic-loads' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="ac" data-cat="electronic-loads">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MEL-ACH" alt="AC/DC Electronic Load" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">🔌</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MEL-ACH</div>
-    <h3 class="card-title">AC/DC Electronic Load</h3>
-    <p class="card-desc">Dual-mode AC/DC load for testing inverters, UPS, and AC/DC converters with PF simulation.</p>
-    <div class="card-features"><span class="card-feature">AC+DC</span><span class="card-feature">PF Control</span><span class="card-feature">Inverter Test</span><span class="card-feature">UPS Test</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">Electronic Loads</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='electronic-loads' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="battery" data-cat="electronic-loads">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MEL-BAT" alt="Battery Discharge Load Tester" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">🔌</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MEL-BAT</div>
-    <h3 class="card-title">Battery Discharge Load Tester</h3>
-    <p class="card-desc">Dedicated battery discharge tester with capacity analysis, internal resistance, and cycle testing.</p>
-    <div class="card-features"><span class="card-feature">Battery Test</span><span class="card-feature">Capacity Calc</span><span class="card-feature">IR Measure</span><span class="card-feature">Cycle Mode</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">Electronic Loads</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='electronic-loads' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="dc" data-cat="electronic-loads">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MEL-MCH" alt="Multi-Channel Electronic Load" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">🔌</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MEL-MCH</div>
-    <h3 class="card-title">Multi-Channel Electronic Load</h3>
-    <p class="card-desc">4-channel independent programmable loads in a single rack unit for multi-output PSU testing.</p>
-    <div class="card-features"><span class="card-feature">4-Channel</span><span class="card-feature">Independent</span><span class="card-feature">Rack 1U</span><span class="card-feature">GPIB/LAN</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">Electronic Loads</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='electronic-loads' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="dc" data-cat="electronic-loads">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MEL-6KW" alt="High-Power Load System 6kW" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">🔌</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MEL-6KW</div>
-    <h3 class="card-title">High-Power Load System 6kW</h3>
-    <p class="card-desc">Modular 6 kW DC system built from 1200W modules. Fully parallel/series configurable.</p>
-    <div class="card-features"><span class="card-feature">6kW System</span><span class="card-feature">Modular</span><span class="card-feature">Auto-Range</span><span class="card-feature">Master/Slave</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">Electronic Loads</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='electronic-loads' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="handheld" data-cat="lcr-meter">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MLR-100" alt="Handheld LCR Meter" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">📡</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MLR-100</div>
-    <h3 class="card-title">Handheld LCR Meter</h3>
-    <p class="card-desc">Portable LCR meter for quick component checks. 100Hz/1kHz/10kHz test frequencies.</p>
-    <div class="card-features"><span class="card-feature">Handheld</span><span class="card-feature">3 Frequencies</span><span class="card-feature">Auto-Range</span><span class="card-feature">Backlight</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">LCR Meter</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='lcr-meter' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="benchtop" data-cat="lcr-meter">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MLR-821A" alt="Benchtop LCR Meter 20Hz–300kHz" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">📡</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MLR-821A</div>
-    <h3 class="card-title">Benchtop LCR Meter 20Hz–300kHz</h3>
-    <p class="card-desc">High-accuracy benchtop LCR meter with 0.05% basic accuracy and component sorting bins.</p>
-    <div class="card-features"><span class="card-feature">0.05% Accuracy</span><span class="card-feature">20Hz–300kHz</span><span class="card-feature">Binning</span><span class="card-feature">Handler</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">LCR Meter</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='lcr-meter' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="benchtop" data-cat="lcr-meter">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MLR-822A" alt="Precision LCR Meter 1MHz" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">📡</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MLR-822A</div>
-    <h3 class="card-title">Precision LCR Meter 1MHz</h3>
-    <p class="card-desc">Extended frequency range to 1 MHz for RF component characterisation. 7-inch colour display.</p>
-    <div class="card-features"><span class="card-feature">1MHz Range</span><span class="card-feature">7" Display</span><span class="card-feature">0.02% Acc.</span><span class="card-feature">USB/LAN</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">LCR Meter</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='lcr-meter' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="analyzer" data-cat="lcr-meter">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MIA-500" alt="Impedance Analyzer 5MHz" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">📡</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MIA-500</div>
-    <h3 class="card-title">Impedance Analyzer 5MHz</h3>
-    <p class="card-desc">Full impedance analysis up to 5 MHz with Z, θ, L, C, R, Q, D sweep and graphing.</p>
-    <div class="card-features"><span class="card-feature">5MHz</span><span class="card-feature">Sweep Graph</span><span class="card-feature">Z/θ/L/C/R</span><span class="card-feature">GPIB</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">LCR Meter</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='lcr-meter' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="benchtop" data-cat="lcr-meter">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MLR-PRO" alt="In-Circuit LCR Meter" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">📡</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MLR-PRO</div>
-    <h3 class="card-title">In-Circuit LCR Meter</h3>
-    <p class="card-desc">Measures components in-circuit without desoldering using anti-interference guard technology.</p>
-    <div class="card-features"><span class="card-feature">In-Circuit</span><span class="card-feature">Guard Terminal</span><span class="card-feature">Auto-LCR</span><span class="card-feature">Fast 7ms</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">LCR Meter</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='lcr-meter' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="special" data-cat="lcr-meter">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MLR-TF" alt="Transformer Tester" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">📡</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MLR-TF</div>
-    <h3 class="card-title">Transformer Tester</h3>
-    <p class="card-desc">Specialised instrument for transformer turns ratio, leakage inductance, and magnetizing current.</p>
-    <div class="card-features"><span class="card-feature">Turns Ratio</span><span class="card-feature">Leakage L</span><span class="card-feature">Mag Current</span><span class="card-feature">Winding Test</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">LCR Meter</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='lcr-meter' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="hipot" data-cat="withstand-voltage-tester">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MHT-501" alt="AC Hipot Tester 5kVAC" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">⚠</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MHT-501</div>
-    <h3 class="card-title">AC Hipot Tester 5kVAC</h3>
-    <p class="card-desc">5kVAC withstanding voltage tester with adjustable ramp, dwell, and breakdown detection.</p>
-    <div class="card-features"><span class="card-feature">5kVAC</span><span class="card-feature">Ramp Mode</span><span class="card-feature">0.1mA Res.</span><span class="card-feature">Safety Interlock</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">Withstand Voltage Tester</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="hipot" data-cat="withstand-voltage-tester">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MHT-502" alt="AC/DC Hipot Tester" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">⚠</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MHT-502</div>
-    <h3 class="card-title">AC/DC Hipot Tester</h3>
-    <p class="card-desc">Combined AC and DC hipot tester: 5kVAC / 6kVDC with automatic discharge and arc detection.</p>
-    <div class="card-features"><span class="card-feature">5kVAC/6kVDC</span><span class="card-feature">Arc Detect</span><span class="card-feature">Auto Discharge</span><span class="card-feature">USB Log</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">Withstand Voltage Tester</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="insulation" data-cat="withstand-voltage-tester">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MIR-5000" alt="Insulation Resistance Tester" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">⚠</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MIR-5000</div>
-    <h3 class="card-title">Insulation Resistance Tester</h3>
-    <p class="card-desc">Digital megohmmeter for insulation testing: 50V–5000V test voltage, 0.01MΩ–1TΩ range.</p>
-    <div class="card-features"><span class="card-feature">50–5000V</span><span class="card-feature">0.01MΩ–1TΩ</span><span class="card-feature">PI/DAR Test</span><span class="card-feature">Bluetooth</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">Withstand Voltage Tester</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="ground" data-cat="withstand-voltage-tester">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MGC-100" alt="Ground Continuity Tester" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">⚠</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MGC-100</div>
-    <h3 class="card-title">Ground Continuity Tester</h3>
-    <p class="card-desc">Tests ground/earth bond continuity with 25A/30A AC test current. Dual clamp connections.</p>
-    <div class="card-features"><span class="card-feature">25A Test</span><span class="card-feature">Dual Clamp</span><span class="card-feature">Auto-Scan</span><span class="card-feature">Pass/Fail LED</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">Withstand Voltage Tester</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="combo" data-cat="withstand-voltage-tester">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MES-3IN1" alt="3-in-1 Electrical Safety Tester" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">⚠</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MES-3IN1</div>
-    <h3 class="card-title">3-in-1 Electrical Safety Tester</h3>
-    <p class="card-desc">All-in-one unit combining hipot, insulation resistance, and ground continuity into a single instrument.</p>
-    <div class="card-features"><span class="card-feature">3-in-1</span><span class="card-feature">Auto Sequence</span><span class="card-feature">IEC/UL Tests</span><span class="card-feature">LAN/RS232</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">Withstand Voltage Tester</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="hipot" data-cat="withstand-voltage-tester">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MHT-10K" alt="High Voltage AC Tester 10kVAC" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">⚠</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MHT-10K</div>
-    <h3 class="card-title">High Voltage AC Tester 10kVAC</h3>
-    <p class="card-desc">Heavy-duty 10kVAC tester for HV transformers, cable assemblies, and switchgear testing.</p>
-    <div class="card-features"><span class="card-feature">10kVAC</span><span class="card-feature">High Power</span><span class="card-feature">Arc Detect</span><span class="card-feature">Rack Mount</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">Withstand Voltage Tester</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="dso" data-cat="oscilloscope">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MDS-100" alt="50MHz Digital Oscilloscope" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">📊</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MDS-100</div>
-    <h3 class="card-title">50MHz Digital Oscilloscope</h3>
-    <p class="card-desc">2-channel 50MHz DSO with 1GSa/s sample rate, 7" colour display, and USB storage.</p>
-    <div class="card-features"><span class="card-feature">50MHz</span><span class="card-feature">1GSa/s</span><span class="card-feature">2CH</span><span class="card-feature">7" Colour</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">Oscilloscope</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='oscilloscope' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="dso" data-cat="oscilloscope">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MDS-200" alt="200MHz 4-Channel Oscilloscope" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">📊</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MDS-200</div>
-    <h3 class="card-title">200MHz 4-Channel Oscilloscope</h3>
-    <p class="card-desc">4-channel 200MHz scope with 2GSa/s, 128Mpts memory, and advanced maths/FFT analysis.</p>
-    <div class="card-features"><span class="card-feature">200MHz</span><span class="card-feature">2GSa/s</span><span class="card-feature">4CH</span><span class="card-feature">128Mpts</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">Oscilloscope</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='oscilloscope' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="mso" data-cat="oscilloscope">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MDS-500" alt="500MHz Mixed-Signal Oscilloscope" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">📊</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MDS-500</div>
-    <h3 class="card-title">500MHz Mixed-Signal Oscilloscope</h3>
-    <p class="card-desc">MSO with 2 analog + 16 digital channels. Protocol decode: I2C, SPI, UART, CAN, LIN.</p>
-    <div class="card-features"><span class="card-feature">500MHz</span><span class="card-feature">2+16CH MSO</span><span class="card-feature">Protocol Decode</span><span class="card-feature">Logic Analyser</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">Oscilloscope</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='oscilloscope' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="dso" data-cat="oscilloscope">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MDS-1G" alt="1GHz High-Bandwidth Oscilloscope" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">📊</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MDS-1G</div>
-    <h3 class="card-title">1GHz High-Bandwidth Oscilloscope</h3>
-    <p class="card-desc">4-channel 1 GHz DSO with 5GSa/s, 250Mpts deep memory, and segmented acquisition.</p>
-    <div class="card-features"><span class="card-feature">1GHz</span><span class="card-feature">5GSa/s</span><span class="card-feature">250Mpts</span><span class="card-feature">Segmented Acq.</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">Oscilloscope</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='oscilloscope' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="combo" data-cat="oscilloscope">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MDO-200" alt="Digital Oscilloscope + DMM" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">📊</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MDO-200</div>
-    <h3 class="card-title">Digital Oscilloscope + DMM</h3>
-    <p class="card-desc">Combo instrument: 200MHz oscilloscope + 6000-count multimeter sharing a single 8" screen.</p>
-    <div class="card-features"><span class="card-feature">200MHz</span><span class="card-feature">DMM Built-in</span><span class="card-feature">8" Screen</span><span class="card-feature">Portable</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">Oscilloscope</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='oscilloscope' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="handheld" data-cat="oscilloscope">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MHO-70" alt="Handheld Oscilloscope 70MHz" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">📊</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MHO-70</div>
-    <h3 class="card-title">Handheld Oscilloscope 70MHz</h3>
-    <p class="card-desc">Rugged handheld 70MHz oscilloscope/multimeter for field use. Battery operated, IP51 rated.</p>
-    <div class="card-features"><span class="card-feature">70MHz</span><span class="card-feature">Handheld</span><span class="card-feature">IP51 Rated</span><span class="card-feature">Battery Op.</span></div>
-    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px;">Oscilloscope</div>
-  </div>
-  <div class="card-footer">
-    <a href="{% url 'products:center_page' page_name='oscilloscope' %}" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-    </div>
-  </section>
-
-  <footer class="footer py-5 border-top border-secondary">
-    <div class="container">
-      <div class="row g-5">
-        <div class="col-lg-4 col-md-6 footer-brand-section">
-          <a class="navbar-brand d-flex align-items-center mb-4" href="{% url 'core:index' %}">
-            <div class="brand-strips me-2"><i></i><i></i><i></i></div>
-            <span class="brand-text">MATRIX</span>
-          </a>
-          <p class="text-secondary mb-4">Leading manufacturer of precision test instruments since 2003.</p>
-          <div class="d-flex gap-3 social-links">
-            <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle"><i class="bi bi-youtube"></i></a>
-            <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle"><i class="bi bi-linkedin"></i></a>
-          </div>
-        </div>
-        
-        <div class="col-lg-2 col-md-6">
-          <h5 class="mb-4 text-white">Solutions</h5>
-          <ul class="list-unstyled footer-links">
-            <li><a href="{% url 'products:center_page' page_name='dc-power-supply' %}" class="text-secondary text-decoration-none">DC Power Supply</a></li>
-            <li><a href="{% url 'products:center_page' page_name='ac-power-supply' %}" class="text-secondary text-decoration-none">AC Power Supply</a></li>
-            <li><a href="{% url 'products:center_page' page_name='electronic-loads' %}" class="text-secondary text-decoration-none">Electronic Loads</a></li>
-            <li><a href="{% url 'products:center_page' page_name='all-products' %}" class="text-secondary text-decoration-none text-primary">All Products</a></li>
-          </ul>
+        <!-- CATEGORY TABS -->
+        <div class="category-tabs mb-4">
+            <a href="#all" class="cat-tab active" data-cat="all">🗂 All Products <span class="count">36</span></a>
+            <a href="#dc-power-supply" class="cat-tab" data-cat="dc-power-supply">⚡ DC Power Supply <span class="count">6</span></a>
+            <a href="#ac-power-supply" class="cat-tab" data-cat="ac-power-supply">〜 AC Power Supply <span class="count">6</span></a>
+            <a href="#electronic-loads" class="cat-tab" data-cat="electronic-loads">🔌 Electronic Loads <span class="count">6</span></a>
+            <a href="#lcr-meter" class="cat-tab" data-cat="lcr-meter">📡 LCR Meter <span class="count">6</span></a>
+            <a href="#withstand-voltage-tester" class="cat-tab" data-cat="withstand-voltage-tester">⚠ Withstand Voltage Tester <span class="count">6</span></a>
+            <a href="#oscilloscope" class="cat-tab" data-cat="oscilloscope">📊 Oscilloscope <span class="count">6</span></a>
         </div>
 
-        <div class="col-lg-2 col-md-6">
-          <h5 class="mb-4 text-white">Company</h5>
-          <ul class="list-unstyled footer-links">
-            <li><a href="{% url 'core:about' %}" class="text-secondary text-decoration-none">About Matrix</a></li>
-            <li><a href="{% url 'core:services' %}" class="text-secondary text-decoration-none">Our Services</a></li>
-            <li><a href="{% url 'core:faq' %}" class="text-secondary text-decoration-none">FAQ Center</a></li>
-            <li><a href="{% url 'core:contact' %}" class="text-secondary text-decoration-none">Contact Us</a></li>
-          </ul>
+        <!-- SEARCH -->
+        <div class="search-bar-wrap mb-5">
+            <div class="input-group">
+                <span class="input-group-text bg-transparent border-secondary text-muted px-3"><i class="bi bi-search"></i></span>
+                <input type="text" id="productSearch" class="form-control bg-transparent border-secondary text-light py-2" placeholder="Search all products, models, features…">
+            </div>
         </div>
 
-        <div class="col-lg-4 col-md-6">
-          <h5 class="mb-4 text-white">Contact Info</h5>
-          <ul class="list-unstyled text-secondary">
-            <li class="mb-2"><i class="bi bi-geo-alt me-2 text-primary"></i>Shenzhen, Guangdong, China</li>
-            <li class="mb-2"><i class="bi bi-telephone me-2 text-primary"></i>0086 755 2836 4276</li>
-            <li class="mb-2"><i class="bi bi-envelope me-2 text-primary"></i>sales@szmatrix.com</li>
-          </ul>
+        <!-- PRODUCTS GRID -->
+        <div id="products-grid" class="row g-4 stagger-container">
+            {% include "product-center/partials/all_cards.html" %}
         </div>
-      </div>
-      
-      <div class="row mt-5 pt-4 border-top border-secondary border-opacity-25 align-items-center">
-        <div class="col-md-6">
-          <p class="mb-0 text-secondary small">© 2025 MATRIX Technology Inc. All rights reserved.</p>
-        </div>
-      </div>
     </div>
-  </footer>
-
-  <!-- Floating Contact Button (Standardized) -->
-  <a href="{% url 'core:contact' %}" class="floating-contact">
-      <i class="bi bi-chat-dots-fill"></i>
-      <span>Contact Us</span>
-  </a>
 </div>
+{% endblock %}
 
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{% static 'js/main.js' %}"></script>
-<script src="{% static 'js/product_main.js' %}"></script>
+{% block extra_js %}
 <script>
-  // Category tab filter
-  document.querySelectorAll('.cat-tab').forEach(tab => {
-    tab.addEventListener('click', function(e) {
-      e.preventDefault();
-      document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
-      this.classList.add('active');
-      const cat = this.dataset.cat;
-      document.querySelectorAll('.product-card').forEach(card => {
-        card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
-      });
+    document.addEventListener('DOMContentLoaded', function() {
+        const tabs = document.querySelectorAll('.cat-tab');
+        const cards = document.querySelectorAll('.product-card');
+        const searchInput = document.getElementById('productSearch');
+
+        function filterProducts() {
+            const activeCat = document.querySelector('.cat-tab.active').dataset.cat;
+            const query = searchInput.value.toLowerCase();
+
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title')?.innerText.toLowerCase() || '';
+                const model = card.querySelector('.card-model')?.innerText.toLowerCase() || '';
+                const desc = card.querySelector('.card-desc')?.innerText.toLowerCase() || '';
+                const cat = card.dataset.cat;
+
+                const matchesSearch = title.includes(query) || model.includes(query) || desc.includes(query);
+                const matchesCat = (activeCat === 'all' || cat === activeCat);
+
+                if (matchesSearch && matchesCat) {
+                    card.parentElement.style.display = 'block';
+                } else {
+                    card.parentElement.style.display = 'none';
+                }
+            });
+        }
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function(e) {
+                e.preventDefault();
+                tabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                filterProducts();
+            });
+        });
+
+        searchInput.addEventListener('input', filterProducts);
     });
-  });
 </script>
-</body>
-</html>
+{% endblock %}

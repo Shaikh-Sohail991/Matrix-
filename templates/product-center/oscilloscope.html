@@ -1,300 +1,115 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Oscilloscope | MATRIX Technology Product Center</title>
-  <meta name="description" content="Explore Matrix Technology's Oscilloscope range. Digital Storage Oscilloscopes & Signal Analyzers.">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <link rel="stylesheet" href="{% static 'css/awesome.css' %}">
-</head>
-<body>
 
-<!-- NAVBAR (main site) -->
-<nav class="navbar navbar-expand-lg fixed-top" role="navigation" aria-label="Main navigation">
-    <div class="container navbar-container">
-        <div class="navbar-top d-flex w-100 align-items-center justify-content-between">
-            <a class="navbar-brand" href="{% url 'core:index' %}"><span class="brand-logo-wrap"><span class="brand-strips" aria-hidden="true"><i></i><i></i><i></i></span><span class="brand-name">MATRIX</span></span></a>
-            <div class="d-flex align-items-center gap-3">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            </div>
-        </div>
-        <div class="collapse navbar-collapse" id="navbarMain">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="{% url 'core:index' %}">Home</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown" aria-expanded="false">Product Center</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='dc-power-supply' %}">DC Power Supply</a></li>
-                        <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='ac-power-supply' %}">AC Power Supply</a></li>
-                        <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='electronic-loads' %}">Electronic Loads</a></li>
-                        <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='lcr-meter' %}">LCR Meter</a></li>
-                        <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}">Withstand Voltage Tester</a></li>
-                        <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='oscilloscope' %}">Oscilloscope</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'products:product_list' %}">All Products</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Service</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'core:videos' %}">Video</a></li>
-                        <li><a class="dropdown-item" href="{% url 'core:faq' %}">FAQ</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'core:services' %}">All Services</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">About Us</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'core:contact' %}">Contact Us</a></li>
-            </ul>
-            <div class="navbar-end-controls d-flex align-items-center gap-3">
-                <button class="btn btn-link nav-search-btn p-0" id="navSearchToggle" aria-label="Search" aria-expanded="false" aria-controls="navSearchOverlay"><i class="bi bi-search"></i></button>
-            </div>
-            <div class="nav-search-overlay" id="navSearchOverlay" aria-hidden="true">
-                <form method="get" action="{% url 'products:search' %}" class="nav-search-form" role="search">
-                    <div class="nav-search-inner container">
-                        <i class="bi bi-search nav-search-icon" aria-hidden="true"></i>
-                        <input type="search" name="q" class="nav-search-field" placeholder="Search products…" autocomplete="off" aria-label="Search site" id="navSearchField">
-                        <button type="submit" class="btn btn-primary-custom btn-sm-custom ms-2"><span>Go</span></button>
-                        <button type="button" class="btn btn-link nav-search-close ms-1" id="navSearchClose" aria-label="Close search"><i class="bi bi-x-lg"></i></button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</nav>
+{% block title %}Oscilloscope | MATRIX Technology Product Center{% endblock %}
+{% block meta_description %}Explore Matrix Technology's Oscilloscope range. Digital Storage Oscilloscopes & Signal Analyzers.{% endblock %}
 
-<!-- PAGE WRAPPER -->
-<div class="page-wrapper">
+{% block extra_css %}
+<!-- Product-center supplemental CSS -->
+<link rel="stylesheet" href="{% static 'css/awesome.css' %}">
+<style>
+    .layout-with-sidebar { min-height: calc(100vh - 110px); }
+    .premium-hero.product-hero { margin-bottom: 0; }
+</style>
+{% endblock %}
 
-  <!-- BREADCRUMB -->
-  <div class="breadcrumb-bar">
+{% block content %}
+<!-- BREADCRUMB -->
+<div class="breadcrumb-bar">
     <div class="container">
-      <ol class="breadcrumb">
-        <li><a href="{% url 'products:center_page' page_name='index' %}">Home</a></li>
-        <li><a href="{% url 'products:center_page' page_name='index' %}">Product Center</a></li>
-        <li class="active">Oscilloscope</li>
-      </ol>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{% url 'products:center_page' page_name='index' %}" class="text-secondary">Product Center</a></li>
+                <li class="breadcrumb-item active text-accent" aria-current="page">Oscilloscope</li>
+            </ol>
+        </nav>
     </div>
-  </div>
+</div>
 
-  <!-- MAIN LAYOUT -->
-  <div class="layout-with-sidebar">
-
+<!-- MAIN LAYOUT -->
+<div class="layout-with-sidebar">
     <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-title">Product Center</div>
-      <ul class="sidebar-nav">
-        <li><a href="{% url 'products:center_page' page_name='dc-power-supply' %}" class=""><span class="icon">⚡</span>DC Power Supply</a></li>
-<li><a href="{% url 'products:center_page' page_name='ac-power-supply' %}" class=""><span class="icon">〜</span>AC Power Supply</a></li>
-<li><a href="{% url 'products:center_page' page_name='electronic-loads' %}" class=""><span class="icon">🔌</span>Electronic Loads</a></li>
-<li><a href="{% url 'products:center_page' page_name='lcr-meter' %}" class=""><span class="icon">📡</span>LCR Meter</a></li>
-<li><a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}" class=""><span class="icon">⚠</span>Withstand Voltage Tester</a></li>
-<li><a href="{% url 'products:center_page' page_name='oscilloscope' %}" class="active"><span class="icon">📊</span>Oscilloscope</a></li>
-
-      </ul>
-      <div class="sidebar-all">
-        <ul class="sidebar-nav">
-          <li><a href="{% url 'products:center_page' page_name='all-products' %}"><span class="icon">🗂</span> All Products</a></li>
-        </ul>
-      </div>
-    </aside>
+    {% include "product-center/partials/sidebar.html" with current_page="oscilloscope" %}
 
     <!-- CONTENT -->
     <main class="main-content">
+        <!-- Mobile sidebar trigger -->
+        <button class="sidebar-mobile-trigger" id="sidebarTrigger" style="display:none;">
+            <i class="bi bi-layout-sidebar-inset"></i> Browse Categories
+        </button>
 
-      <!-- Mobile sidebar trigger -->
-      <button class="sidebar-mobile-trigger" id="sidebarTrigger" style="display:none;">
-        <i class="bi bi-layout-sidebar-inset"></i> Browse Categories
-      </button>
+        <!-- HERO -->
+        <section class="premium-hero product-hero">
+            <div class="technical-grid"></div>
+            <div class="container position-relative" style="z-index: 1;">
+                <div class="product-hero-inner">
+                    <div class="hero-badge mb-3"><span class="dot"></span> Category 06</div>
+                    <h1 class="display-5 fw-bold mb-3">Oscilloscope <span class="highlight">Series</span></h1>
+                    <p class="lead text-secondary opacity-75 mb-4">Digital Storage Oscilloscopes & Signal Analyzers. Matrix oscilloscopes deliver deep memory, high sample rates, and advanced triggering in a compact design. From 50 MHz entry-level to 1 GHz high-performance models.</p>
+                    <div class="hero-stats d-flex gap-4">
+                        <div class="hero-stat text-center">
+                            <div class="num h4 fw-bold text-accent mb-0">6</div>
+                            <p class="lbl small text-muted mb-0">Models</p>
+                        </div>
+                        <div class="hero-stat text-center">
+                            <div class="num h4 fw-bold text-accent mb-0">CE</div>
+                            <p class="lbl small text-muted mb-0">Certified</p>
+                        </div>
+                        <div class="hero-stat text-center">
+                            <div class="num h4 fw-bold text-accent mb-0">2yr</div>
+                            <p class="lbl small text-muted mb-0">Warranty</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-      <!-- HERO -->
-      <section class="product-hero">
-        <div class="hero-grid-pattern"></div>
-        <div class="product-hero-inner">
-          <div class="hero-badge"><span class="dot"></span> Category 06</div>
-          <h1>Oscilloscope <span class="highlight">Oscilloscope</span></h1>
-          <p>Digital Storage Oscilloscopes & Signal Analyzers. Matrix oscilloscopes deliver deep memory, high sample rates, and advanced triggering in a compact design. From 50 MHz en...</p>
-          <div class="hero-stats">
-            <div class="hero-stat"><div class="num">6</div><p class="lbl">Models</p></div>
-            <div class="hero-stat"><div class="num">CE</div><p class="lbl">Certified</p></div>
-            <div class="hero-stat"><div class="num">2yr</div><p class="lbl">Warranty</p></div>
-          </div>
+        <!-- PRODUCTS SECTION -->
+        <section class="products-section p-4">
+            <div class="products-section-header d-flex justify-content-between align-items-end flex-wrap gap-3 mb-4">
+                <div>
+                    <span class="section-label small fw-bold text-accent text-uppercase tracking-wider">Products</span>
+                    <h2 class="h3 fw-bold mb-0">Oscilloscope Series</h2>
+                </div>
+                <div class="filter-bar d-flex gap-2">
+                    <button class="btn btn-sm btn-outline-custom active" data-filter="all">All</button>
+                    <button class="btn btn-sm btn-outline-custom" data-filter="dso">DSO</button>
+                    <button class="btn btn-sm btn-outline-custom" data-filter="mso">MSO</button>
+                    <button class="btn btn-sm btn-outline-custom" data-filter="handheld">Handheld</button>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div class="search-bar-wrap mb-4">
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-secondary text-muted"><i class="bi bi-search"></i></span>
+                    <input type="text" id="productSearch" class="form-control bg-transparent border-secondary text-light" placeholder="Search oscilloscope models…">
+                </div>
+            </div>
+
+            <!-- Cards -->
+            <div class="row g-4 stagger-container">
+                 {% include "product-center/partials/oscilloscope_cards.html" %}
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <div class="cta-section m-4 p-5 rounded-4 bg-glass border border-secondary">
+            <div class="cta-inner d-flex justify-content-between align-items-center flex-wrap gap-4">
+                <div>
+                    <h2 class="h4 fw-bold mb-2">Need a Custom Solution?</h2>
+                    <p class="text-secondary mb-0">Our engineers can tailor Oscilloscope specifications to your application requirements.</p>
+                </div>
+                <div class="cta-buttons d-flex gap-3">
+                    <a href="#" class="btn btn-primary-custom"><span>Request Quote</span></a>
+                    <a href="#" class="btn btn-outline-custom">Download Catalog</a>
+                </div>
+            </div>
         </div>
-      </section>
-
-      <!-- PRODUCTS SECTION -->
-      <section class="products-section">
-        <div class="products-section-header">
-          <div>
-            <span class="section-label">Products</span>
-            <h2 class="section-title">Oscilloscope Series</h2>
-          </div>
-          <div class="filter-bar">
-            <button class="filter-btn active" data-filter="all">All</button>
-<button class="filter-btn" data-filter="dso">Dso</button>
-<button class="filter-btn" data-filter="mso">Mso</button>
-<button class="filter-btn" data-filter="combo">Combo</button>
-<button class="filter-btn" data-filter="handheld">Handheld</button>
-
-          </div>
-        </div>
-
-        <!-- Search -->
-        <div class="search-bar-wrap">
-          <div class="search-bar">
-            <span class="si"><i class="bi bi-search"></i></span>
-            <input type="text" id="productSearch" placeholder="Search oscilloscope models…">
-          </div>
-        </div>
-
-        <!-- Cards -->
-        <div class="products-grid" style="margin-top:24px;">
-          
-<article class="product-card" data-type="dso">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MDS-100" alt="50MHz Digital Oscilloscope" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">DSO</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MDS-100</div>
-    <h3 class="card-title">50MHz Digital Oscilloscope</h3>
-    <p class="card-desc">2-channel 50MHz DSO with 1GSa/s sample rate, 7" colour display, and USB storage.</p>
-    <div class="card-features"><span class="card-feature">50MHz</span><span class="card-feature">1GSa/s</span><span class="card-feature">2CH</span><span class="card-feature">7" Colour</span></div>
-  </div>
-  <div class="card-footer">
-    <a href="#" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="dso">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MDS-200" alt="200MHz 4-Channel Oscilloscope" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">DSO</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MDS-200</div>
-    <h3 class="card-title">200MHz 4-Channel Oscilloscope</h3>
-    <p class="card-desc">4-channel 200MHz scope with 2GSa/s, 128Mpts memory, and advanced maths/FFT analysis.</p>
-    <div class="card-features"><span class="card-feature">200MHz</span><span class="card-feature">2GSa/s</span><span class="card-feature">4CH</span><span class="card-feature">128Mpts</span></div>
-  </div>
-  <div class="card-footer">
-    <a href="#" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="mso">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MDS-500" alt="500MHz Mixed-Signal Oscilloscope" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">MSO</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MDS-500</div>
-    <h3 class="card-title">500MHz Mixed-Signal Oscilloscope</h3>
-    <p class="card-desc">MSO with 2 analog + 16 digital channels. Protocol decode: I2C, SPI, UART, CAN, LIN.</p>
-    <div class="card-features"><span class="card-feature">500MHz</span><span class="card-feature">2+16CH MSO</span><span class="card-feature">Protocol Decode</span><span class="card-feature">Logic Analyser</span></div>
-  </div>
-  <div class="card-footer">
-    <a href="#" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="dso">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MDS-1G" alt="1GHz High-Bandwidth Oscilloscope" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">DSO</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MDS-1G</div>
-    <h3 class="card-title">1GHz High-Bandwidth Oscilloscope</h3>
-    <p class="card-desc">4-channel 1 GHz DSO with 5GSa/s, 250Mpts deep memory, and segmented acquisition.</p>
-    <div class="card-features"><span class="card-feature">1GHz</span><span class="card-feature">5GSa/s</span><span class="card-feature">250Mpts</span><span class="card-feature">Segmented Acq.</span></div>
-  </div>
-  <div class="card-footer">
-    <a href="#" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="combo">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MDO-200" alt="Digital Oscilloscope + DMM" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">COMBO</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MDO-200</div>
-    <h3 class="card-title">Digital Oscilloscope + DMM</h3>
-    <p class="card-desc">Combo instrument: 200MHz oscilloscope + 6000-count multimeter sharing a single 8" screen.</p>
-    <div class="card-features"><span class="card-feature">200MHz</span><span class="card-feature">DMM Built-in</span><span class="card-feature">8" Screen</span><span class="card-feature">Portable</span></div>
-  </div>
-  <div class="card-footer">
-    <a href="#" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="handheld">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MHO-70" alt="Handheld Oscilloscope 70MHz" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">HANDHELD</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MHO-70</div>
-    <h3 class="card-title">Handheld Oscilloscope 70MHz</h3>
-    <p class="card-desc">Rugged handheld 70MHz oscilloscope/multimeter for field use. Battery operated, IP51 rated.</p>
-    <div class="card-features"><span class="card-feature">70MHz</span><span class="card-feature">Handheld</span><span class="card-feature">IP51 Rated</span><span class="card-feature">Battery Op.</span></div>
-  </div>
-  <div class="card-footer">
-    <a href="#" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-        </div>
-      </section>
-
-      <!-- CTA -->
-      <div class="cta-section">
-        <div class="cta-inner">
-          <div>
-            <h2>Need a Custom Solution?</h2>
-            <p>Our engineers can tailor Oscilloscope specifications to your application requirements.</p>
-          </div>
-          <div class="cta-buttons">
-            <a href="#" class="btn-primary"><i class="bi bi-envelope"></i> Request Quote</a>
-            <a href="#" class="btn-outline"><i class="bi bi-file-earmark-text"></i> Download Catalog</a>
-          </div>
-        </div>
-      </div>
-
     </main>
-  </div><!-- /layout-with-sidebar -->
+</div>
+{% endblock %}
 
-  <footer class="footer" role="contentinfo">
-    <div class="container">
-      <div class="row g-5">
-        <div class="col-lg-3 col-md-6"><h5 class="footer-col-title">Product</h5><ul class="footer-links"><li><a href="{% url 'products:center_page' page_name='dc-power-supply' %}">DC Power Supply</a></li><li><a href="{% url 'products:center_page' page_name='ac-power-supply' %}">AC Power Supply</a></li><li><a href="{% url 'products:center_page' page_name='electronic-loads' %}">Electronic Loads</a></li><li><a href="{% url 'products:center_page' page_name='lcr-meter' %}">LCR Meter</a></li><li><a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}">Withstand Voltage Tester</a></li><li><a href="{% url 'products:center_page' page_name='oscilloscope' %}">Oscilloscope</a></li></ul></div>
-        <div class="col-lg-2 col-md-6"><h5 class="footer-col-title">Service</h5><ul class="footer-links"><li><a href="{% url 'core:videos' %}">Video</a></li><li><a href="{% url 'core:faq' %}">FAQ</a></li></ul></div>
-        <div class="col-lg-4 col-md-6"><h5 class="footer-col-title">About Us</h5><div class="footer-about-info"><p class="footer-company-name">MATRIX TECHNOLOGY INC.</p><p class="footer-address">Room 601, Block C, Huachuangda, Bao'an District, Shenzhen, Guangdong Province</p><p class="footer-contact-line">Tel: 0086 755 2836 4276</p><p class="footer-contact-line">Email: sales@szmatrix.com</p></div></div>
-        <div class="col-lg-3 col-md-6"><h5 class="footer-col-title">Work Hours</h5><div class="footer-hours"><p>Mon-Fri 08:00AM - 08:00PM</p><p>Sat-Sun 09:00AM - 06:00PM</p></div><div class="footer-social-icons"><a href="#" class="footer-social-icon" aria-label="Facebook"><i class="bi bi-facebook"></i></a><a href="#" class="footer-social-icon" aria-label="YouTube"><i class="bi bi-youtube"></i></a><a href="#" class="footer-social-icon" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a><a href="#" class="footer-social-icon" aria-label="Email"><i class="bi bi-envelope"></i></a></div></div>
-      </div>
-      <div class="footer-bottom"><p class="footer-copyright">Copyright &copy; 2025 MATRIX TECHNOLOGY INC.</p></div>
-    </div>
-    <a href="{% url 'core:contact' %}" class="floating-contact-btn" aria-label="Contact us"><span class="floating-contact-label">Contact us</span><span class="floating-contact-icon-wrap"><i class="bi bi-chat-fill"></i></span></a>
-  </footer>
-</div><!-- /page-wrapper -->
-<script>(function(){var t=document.getElementById('navSearchToggle'),o=document.getElementById('navSearchOverlay'),f=document.getElementById('navSearchField'),c=document.getElementById('navSearchClose');function op(){o.classList.add('open');t.setAttribute('aria-expanded','true');o.setAttribute('aria-hidden','false');setTimeout(function(){f.focus();},120);}function cl(){o.classList.remove('open');t.setAttribute('aria-expanded','false');o.setAttribute('aria-hidden','true');}if(t)t.addEventListener('click',function(){o.classList.contains('open')?cl():op();});if(c)c.addEventListener('click',cl);document.addEventListener('keydown',function(e){if(e.key==='Escape')cl();});}());</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{% static 'js/main.js' %}"></script>
+{% block extra_js %}
 <script src="{% static 'js/product_main.js' %}"></script>
-</body>
-</html>
+{% endblock %}

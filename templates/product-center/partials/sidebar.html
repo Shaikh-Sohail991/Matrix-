@@ -1,0 +1,16 @@
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-title">Product Center</div>
+    <ul class="sidebar-nav">
+        <li><a href="{% url 'products:center_page' page_name='dc-power-supply' %}" class="{% if current_page == 'dc-power-supply' %}active{% endif %}"><span class="icon">⚡</span>DC Power Supply</a></li>
+        <li><a href="{% url 'products:center_page' page_name='ac-power-supply' %}" class="{% if current_page == 'ac-power-supply' %}active{% endif %}"><span class="icon">〜</span>AC Power Supply</a></li>
+        <li><a href="{% url 'products:center_page' page_name='electronic-loads' %}" class="{% if current_page == 'electronic-loads' %}active{% endif %}"><span class="icon">🔌</span>Electronic Loads</a></li>
+        <li><a href="{% url 'products:center_page' page_name='lcr-meter' %}" class="{% if current_page == 'lcr-meter' %}active{% endif %}"><span class="icon">📡</span>LCR Meter</a></li>
+        <li><a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}" class="{% if current_page == 'withstand-voltage-tester' %}active{% endif %}"><span class="icon">⚠</span>Withstand Voltage Tester</a></li>
+        <li><a href="{% url 'products:center_page' page_name='oscilloscope' %}" class="{% if current_page == 'oscilloscope' %}active{% endif %}"><span class="icon">📊</span>Oscilloscope</a></li>
+    </ul>
+    <div class="sidebar-all">
+        <ul class="sidebar-nav">
+            <li><a href="{% url 'products:center_page' page_name='all-products' %}" class="{% if current_page == 'all-products' %}active{% endif %}"><span class="icon">🗂</span> All Products</a></li>
+        </ul>
+    </div>
+</aside>

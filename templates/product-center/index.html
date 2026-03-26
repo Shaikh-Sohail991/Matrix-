@@ -1,310 +1,209 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Center | MATRIX Technology</title>
-  <meta name="description" content="Explore Matrix Technology's full range of precision test and measurement instruments – DC & AC Power Supplies, Electronic Loads, LCR Meters, and more.">
-  
-  <!-- Bootstrap 5.3 + Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-  
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- Main Styles -->
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <!-- Keep awesome.css for internal page styling -->
-  <link rel="stylesheet" href="{% static 'css/awesome.css' %}">
-</head>
-<body>
 
-<!-- ══════════════════ NAVBAR ══════════════════ -->
-<nav class="navbar navbar-expand-lg fixed-top">
-  <div class="container navbar-container">
-    <a class="navbar-brand d-flex align-items-center" href="{% url 'core:index' %}">
-      <div class="brand-strips me-2"><i></i><i></i><i></i></div>
-      <span class="brand-text">MATRIX</span>
-    </a>
+{% block title %}Product Center | MATRIX Technology{% endblock %}
+{% block meta_description %}Explore Matrix Technology's full range of precision test and measurement instruments – DC & AC Power Supplies, Electronic Loads, LCR Meters, and more.{% endblock %}
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+{% block extra_css %}
+<!-- Product-center supplemental CSS -->
+<link rel="stylesheet" href="{% static 'css/awesome.css' %}">
+<style>
+    .premium-hero { margin-bottom: 0; }
+    .category-card {
+        display: block;
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--r-lg);
+        overflow: hidden;
+        transition: all var(--t-base);
+        text-decoration: none;
+        position: relative;
+        height: 100%;
+    }
+    .category-card:hover {
+        transform: translateY(-6px);
+        border-color: var(--border-strong);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 60px var(--accent-glow);
+    }
+    .category-card-icon-wrap {
+        height: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .category-card.dc .category-card-icon-wrap { background: linear-gradient(135deg,#0a1c3a,#0f2d5e); }
+    .category-card.ac .category-card-icon-wrap { background: linear-gradient(135deg,#1a0a3a,#2d0f5e); }
+    .category-card.loads .category-card-icon-wrap { background: linear-gradient(135deg,#0a2a1a,#0f5e2d); }
+    .category-card.lcr .category-card-icon-wrap { background: linear-gradient(135deg,#2a1a0a,#5e2d0f); }
+    .category-card.safety .category-card-icon-wrap { background: linear-gradient(135deg,#2a0a0a,#5e0f0f); }
+    .category-card.scope .category-card-icon-wrap { background: linear-gradient(135deg,#0a1a2a,#0f365e); }
+</style>
+{% endblock %}
 
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto align-items-lg-center">
-        <li class="nav-item"><a class="nav-link" href="{% url 'core:index' %}">Home</a></li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown">Product Center</a>
-          <ul class="dropdown-menu shadow-lg border-0">
-            <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='dc-power-supply' %}">DC Power Supply</a></li>
-            <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='ac-power-supply' %}">AC Power Supply</a></li>
-            <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='electronic-loads' %}">Electronic Loads</a></li>
-            <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='lcr-meter' %}">LCR Meter</a></li>
-            <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}">Withstand Voltage Tester</a></li>
-            <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='oscilloscope' %}">Oscilloscope</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='all-products' %}">All Products</a></li>
-          </ul>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Service</a>
-          <ul class="dropdown-menu shadow-lg border-0">
-            <li><a class="dropdown-item" href="{% url 'core:services' %}">Corporate Services</a></li>
-            <li><a class="dropdown-item" href="{% url 'core:faq' %}">FAQ Center</a></li>
-            <li><a class="dropdown-item" href="{% url 'core:videos' %}">Video Center</a></li>
-          </ul>
-        </li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">About Us</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'core:contact' %}">Contact Us</a></li>
-        <li class="nav-item ms-lg-3 d-none d-lg-block">
-          <button class="btn-search-trigger" id="searchTrigger"><i class="bi bi-search"></i></button>
-        </li>
-      </ul>
+{% block content %}
+<!-- HERO -->
+<section class="premium-hero">
+    <div class="technical-grid"></div>
+    <div class="container position-relative" style="z-index: 1;">
+        <div class="row align-items-center min-vh-60 py-5">
+            <div class="col-lg-7">
+                <div class="hero-badge mb-4"><span class="dot"></span> Precision Test & Measurement</div>
+                <h1 class="display-3 fw-bold mb-3">Professional <span class="highlight">Product Center</span></h1>
+                <p class="lead text-secondary opacity-75 mb-5">Industry-leading test and measurement instruments engineered for accuracy, durability, and performance. Trusted by engineers worldwide.</p>
+                <div class="d-flex gap-3 flex-wrap">
+                    <a href="{% url 'products:center_page' page_name='all-products' %}" class="btn btn-primary-custom px-4 py-3">
+                        <span><i class="bi bi-grid-3x3-gap-fill me-2"></i> Browse All Products</span>
+                    </a>
+                    <a href="#categories" class="btn btn-outline-custom px-4 py-3">
+                        <i class="bi bi-layers me-2"></i> View Categories
+                    </a>
+                </div>
+                <div class="hero-stats d-flex gap-5 mt-5">
+                    <div class="hero-stat">
+                        <div class="num h3 fw-bold text-accent mb-0">500+</div>
+                        <p class="lbl small text-muted mb-0">Products</p>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="num h3 fw-bold text-accent mb-0">6</div>
+                        <p class="lbl small text-muted mb-0">Categories</p>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="num h3 fw-bold text-accent mb-0">20yr</div>
+                        <p class="lbl small text-muted mb-0">Experience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</nav>
-
-<!-- SEARCH OVERLAY (Standardized) -->
-<div class="search-overlay" id="searchOverlay">
-  <div class="overlay-close" id="overlayClose"></div>
-  <div class="search-box-container">
-    <div class="search-box-header">
-      <i class="bi bi-search search-box-icon"></i>
-      <input type="text" id="searchInput" placeholder="Search for products, documentation, manuals..." autofocus>
-      <button class="search-box-close" id="searchBoxClose"><i class="bi bi-x-lg"></i></button>
-    </div>
-    <div class="search-results-area" id="searchResults">
-      <div class="search-hint">Type at least 2 characters to search...</div>
-    </div>
-  </div>
-</div>
-
-<!-- ══════════════════ HERO ══════════════════ -->
-<section class="page-wrapper" style="padding-top:var(--nav-h);">
-  <div style="position:relative;min-height:520px;background:linear-gradient(135deg,#0D1627 0%,#080E1A 100%);overflow:hidden;display:flex;align-items:center;">
-    <div class="hero-grid-pattern"></div>
-    <!-- decorative circles -->
-    <div style="position:absolute;right:-80px;top:-80px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(0,102,255,0.15) 0%,transparent 70%);pointer-events:none;"></div>
-    <div style="position:absolute;right:200px;bottom:-60px;width:250px;height:250px;border-radius:50%;background:radial-gradient(circle,rgba(0,194,255,0.08) 0%,transparent 70%);pointer-events:none;"></div>
-    <div class="container" style="position:relative;z-index:1;padding:5rem 2rem;">
-      <div style="max-width:660px;">
-        <div class="hero-badge" style="margin-bottom:20px;">
-          <span class="dot"></span> Precision Test &amp; Measurement
-        </div>
-        <h1 style="font-size:clamp(2.4rem,6vw,4rem);font-weight:800;line-height:1.05;margin-bottom:20px;">
-          Professional <span class="highlight">Product Center</span>
-        </h1>
-        <p style="font-size:1.1rem;color:var(--text-secondary);max-width:520px;margin-bottom:32px;">
-          Industry-leading test and measurement instruments engineered for accuracy, durability, and performance. Trusted by engineers worldwide.
-        </p>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;">
-          <a href="{% url 'products:center_page' page_name='all-products' %}" class="btn-primary"><i class="bi bi-grid-3x3-gap-fill"></i> Browse All Products</a>
-          <a href="#categories" class="btn-outline"><i class="bi bi-layers"></i> View Categories</a>
-        </div>
-        <div class="hero-stats" style="margin-top:36px;">
-          <div class="hero-stat"><div class="num">500+</div><p class="lbl">Products</p></div>
-          <div class="hero-stat"><div class="num">6</div><p class="lbl">Categories</p></div>
-          <div class="hero-stat"><div class="num">50+</div><p class="lbl">Countries</p></div>
-          <div class="hero-stat"><div class="num">20yr</div><p class="lbl">Experience</p></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════ CATEGORIES GRID ══════════════════ -->
-  <section id="categories" class="section-padding">
-    <div class="container">
-      <div class="reveal" style="text-align:center;margin-bottom:48px;">
-        <span class="section-label">Our Portfolio</span>
-        <h2 class="section-title">Browse by Category</h2>
-        <p style="max-width:520px;margin:0 auto;color:var(--text-muted);">From benchtop power supplies to digital oscilloscopes — the tools professionals rely on.</p>
-      </div>
-
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;" class="stagger-container">
-
-        <!-- DC Power Supply -->
-        <a href="{% url 'products:center_page' page_name='dc-power-supply' %}" class="stagger-item" style="display:block;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:all var(--t-base);text-decoration:none;position:relative;">
-          <div style="height:160px;background:linear-gradient(135deg,#0a1c3a,#0f2d5e);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(0,194,255,0.15) 0%,transparent 60%);"></div>
-            <span style="font-size:4rem;z-index:1;">⚡</span>
-          </div>
-          <div style="padding:20px;">
-            <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">Category 01</div>
-            <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--text-primary);">DC Power Supply</h3>
-            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:14px;">Programmable single &amp; multi-channel DC supplies from 30W to 10kW.</p>
-            <div style="display:flex;align-items:center;gap:4px;font-size:0.8rem;font-weight:600;color:var(--accent);">View Products <i class="bi bi-arrow-right"></i></div>
-          </div>
-        </a>
-
-        <!-- AC Power Supply -->
-        <a href="{% url 'products:center_page' page_name='ac-power-supply' %}" class="stagger-item" style="display:block;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:all var(--t-base);text-decoration:none;position:relative;">
-          <div style="height:160px;background:linear-gradient(135deg,#1a0a3a,#2d0f5e);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <div style="position:absolute;inset:0;background:radial-gradient(circle at 70% 50%,rgba(100,0,255,0.15) 0%,transparent 60%);"></div>
-            <span style="font-size:4rem;z-index:1;">〜</span>
-          </div>
-          <div style="padding:20px;">
-            <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">Category 02</div>
-            <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--text-primary);">AC Power Supply</h3>
-            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:14px;">Programmable AC sources with frequency &amp; voltage sweep capabilities.</p>
-            <div style="display:flex;align-items:center;gap:4px;font-size:0.8rem;font-weight:600;color:var(--accent);">View Products <i class="bi bi-arrow-right"></i></div>
-          </div>
-        </a>
-
-        <!-- Electronic Loads -->
-        <a href="{% url 'products:center_page' page_name='electronic-loads' %}" class="stagger-item" style="display:block;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:all var(--t-base);text-decoration:none;position:relative;">
-          <div style="height:160px;background:linear-gradient(135deg,#0a2a1a,#0f5e2d);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(0,255,100,0.12) 0%,transparent 60%);"></div>
-            <span style="font-size:4rem;z-index:1;">🔌</span>
-          </div>
-          <div style="padding:20px;">
-            <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">Category 03</div>
-            <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--text-primary);">Electronic Loads</h3>
-            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:14px;">DC &amp; AC electronic loads for battery, power supply, and charger testing.</p>
-            <div style="display:flex;align-items:center;gap:4px;font-size:0.8rem;font-weight:600;color:var(--accent);">View Products <i class="bi bi-arrow-right"></i></div>
-          </div>
-        </a>
-
-        <!-- LCR Meter -->
-        <a href="{% url 'products:center_page' page_name='lcr-meter' %}" class="stagger-item" style="display:block;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:all var(--t-base);text-decoration:none;position:relative;">
-          <div style="height:160px;background:linear-gradient(135deg,#2a1a0a,#5e2d0f);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 70%,rgba(255,150,0,0.12) 0%,transparent 60%);"></div>
-            <span style="font-size:4rem;z-index:1;">📡</span>
-          </div>
-          <div style="padding:20px;">
-            <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">Category 04</div>
-            <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--text-primary);">LCR Meter</h3>
-            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:14px;">Precision impedance analyzers measuring inductance, capacitance &amp; resistance.</p>
-            <div style="display:flex;align-items:center;gap:4px;font-size:0.8rem;font-weight:600;color:var(--accent);">View Products <i class="bi bi-arrow-right"></i></div>
-          </div>
-        </a>
-
-        <!-- Withstand Voltage Tester -->
-        <a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}" class="stagger-item" style="display:block;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:all var(--t-base);text-decoration:none;position:relative;">
-          <div style="height:160px;background:linear-gradient(135deg,#2a0a0a,#5e0f0f);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <div style="position:absolute;inset:0;background:radial-gradient(circle at 80% 50%,rgba(255,50,50,0.12) 0%,transparent 60%);"></div>
-            <span style="font-size:4rem;z-index:1;">⚠</span>
-          </div>
-          <div style="padding:20px;">
-            <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">Category 05</div>
-            <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--text-primary);">Withstand Voltage Tester</h3>
-            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:14px;">Hipot &amp; insulation testers ensuring electrical safety compliance.</p>
-            <div style="display:flex;align-items:center;gap:4px;font-size:0.8rem;font-weight:600;color:var(--accent);">View Products <i class="bi bi-arrow-right"></i></div>
-          </div>
-        </a>
-
-        <!-- Oscilloscope -->
-        <a href="{% url 'products:center_page' page_name='oscilloscope' %}" class="stagger-item" style="display:block;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:all var(--t-base);text-decoration:none;position:relative;">
-          <div style="height:160px;background:linear-gradient(135deg,#0a1a2a,#0f365e);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
-            <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 80%,rgba(0,194,255,0.15) 0%,transparent 60%);"></div>
-            <span style="font-size:4rem;z-index:1;">📊</span>
-          </div>
-          <div style="padding:20px;">
-            <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;">Category 06</div>
-            <h3 style="font-size:1.1rem;margin-bottom:8px;color:var(--text-primary);">Oscilloscope</h3>
-            <p style="font-size:0.85rem;color:var(--text-muted);margin-bottom:14px;">Digital storage oscilloscopes with 50 MHz to 1 GHz bandwidth.</p>
-            <div style="display:flex;align-items:center;gap:4px;font-size:0.8rem;font-weight:600;color:var(--accent);">View Products <i class="bi bi-arrow-right"></i></div>
-          </div>
-        </a>
-
-      </div>
-
-      <!-- All products CTA -->
-      <div style="text-align:center;margin-top:40px;" class="reveal">
-        <a href="{% url 'products:center_page' page_name='all-products' %}" class="btn-primary" style="font-size:1rem;padding:14px 36px;">
-          <i class="bi bi-grid-3x3-gap-fill"></i> View All Products
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════ FOOTER ══════════════════ -->
-  <footer class="footer py-5 border-top border-secondary">
-    <div class="container">
-      <div class="row g-5">
-        <div class="col-lg-4 col-md-6 footer-brand-section">
-          <a class="navbar-brand d-flex align-items-center mb-4" href="{% url 'core:index' %}">
-            <div class="brand-strips me-2"><i></i><i></i><i></i></div>
-            <span class="brand-text">MATRIX</span>
-          </a>
-          <p class="text-secondary mb-4">Leading manufacturer of precision DC power supplies, AC sources, and electronic test instruments since 2003.</p>
-          <div class="d-flex gap-3 social-links">
-            <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle"><i class="bi bi-youtube"></i></a>
-            <a href="#" class="btn btn-outline-secondary btn-sm rounded-circle"><i class="bi bi-linkedin"></i></a>
-          </div>
-        </div>
-        
-        <div class="col-lg-2 col-md-6">
-          <h5 class="mb-4 text-white">Solutions</h5>
-          <ul class="list-unstyled footer-links">
-            <li><a href="{% url 'products:center_page' page_name='dc-power-supply' %}" class="text-secondary text-decoration-none">DC Power Supply</a></li>
-            <li><a href="{% url 'products:center_page' page_name='ac-power-supply' %}" class="text-secondary text-decoration-none">AC Power Supply</a></li>
-            <li><a href="{% url 'products:center_page' page_name='electronic-loads' %}" class="text-secondary text-decoration-none">Electronic Loads</a></li>
-            <li><a href="{% url 'products:center_page' page_name='all-products' %}" class="text-secondary text-decoration-none">Product Catalog</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-2 col-md-6">
-          <h5 class="mb-4 text-white">Company</h5>
-          <ul class="list-unstyled footer-links">
-            <li><a href="{% url 'core:about' %}" class="text-secondary text-decoration-none">About Matrix</a></li>
-            <li><a href="{% url 'core:services' %}" class="text-secondary text-decoration-none">Our Services</a></li>
-            <li><a href="{% url 'core:faq' %}" class="text-secondary text-decoration-none">FAQ Center</a></li>
-            <li><a href="{% url 'core:contact' %}" class="text-secondary text-decoration-none">Contact Us</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-4 col-md-6">
-          <h5 class="mb-4 text-white">Contact Info</h5>
-          <ul class="list-unstyled text-secondary">
-            <li class="mb-2"><i class="bi bi-geo-alt me-2 text-primary"></i>Room 601, Block C, Huachuangda Industrial Park, Shenzhen</li>
-            <li class="mb-2"><i class="bi bi-telephone me-2 text-primary"></i>0086 755 2836 4276</li>
-            <li class="mb-2"><i class="bi bi-envelope me-2 text-primary"></i>sales@szmatrix.com</li>
-            <li class="mt-3"><small class="d-block pt-2 border-top border-dark border-opacity-25">Work Hours: Mon–Fri 8:00–20:00 (GMT+8)</small></li>
-          </ul>
-        </div>
-      </div>
-      
-      <div class="row mt-5 pt-4 border-top border-secondary border-opacity-25 align-items-center">
-        <div class="col-md-6">
-          <p class="mb-0 text-secondary small">© 2025 MATRIX Technology Inc. All rights reserved.</p>
-        </div>
-        <div class="col-md-6 text-md-end">
-          <a href="#" class="text-secondary text-decoration-none small me-3">Privacy Policy</a>
-          <a href="#" class="text-secondary text-decoration-none small">Terms of Service</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Floating Contact Button (Standardized) -->
-  <a href="{% url 'core:contact' %}" class="floating-contact">
-      <i class="bi bi-chat-dots-fill"></i>
-      <span>Contact Us</span>
-  </a>
 </section>
 
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{% static 'js/main.js' %}"></script>
-<script src="{% static 'js/product_main.js' %}"></script>
-<script>
-  // Hover effect on category cards
-  document.querySelectorAll('.stagger-item').forEach(card => {
-    card.addEventListener('mouseenter', function() {
-      this.style.transform = 'translateY(-6px)';
-      this.style.borderColor = 'var(--border-strong)';
-      this.style.boxShadow = '0 20px 40px rgba(0,0,0,0.4), 0 0 60px var(--accent-glow)';
-    });
-    card.addEventListener('mouseleave', function() {
-      this.style.transform = '';
-      this.style.borderColor = '';
-      this.style.boxShadow = '';
-    });
-  });
-</script>
-</body>
-</html>
+<!-- CATEGORIES GRID -->
+<section id="categories" class="section-padding bg-darker">
+    <div class="container">
+        <div class="text-center mb-5">
+            <span class="section-label small fw-bold text-accent text-uppercase tracking-wider">Our Portfolio</span>
+            <h2 class="display-5 fw-bold mb-3">Browse by Category</h2>
+            <p class="text-secondary mx-auto" style="max-width: 600px;">From benchtop power supplies to digital oscilloscopes — the tools professionals rely on.</p>
+        </div>
+
+        <div class="row g-4 stagger-container">
+            <!-- DC Power Supply -->
+            <div class="col-md-6 col-lg-4 stagger-item">
+                <a href="{% url 'products:center_page' page_name='dc-power-supply' %}" class="category-card dc">
+                    <div class="category-card-icon-wrap">
+                        <div class="position-absolute inset-0 opacity-25" style="background:radial-gradient(circle at 30% 50%,#00C2FF 0%,transparent 60%);"></div>
+                        <span class="display-1">⚡</span>
+                    </div>
+                    <div class="p-4">
+                        <div class="small fw-bold text-accent text-uppercase tracking-wider mb-2">Category 01</div>
+                        <h3 class="h5 fw-bold text-white mb-2">DC Power Supply</h3>
+                        <p class="small text-secondary mb-4">Programmable single & multi-channel DC supplies from 30W to 10kW.</p>
+                        <div class="d-flex align-items-center gap-2 small fw-bold text-accent">
+                            View Products <i class="bi bi-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- AC Power Supply -->
+            <div class="col-md-6 col-lg-4 stagger-item">
+                <a href="{% url 'products:center_page' page_name='ac-power-supply' %}" class="category-card ac">
+                    <div class="category-card-icon-wrap">
+                        <div class="position-absolute inset-0 opacity-25" style="background:radial-gradient(circle at 70% 50%,#6400FF 0%,transparent 60%);"></div>
+                        <span class="display-1">〜</span>
+                    </div>
+                    <div class="p-4">
+                        <div class="small fw-bold text-accent text-uppercase tracking-wider mb-2">Category 02</div>
+                        <h3 class="h5 fw-bold text-white mb-2">AC Power Supply</h3>
+                        <p class="small text-secondary mb-4">Programmable AC sources with frequency & voltage sweep capabilities.</p>
+                        <div class="d-flex align-items-center gap-2 small fw-bold text-accent">
+                            View Products <i class="bi bi-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Electronic Loads -->
+            <div class="col-md-6 col-lg-4 stagger-item">
+                <a href="{% url 'products:center_page' page_name='electronic-loads' %}" class="category-card loads">
+                    <div class="category-card-icon-wrap">
+                        <div class="position-absolute inset-0 opacity-25" style="background:radial-gradient(circle at 50% 30%,#00FF64 0%,transparent 60%);"></div>
+                        <span class="display-1">🔌</span>
+                    </div>
+                    <div class="p-4">
+                        <div class="small fw-bold text-accent text-uppercase tracking-wider mb-2">Category 03</div>
+                        <h3 class="h5 fw-bold text-white mb-2">Electronic Loads</h3>
+                        <p class="small text-secondary mb-4">DC & AC electronic loads for battery, power supply, and charger testing.</p>
+                        <div class="d-flex align-items-center gap-2 small fw-bold text-accent">
+                            View Products <i class="bi bi-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- LCR Meter -->
+            <div class="col-md-6 col-lg-4 stagger-item">
+                <a href="{% url 'products:center_page' page_name='lcr-meter' %}" class="category-card lcr">
+                    <div class="category-card-icon-wrap">
+                        <div class="position-absolute inset-0 opacity-25" style="background:radial-gradient(circle at 30% 70%,#FF9600 0%,transparent 60%);"></div>
+                        <span class="display-1">📡</span>
+                    </div>
+                    <div class="p-4">
+                        <div class="small fw-bold text-accent text-uppercase tracking-wider mb-2">Category 04</div>
+                        <h3 class="h5 fw-bold text-white mb-2">LCR Meter</h3>
+                        <p class="small text-secondary mb-4">Precision impedance analyzers measuring inductance, capacitance & resistance.</p>
+                        <div class="d-flex align-items-center gap-2 small fw-bold text-accent">
+                            View Products <i class="bi bi-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Withstand Voltage Tester -->
+            <div class="col-md-6 col-lg-4 stagger-item">
+                <a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}" class="category-card safety">
+                    <div class="category-card-icon-wrap">
+                        <div class="position-absolute inset-0 opacity-25" style="background:radial-gradient(circle at 80% 50%,#FF3232 0%,transparent 60%);"></div>
+                        <span class="display-1">⚠</span>
+                    </div>
+                    <div class="p-4">
+                        <div class="small fw-bold text-accent text-uppercase tracking-wider mb-2">Category 05</div>
+                        <h3 class="h5 fw-bold text-white mb-2">Withstand Voltage Tester</h3>
+                        <p class="small text-secondary mb-4">Hipot & insulation testers ensuring electrical safety compliance.</p>
+                        <div class="d-flex align-items-center gap-2 small fw-bold text-accent">
+                            View Products <i class="bi bi-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Oscilloscope -->
+            <div class="col-md-6 col-lg-4 stagger-item">
+                <a href="{% url 'products:center_page' page_name='oscilloscope' %}" class="category-card scope">
+                    <div class="category-card-icon-wrap">
+                        <div class="position-absolute inset-0 opacity-25" style="background:radial-gradient(circle at 50% 80%,#00C2FF 0%,transparent 60%);"></div>
+                        <span class="display-1">📊</span>
+                    </div>
+                    <div class="p-4">
+                        <div class="small fw-bold text-accent text-uppercase tracking-wider mb-2">Category 06</div>
+                        <h3 class="h5 fw-bold text-white mb-2">Oscilloscope</h3>
+                        <p class="small text-secondary mb-4">Digital storage oscilloscopes with 50 MHz to 1 GHz bandwidth.</p>
+                        <div class="d-flex align-items-center gap-2 small fw-bold text-accent">
+                            View Products <i class="bi bi-arrow-right"></i>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- All products CTA -->
+        <div class="text-center mt-5">
+            <a href="{% url 'products:center_page' page_name='all-products' %}" class="btn btn-primary-custom px-5 py-3">
+                <span><i class="bi bi-grid-3x3-gap-fill me-2"></i> View All Products</span>
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

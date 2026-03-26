@@ -427,9 +427,8 @@ img { max-width: 100%; height: auto; display: block; }
 
 /* Product Grid */
 .products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+  /* Removed display: grid to avoid conflict with Bootstrap .row */
+  margin-top: 20px;
 }
 
 /* ===================== PRODUCT CARD ===================== */

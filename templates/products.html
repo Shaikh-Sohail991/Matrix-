@@ -7,18 +7,18 @@
 
 {% block content %}
 <!-- Page Header -->
-<section class="page-header products-hero" style="background-image:url('{% static "images/products-hero.jpg" %}')">
-    <div class="container">
+<section class="premium-hero products-hero">
+    <div class="technical-grid"></div>
+    <div class="container position-relative" style="z-index: 1;">
         <div class="page-header-content">
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{% url 'core:index' %}">Home</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Products</li>
+                <ol class="breadcrumb mb-4">
+                    <li class="breadcrumb-item"><a href="{% url 'core:index' %}" class="text-secondary">Home</a></li>
+                    <li class="breadcrumb-item active text-accent" aria-current="page">Products</li>
                 </ol>
             </nav>
-            <h1>Product Center</h1>
-            <p>Browse our complete catalog of electrical and electronic products with advanced filtering
-                options.</p>
+            <h1 class="display-4 fw-bold mb-3">Product Center</h1>
+            <p class="lead text-secondary max-width-600">Explore our comprehensive range of high-performance electrical and electronic solutions, engineered for precision and reliability.</p>
         </div>
     </div>
 </section>

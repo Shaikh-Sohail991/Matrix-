@@ -1,300 +1,114 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Withstand Voltage Tester | MATRIX Technology Product Center</title>
-  <meta name="description" content="Explore Matrix Technology's Withstand Voltage Tester range. Hipot & Electrical Safety Test Equipment.">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <link rel="stylesheet" href="{% static 'css/awesome.css' %}">
-</head>
-<body>
 
-<!-- NAVBAR (main site) -->
-<nav class="navbar navbar-expand-lg fixed-top" role="navigation" aria-label="Main navigation">
-    <div class="container navbar-container">
-        <div class="navbar-top d-flex w-100 align-items-center justify-content-between">
-            <a class="navbar-brand" href="{% url 'core:index' %}"><span class="brand-logo-wrap"><span class="brand-strips" aria-hidden="true"><i></i><i></i><i></i></span><span class="brand-name">MATRIX</span></span></a>
-            <div class="d-flex align-items-center gap-3">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-            </div>
-        </div>
-        <div class="collapse navbar-collapse" id="navbarMain">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link" href="{% url 'core:index' %}">Home</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle active" href="#" data-bs-toggle="dropdown" aria-expanded="false">Product Center</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='dc-power-supply' %}">DC Power Supply</a></li>
-                        <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='ac-power-supply' %}">AC Power Supply</a></li>
-                        <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='electronic-loads' %}">Electronic Loads</a></li>
-                        <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='lcr-meter' %}">LCR Meter</a></li>
-                        <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}">Withstand Voltage Tester</a></li>
-                        <li><a class="dropdown-item" href="{% url 'products:center_page' page_name='oscilloscope' %}">Oscilloscope</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'products:product_list' %}">All Products</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Service</a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="{% url 'core:videos' %}">Video</a></li>
-                        <li><a class="dropdown-item" href="{% url 'core:faq' %}">FAQ</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{% url 'core:services' %}">All Services</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'core:about' %}">About Us</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'core:contact' %}">Contact Us</a></li>
-            </ul>
-            <div class="navbar-end-controls d-flex align-items-center gap-3">
-                <button class="btn btn-link nav-search-btn p-0" id="navSearchToggle" aria-label="Search" aria-expanded="false" aria-controls="navSearchOverlay"><i class="bi bi-search"></i></button>
-            </div>
-            <div class="nav-search-overlay" id="navSearchOverlay" aria-hidden="true">
-                <form method="get" action="{% url 'products:search' %}" class="nav-search-form" role="search">
-                    <div class="nav-search-inner container">
-                        <i class="bi bi-search nav-search-icon" aria-hidden="true"></i>
-                        <input type="search" name="q" class="nav-search-field" placeholder="Search products…" autocomplete="off" aria-label="Search site" id="navSearchField">
-                        <button type="submit" class="btn btn-primary-custom btn-sm-custom ms-2"><span>Go</span></button>
-                        <button type="button" class="btn btn-link nav-search-close ms-1" id="navSearchClose" aria-label="Close search"><i class="bi bi-x-lg"></i></button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</nav>
+{% block title %}Withstand Voltage Tester | MATRIX Technology Product Center{% endblock %}
+{% block meta_description %}Explore Matrix Technology's Withstand Voltage Tester range. Hipot & Electrical Safety Test Equipment.{% endblock %}
 
-<!-- PAGE WRAPPER -->
-<div class="page-wrapper">
+{% block extra_css %}
+<!-- Product-center supplemental CSS -->
+<link rel="stylesheet" href="{% static 'css/awesome.css' %}">
+<style>
+    .layout-with-sidebar { min-height: calc(100vh - 110px); }
+    .premium-hero.product-hero { margin-bottom: 0; }
+</style>
+{% endblock %}
 
-  <!-- BREADCRUMB -->
-  <div class="breadcrumb-bar">
+{% block content %}
+<!-- BREADCRUMB -->
+<div class="breadcrumb-bar">
     <div class="container">
-      <ol class="breadcrumb">
-        <li><a href="{% url 'products:center_page' page_name='index' %}">Home</a></li>
-        <li><a href="{% url 'products:center_page' page_name='index' %}">Product Center</a></li>
-        <li class="active">Withstand Voltage Tester</li>
-      </ol>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{% url 'products:center_page' page_name='index' %}" class="text-secondary">Product Center</a></li>
+                <li class="breadcrumb-item active text-accent" aria-current="page">Withstand Voltage Tester</li>
+            </ol>
+        </nav>
     </div>
-  </div>
+</div>
 
-  <!-- MAIN LAYOUT -->
-  <div class="layout-with-sidebar">
-
+<!-- MAIN LAYOUT -->
+<div class="layout-with-sidebar">
     <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-title">Product Center</div>
-      <ul class="sidebar-nav">
-        <li><a href="{% url 'products:center_page' page_name='dc-power-supply' %}" class=""><span class="icon">⚡</span>DC Power Supply</a></li>
-<li><a href="{% url 'products:center_page' page_name='ac-power-supply' %}" class=""><span class="icon">〜</span>AC Power Supply</a></li>
-<li><a href="{% url 'products:center_page' page_name='electronic-loads' %}" class=""><span class="icon">🔌</span>Electronic Loads</a></li>
-<li><a href="{% url 'products:center_page' page_name='lcr-meter' %}" class=""><span class="icon">📡</span>LCR Meter</a></li>
-<li><a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}" class="active"><span class="icon">⚠</span>Withstand Voltage Tester</a></li>
-<li><a href="{% url 'products:center_page' page_name='oscilloscope' %}" class=""><span class="icon">📊</span>Oscilloscope</a></li>
-
-      </ul>
-      <div class="sidebar-all">
-        <ul class="sidebar-nav">
-          <li><a href="{% url 'products:center_page' page_name='all-products' %}"><span class="icon">🗂</span> All Products</a></li>
-        </ul>
-      </div>
-    </aside>
+    {% include "product-center/partials/sidebar.html" with current_page="withstand-voltage-tester" %}
 
     <!-- CONTENT -->
     <main class="main-content">
+        <!-- Mobile sidebar trigger -->
+        <button class="sidebar-mobile-trigger" id="sidebarTrigger" style="display:none;">
+            <i class="bi bi-layout-sidebar-inset"></i> Browse Categories
+        </button>
 
-      <!-- Mobile sidebar trigger -->
-      <button class="sidebar-mobile-trigger" id="sidebarTrigger" style="display:none;">
-        <i class="bi bi-layout-sidebar-inset"></i> Browse Categories
-      </button>
+        <!-- HERO -->
+        <section class="premium-hero product-hero">
+            <div class="technical-grid"></div>
+            <div class="container position-relative" style="z-index: 1;">
+                <div class="product-hero-inner">
+                    <div class="hero-badge mb-3"><span class="dot"></span> Category 05</div>
+                    <h1 class="display-5 fw-bold mb-3">Withstand <span class="highlight">Voltage Tester</span></h1>
+                    <p class="lead text-secondary opacity-75 mb-4">Hipot & Electrical Safety Test Equipment. Ensure electrical safety compliance with Matrix Hipot Testers. Our range covers AC/DC withstanding voltage, insulation resistance, and ground bond testing.</p>
+                    <div class="hero-stats d-flex gap-4">
+                        <div class="hero-stat text-center">
+                            <div class="num h4 fw-bold text-accent mb-0">6</div>
+                            <p class="lbl small text-muted mb-0">Models</p>
+                        </div>
+                        <div class="hero-stat text-center">
+                            <div class="num h4 fw-bold text-accent mb-0">CE</div>
+                            <p class="lbl small text-muted mb-0">Certified</p>
+                        </div>
+                        <div class="hero-stat text-center">
+                            <div class="num h4 fw-bold text-accent mb-0">2yr</div>
+                            <p class="lbl small text-muted mb-0">Warranty</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-      <!-- HERO -->
-      <section class="product-hero">
-        <div class="hero-grid-pattern"></div>
-        <div class="product-hero-inner">
-          <div class="hero-badge"><span class="dot"></span> Category 05</div>
-          <h1>Withstand <span class="highlight">Voltage Tester</span></h1>
-          <p>Hipot & Electrical Safety Test Equipment. Ensure electrical safety compliance with Matrix Hipot Testers. Our range covers AC/DC withstanding voltage, insulation r...</p>
-          <div class="hero-stats">
-            <div class="hero-stat"><div class="num">6</div><p class="lbl">Models</p></div>
-            <div class="hero-stat"><div class="num">CE</div><p class="lbl">Certified</p></div>
-            <div class="hero-stat"><div class="num">2yr</div><p class="lbl">Warranty</p></div>
-          </div>
+        <!-- PRODUCTS SECTION -->
+        <section class="products-section p-4">
+            <div class="products-section-header d-flex justify-content-between align-items-end flex-wrap gap-3 mb-4">
+                <div>
+                    <span class="section-label small fw-bold text-accent text-uppercase tracking-wider">Products</span>
+                    <h2 class="h3 fw-bold mb-0">Withstand Voltage Tester Series</h2>
+                </div>
+                <div class="filter-bar d-flex gap-2">
+                    <button class="btn btn-sm btn-outline-custom active" data-filter="all">All</button>
+                    <button class="btn btn-sm btn-outline-custom" data-filter="hipot">Hipot</button>
+                    <button class="btn btn-sm btn-outline-custom" data-filter="insulation">Insulation</button>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div class="search-bar-wrap mb-4">
+                <div class="input-group">
+                    <span class="input-group-text bg-transparent border-secondary text-muted"><i class="bi bi-search"></i></span>
+                    <input type="text" id="productSearch" class="form-control bg-transparent border-secondary text-light" placeholder="Search withstand voltage tester models…">
+                </div>
+            </div>
+
+            <!-- Cards -->
+            <div class="row g-4 stagger-container">
+                 {% include "product-center/partials/withstand_cards.html" %}
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <div class="cta-section m-4 p-5 rounded-4 bg-glass border border-secondary">
+            <div class="cta-inner d-flex justify-content-between align-items-center flex-wrap gap-4">
+                <div>
+                    <h2 class="h4 fw-bold mb-2">Need a Custom Solution?</h2>
+                    <p class="text-secondary mb-0">Our engineers can tailor Withstand Voltage Tester specifications to your application requirements.</p>
+                </div>
+                <div class="cta-buttons d-flex gap-3">
+                    <a href="#" class="btn btn-primary-custom"><span>Request Quote</span></a>
+                    <a href="#" class="btn btn-outline-custom">Download Catalog</a>
+                </div>
+            </div>
         </div>
-      </section>
-
-      <!-- PRODUCTS SECTION -->
-      <section class="products-section">
-        <div class="products-section-header">
-          <div>
-            <span class="section-label">Products</span>
-            <h2 class="section-title">Withstand Voltage Tester Series</h2>
-          </div>
-          <div class="filter-bar">
-            <button class="filter-btn active" data-filter="all">All</button>
-<button class="filter-btn" data-filter="hipot">Hipot</button>
-<button class="filter-btn" data-filter="insulation">Insulation</button>
-<button class="filter-btn" data-filter="ground">Ground</button>
-<button class="filter-btn" data-filter="combo">Combo</button>
-
-          </div>
-        </div>
-
-        <!-- Search -->
-        <div class="search-bar-wrap">
-          <div class="search-bar">
-            <span class="si"><i class="bi bi-search"></i></span>
-            <input type="text" id="productSearch" placeholder="Search withstand voltage tester models…">
-          </div>
-        </div>
-
-        <!-- Cards -->
-        <div class="products-grid" style="margin-top:24px;">
-          
-<article class="product-card" data-type="hipot">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MHT-501" alt="AC Hipot Tester 5kVAC" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">HIPOT</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MHT-501</div>
-    <h3 class="card-title">AC Hipot Tester 5kVAC</h3>
-    <p class="card-desc">5kVAC withstanding voltage tester with adjustable ramp, dwell, and breakdown detection.</p>
-    <div class="card-features"><span class="card-feature">5kVAC</span><span class="card-feature">Ramp Mode</span><span class="card-feature">0.1mA Res.</span><span class="card-feature">Safety Interlock</span></div>
-  </div>
-  <div class="card-footer">
-    <a href="#" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="hipot">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MHT-502" alt="AC/DC Hipot Tester" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">HIPOT</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MHT-502</div>
-    <h3 class="card-title">AC/DC Hipot Tester</h3>
-    <p class="card-desc">Combined AC and DC hipot tester: 5kVAC / 6kVDC with automatic discharge and arc detection.</p>
-    <div class="card-features"><span class="card-feature">5kVAC/6kVDC</span><span class="card-feature">Arc Detect</span><span class="card-feature">Auto Discharge</span><span class="card-feature">USB Log</span></div>
-  </div>
-  <div class="card-footer">
-    <a href="#" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="insulation">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MIR-5000" alt="Insulation Resistance Tester" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">INSULATION</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MIR-5000</div>
-    <h3 class="card-title">Insulation Resistance Tester</h3>
-    <p class="card-desc">Digital megohmmeter for insulation testing: 50V–5000V test voltage, 0.01MΩ–1TΩ range.</p>
-    <div class="card-features"><span class="card-feature">50–5000V</span><span class="card-feature">0.01MΩ–1TΩ</span><span class="card-feature">PI/DAR Test</span><span class="card-feature">Bluetooth</span></div>
-  </div>
-  <div class="card-footer">
-    <a href="#" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="ground">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MGC-100" alt="Ground Continuity Tester" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">GROUND</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MGC-100</div>
-    <h3 class="card-title">Ground Continuity Tester</h3>
-    <p class="card-desc">Tests ground/earth bond continuity with 25A/30A AC test current. Dual clamp connections.</p>
-    <div class="card-features"><span class="card-feature">25A Test</span><span class="card-feature">Dual Clamp</span><span class="card-feature">Auto-Scan</span><span class="card-feature">Pass/Fail LED</span></div>
-  </div>
-  <div class="card-footer">
-    <a href="#" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="combo">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MES-3IN1" alt="3-in-1 Electrical Safety Tester" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">COMBO</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MES-3IN1</div>
-    <h3 class="card-title">3-in-1 Electrical Safety Tester</h3>
-    <p class="card-desc">All-in-one unit combining hipot, insulation resistance, and ground continuity into a single instrument.</p>
-    <div class="card-features"><span class="card-feature">3-in-1</span><span class="card-feature">Auto Sequence</span><span class="card-feature">IEC/UL Tests</span><span class="card-feature">LAN/RS232</span></div>
-  </div>
-  <div class="card-footer">
-    <a href="#" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-<article class="product-card" data-type="hipot">
-  <div class="card-image">
-    <img src="https://placehold.co/600x400/112040/00C2FF.png?text=MHT-10K" alt="High Voltage AC Tester 10kVAC" style="width:100%; height:100%; object-fit:cover; opacity: 0.8;">
-    <span class="card-badge">HIPOT</span>
-    <div class="card-image-overlay"></div>
-  </div>
-  <div class="card-body">
-    <div class="card-model">MHT-10K</div>
-    <h3 class="card-title">High Voltage AC Tester 10kVAC</h3>
-    <p class="card-desc">Heavy-duty 10kVAC tester for HV transformers, cable assemblies, and switchgear testing.</p>
-    <div class="card-features"><span class="card-feature">10kVAC</span><span class="card-feature">High Power</span><span class="card-feature">Arc Detect</span><span class="card-feature">Rack Mount</span></div>
-  </div>
-  <div class="card-footer">
-    <a href="#" class="btn-view"><i class="bi bi-eye"></i> View Details</a>
-    <a href="#" class="btn-quote"><i class="bi bi-envelope"></i> Quote</a>
-  </div>
-</article>
-        </div>
-      </section>
-
-      <!-- CTA -->
-      <div class="cta-section">
-        <div class="cta-inner">
-          <div>
-            <h2>Need a Custom Solution?</h2>
-            <p>Our engineers can tailor Withstand Voltage Tester specifications to your application requirements.</p>
-          </div>
-          <div class="cta-buttons">
-            <a href="#" class="btn-primary"><i class="bi bi-envelope"></i> Request Quote</a>
-            <a href="#" class="btn-outline"><i class="bi bi-file-earmark-text"></i> Download Catalog</a>
-          </div>
-        </div>
-      </div>
-
     </main>
-  </div><!-- /layout-with-sidebar -->
+</div>
+{% endblock %}
 
-  <footer class="footer" role="contentinfo">
-    <div class="container">
-      <div class="row g-5">
-        <div class="col-lg-3 col-md-6"><h5 class="footer-col-title">Product</h5><ul class="footer-links"><li><a href="{% url 'products:center_page' page_name='dc-power-supply' %}">DC Power Supply</a></li><li><a href="{% url 'products:center_page' page_name='ac-power-supply' %}">AC Power Supply</a></li><li><a href="{% url 'products:center_page' page_name='electronic-loads' %}">Electronic Loads</a></li><li><a href="{% url 'products:center_page' page_name='lcr-meter' %}">LCR Meter</a></li><li><a href="{% url 'products:center_page' page_name='withstand-voltage-tester' %}">Withstand Voltage Tester</a></li><li><a href="{% url 'products:center_page' page_name='oscilloscope' %}">Oscilloscope</a></li></ul></div>
-        <div class="col-lg-2 col-md-6"><h5 class="footer-col-title">Service</h5><ul class="footer-links"><li><a href="{% url 'core:videos' %}">Video</a></li><li><a href="{% url 'core:faq' %}">FAQ</a></li></ul></div>
-        <div class="col-lg-4 col-md-6"><h5 class="footer-col-title">About Us</h5><div class="footer-about-info"><p class="footer-company-name">MATRIX TECHNOLOGY INC.</p><p class="footer-address">Room 601, Block C, Huachuangda, Bao'an District, Shenzhen, Guangdong Province</p><p class="footer-contact-line">Tel: 0086 755 2836 4276</p><p class="footer-contact-line">Email: sales@szmatrix.com</p></div></div>
-        <div class="col-lg-3 col-md-6"><h5 class="footer-col-title">Work Hours</h5><div class="footer-hours"><p>Mon-Fri 08:00AM - 08:00PM</p><p>Sat-Sun 09:00AM - 06:00PM</p></div><div class="footer-social-icons"><a href="#" class="footer-social-icon" aria-label="Facebook"><i class="bi bi-facebook"></i></a><a href="#" class="footer-social-icon" aria-label="YouTube"><i class="bi bi-youtube"></i></a><a href="#" class="footer-social-icon" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a><a href="#" class="footer-social-icon" aria-label="Email"><i class="bi bi-envelope"></i></a></div></div>
-      </div>
-      <div class="footer-bottom"><p class="footer-copyright">Copyright &copy; 2025 MATRIX TECHNOLOGY INC.</p></div>
-    </div>
-    <a href="{% url 'core:contact' %}" class="floating-contact-btn" aria-label="Contact us"><span class="floating-contact-label">Contact us</span><span class="floating-contact-icon-wrap"><i class="bi bi-chat-fill"></i></span></a>
-  </footer>
-</div><!-- /page-wrapper -->
-<script>(function(){var t=document.getElementById('navSearchToggle'),o=document.getElementById('navSearchOverlay'),f=document.getElementById('navSearchField'),c=document.getElementById('navSearchClose');function op(){o.classList.add('open');t.setAttribute('aria-expanded','true');o.setAttribute('aria-hidden','false');setTimeout(function(){f.focus();},120);}function cl(){o.classList.remove('open');t.setAttribute('aria-expanded','false');o.setAttribute('aria-hidden','true');}if(t)t.addEventListener('click',function(){o.classList.contains('open')?cl():op();});if(c)c.addEventListener('click',cl);document.addEventListener('keydown',function(e){if(e.key==='Escape')cl();});}());</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="{% static 'js/main.js' %}"></script>
+{% block extra_js %}
 <script src="{% static 'js/product_main.js' %}"></script>
-</body>
-</html>
+{% endblock %}
